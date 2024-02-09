@@ -6,7 +6,7 @@ const resolvers = {
       return await Team.find();
     },
     team: async (parent, { _id }) => {
-      const team = await Team.findById(_id);
+      const team = await Team.findById(_id).populate('players');
 
       if (!team) {
         throw new Error('No team found with that ID!');
@@ -18,7 +18,7 @@ const resolvers = {
       return await Player.find();
     },
     player: async (parent, { _id }) => {
-      const player = await Player.findById(_id);
+      const player = await Player.findById(_id).populate('performances');
 
       if (!player) {
         throw new Error('No player found with that ID!');
@@ -30,7 +30,7 @@ const resolvers = {
       return await Performance.find();
     },
     performance: async (parent, { _id }) => {
-      const performance = await Performance.findById(_id);
+      const performance = await Performance.findById(_id).populate('player');
 
       if (!performance) {
         throw new Error('No performance found with that ID!');
