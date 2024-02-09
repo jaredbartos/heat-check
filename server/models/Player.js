@@ -28,6 +28,10 @@ const playerSchema = new Schema(
     weight: {
       type: Number
     },
+    team: {
+      type: Schema.Types.ObjectId,
+      ref: 'Team'
+    },
     performances: [
       {
         type: Schema.Types.ObjectId,

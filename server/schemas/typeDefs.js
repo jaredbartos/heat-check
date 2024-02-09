@@ -44,6 +44,7 @@ const typeDefs = `
     number: Int
     height: Int
     weight: Int
+    team: Team
     performances: [Performance]
   }
 
@@ -54,6 +55,7 @@ const typeDefs = `
     number: Int
     height: Int
     weight: Int
+    team: ID
   }
 
   type Team {
