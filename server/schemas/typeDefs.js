@@ -77,8 +77,11 @@ const typeDefs = `
 
   type Query {
     teams: [Team]
+    team(_id: ID!): Team
     players: [Player]
+    player(_id: ID!): Player
     performances: [Performance]
+    performance(_id: ID!): Performance
     user: User
   }
 
@@ -86,9 +89,9 @@ const typeDefs = `
     addPerformance(input: PerformanceInput): Performance
     addPlayer(input: PlayerInput): Player
     addTeam(name: String!, league: String): Team
-    updatePerformance(input: PerformanceInput): Performance
-    updatePlayer(input: PlayerInput): Player
-    updateTeam(name: String, league: String): Team
+    updatePerformance(_id, ID, input: PerformanceInput): Performance
+    updatePlayer(_id: ID, input: PlayerInput): Player
+    updateTeam(_id: ID, name: String, league: String): Team
     login(email: String!, password: String!): Auth
   }
 `;
