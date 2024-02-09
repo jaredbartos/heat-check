@@ -76,6 +76,10 @@ const performanceSchema = new Schema(
       min: 0,
       default: 0
     },
+    points: {
+      type: Number,
+      required: true,
+    },
     player: {
       type: Schema.Types.ObjectId,
       ref: 'Player',
