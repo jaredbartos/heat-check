@@ -1,0 +1,15 @@
+{
+  "name": "basketball-stat-manager",
+  "version": "1.0.0",
+  "description": "An app to manage amateur basketball team statistics.",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
