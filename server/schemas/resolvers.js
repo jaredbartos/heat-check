@@ -15,10 +15,10 @@ const resolvers = {
       return team;
     },
     players: async () => {
-      return await Player.find();
+      return await Player.find().populate('team');
     },
     player: async (parent, { _id }) => {
-      const player = await Player.findById(_id).populate('performances');
+      const player = await Player.findById(_id).populate('team').populate('performances');
 
       if (!player) {
         throw new Error('No player found with that ID!');
@@ -27,10 +27,13 @@ const resolvers = {
       return player;
     },
     performances: async () => {
-      return await Performance.find();
+      return await Performance.find().populate('player');
     },
     performance: async (parent, { _id }) => {
-      const performance = await Performance.findById(_id).populate('player');
+      const performance = await Performance.findById(_id).populate({
+        path: 'player',
+        populate: { path: 'team' }
+      });
 
       if (!performance) {
         throw new Error('No performance found with that ID!');
@@ -41,10 +44,34 @@ const resolvers = {
   },
   Mutation: {
     addPerformance: async (parent, { input }) => {
-      return await Performance.create(input);
+      const performance = await Performance.create(input);
+
+      const updatedPlayer = await Player.findOneAndUpdate(
+        { _id: input.player },
+        { $addToSet: { performances: performance._id } },
+        { new: true}
+      );
+
+      if (!updatedPlayer) {
+        throw new Error('Something went wrong adding performance to player');
+      }
+
+      return performance;
     },
     addPlayer: async (parent, { input }) => {
-      return await Player.create(input);
+      const player = await Player.create(input);
+
+      const updatedTeam = await Team.findOneAndUpdate(
+        { _id: input.team },
+        { $addToSet: { players: player._id } },
+        { new: true }
+      );
+
+      if (!updatedTeam) {
+        throw new Error('Something went wrong adding player to the team');
+      }
+
+      return player;
     },
     addTeam: async (parent, args) => {
       return await Team.create(args);
