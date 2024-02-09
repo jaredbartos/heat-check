@@ -15,7 +15,7 @@ const typeDefs = `
     turnovers: Int!
     points: Int!
     player: ID!
-    date: DateTime
+    date: String
   }
 
   input PerformanceInput {
@@ -33,7 +33,7 @@ const typeDefs = `
     turnovers: Int
     points: Int
     player: ID
-    date: DateTime
+    date: String
   }
 
   type Player {
@@ -89,7 +89,7 @@ const typeDefs = `
     addPerformance(input: PerformanceInput): Performance
     addPlayer(input: PlayerInput): Player
     addTeam(name: String!, league: String): Team
-    updatePerformance(_id, ID, input: PerformanceInput): Performance
+    updatePerformance(_id: ID, input: PerformanceInput): Performance
     updatePlayer(_id: ID, input: PlayerInput): Player
     updateTeam(_id: ID, name: String, league: String): Team
     login(email: String!, password: String!): Auth
