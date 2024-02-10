@@ -46,11 +46,11 @@ const performanceSchema = new Schema(
       min: 0,
       default: 0
     },
-    defReb: {
+    rebounds: {
       type: Number,
       required: true,
       min: 0,
-      deafult: 0
+      default: 0
     },
     assists: {
       type: Number,
