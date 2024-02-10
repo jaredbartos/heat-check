@@ -34,7 +34,8 @@ const randomizePerformances = () => {
       steals,
       blocks,
       turnovers,
-      points
+      points,
+      date: Date.now()
     };
   
     performances.push(performance);
