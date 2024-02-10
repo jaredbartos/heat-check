@@ -17,9 +17,8 @@ let teamSeedData = [];
 // Randomize matching team names into a league
 // Add the object to the seed data
 for (let i = 0; i < teamNames.length; i++) {
-  const index = Math.floor(Math.random() * 2);
-  const teamObj = { name: teamNames[i], league: leagues[index] };
-  teamSeedData.push(teamObj);
+    const teamObj = { name: teamNames[i], league: leagues[(i % 2 === 0 ? 0 : 1)] };
+    teamSeedData.push(teamObj);
 };
 
 module.exports = teamSeedData;
