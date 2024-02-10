@@ -1,0 +1,32 @@
+[
+  {
+    "username": "coachmiles12",
+    "email": "miles@test.com",
+    "password": "Password1234!"
+  },
+  {
+    "username": "toughlove",
+    "email": "toughlove@test.com",
+    "password": "Password1234!"
+  },
+  {
+    "username": "davisjohn",
+    "email": "davisjohn@test.com",
+    "password": "Password1234!"
+  },
+  {
+    "username": "alexfurth",
+    "email": "alexfurth@test.com",
+    "password": "Password1234!"
+  },
+  {
+    "username": "peterjack",
+    "email": "peterjack@test.com",
+    "password": "Password1234!"
+  },
+  {
+    "username": "badcompany",
+    "email": "badcompany@test.com",
+    "password": "Password1234!"
+  }
+]
