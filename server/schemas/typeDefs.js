@@ -95,6 +95,7 @@ const typeDefs = `
     updatePlayer(_id: ID, input: PlayerInput): Player
     updateTeam(_id: ID, name: String, league: String): Team
     login(email: String!, password: String!): Auth
+    addUser(username: String!, email: String!, password: String!): Auth
   }
 `;
 

@@ -1,9 +1,10 @@
 const { Performance, Player, Team, User } = require('../models');
+const { AuthenticationError, signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
     teams: async () => {
-      return await Team.find();
+      return await Team.find().populate('players');
     },
     team: async (parent, { _id }) => {
       const team = await Team.findById(_id).populate('players');
@@ -74,7 +75,17 @@ const resolvers = {
       return player;
     },
     addTeam: async (parent, args) => {
-      return await Team.create(args);
+      if (context.user) {
+        const team = await Team.create(args);
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { teams: team._id } }
+        );
+
+        return team;
+      }
+
+      throw new Error('You need to be logged in!');
     },
     updatePerformance: async (parent, { _id, input }) => {
       const performance = await Performance.findOneAndUpdate(
@@ -114,6 +125,29 @@ const resolvers = {
       }
 
       return team;
+    },
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        throw AuthenticationError;
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw AuthenticationError;
+      }
+
+      const token = signToken(user);
+
+      return { token, user };
+    },
+    addUser: async (parent, args) => {
+      const user = await User.create(args);
+      const token = signToken(user);
+
+      return { token, user };
     }
   }
 };
