@@ -4,7 +4,7 @@ import { ADD_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 import SignupForm from '../components/SignupForm';
 
-export default function SignupPage () {
+export default function SignupPage() {
   const [formState, setFormState] = useState({
     username: '',
     email: '',

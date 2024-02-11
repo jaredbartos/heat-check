@@ -8,7 +8,7 @@ const typeDefs = `
     ftAtt: Int!
     ftMade: Int!
     offReb: Int!
-    defReb: Int!
+    rebounds: Int!
     assists: Int!
     steals: Int!
     blocks: Int!
@@ -26,7 +26,7 @@ const typeDefs = `
     ftAtt: Int
     ftMade: Int
     offReb: Int
-    defReb: Int
+    rebounds: Int
     assists: Int
     steals: Int
     blocks: Int

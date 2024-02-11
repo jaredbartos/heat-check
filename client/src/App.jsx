@@ -11,6 +11,7 @@ import './App.css'
 import store from './utils/globalState/store';
 import { Provider } from 'react-redux';
 import { Outlet } from 'react-router-dom';
+import Header from './components/Header';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -36,6 +37,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Provider store={store}>
+        <Header />
         <Outlet />
       </Provider>     
     </ApolloProvider>

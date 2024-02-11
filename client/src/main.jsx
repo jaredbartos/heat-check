@@ -7,7 +7,8 @@ import App from './App.jsx'
 import Home from './pages/Home.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import SignupPage from './pages/SignupPage.jsx';
-import Dashboard from './pages/Dashboard.jsx';
+import MyTeams from './pages/MyTeams.jsx';
+import SinglePlayer from './pages/SinglePlayer.jsx';
 
 const router = createBrowserRouter([
   {
@@ -27,8 +28,12 @@ const router = createBrowserRouter([
         element: <SignupPage />
       },
       {
-        path: '/dashboard',
-        element: <Dashboard />
+        path: '/myteams',
+        element: <MyTeams />
+      },
+      {
+        path: '/player/:id',
+        element: <SinglePlayer />
       }
     ]
   }

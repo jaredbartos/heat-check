@@ -4,7 +4,7 @@ import { LOGIN } from '../utils/mutations';
 import Auth from '../utils/auth';
 import LoginForm from '../components/LoginForm';
 
-export default function LoginPage () {
+export default function LoginPage() {
   const [formState, setFormState] = useState({
     email: '',
     password: ''

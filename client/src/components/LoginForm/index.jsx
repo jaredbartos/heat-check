@@ -1,4 +1,4 @@
-export default function LoginForm (props) {
+export default function LoginForm(props) {
   return (
     <form onSubmit={props.handleFormSubmit}>
       <label htmlFor="email">

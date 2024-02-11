@@ -1,17 +1,18 @@
-export default function TeamCard ({ players, teamName, league }) {
-  const playerItems = players.map((player) => {
+import { Link } from 'react-router-dom';
+
+export default function TeamCard({ players, teamName, league }) {
+  const playerLinks = players.map((player) => {
     return (
-      <li key={player._id}>{player.firstName} {player.lastName} {player.position}</li>
+      <Link key={player._id} to={`/player/${player._id}`}>{player.firstName} {player.lastName} {player.position}<br /></Link>
     )
   });
 
   return (
     <>
-      <h3>{teamName}</h3>
-      <p>{league}</p>
+      <h3>{teamName} ({league})</h3>
       <h4>Players</h4>
       <ul>
-        {playerItems}
+        {playerLinks}
       </ul>
     </>
   );

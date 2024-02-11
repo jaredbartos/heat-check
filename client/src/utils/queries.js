@@ -36,3 +36,39 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+export const QUERY_SINGLE_PLAYER = gql`
+  query getSinglePlayer($id: ID!) {
+    player(_id: $id) {
+      _id
+      firstName
+      lastName
+      position
+      number
+      height
+      weight
+      team {
+        _id
+        name
+        league
+      }
+      performances {
+        _id
+        fgAtt
+        fgMade
+        threePtAtt
+        threePtMade
+        ftAtt
+        ftMade
+        offReb
+        rebounds
+        assists
+        steals
+        blocks
+        turnovers
+        points
+        date
+      }
+    }
+  }
+`;

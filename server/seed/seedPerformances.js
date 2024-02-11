@@ -13,8 +13,9 @@ const randomizePerformances = () => {
     fgMade += threePtMade;
     const ftAtt = Math.floor(Math.random() * 11);
     const ftMade = Math.floor(ftAtt * Math.random());
-    const offReb = Math.floor(Math.random() * 9);
-    const rebounds = Math.floor(Math.random() * 13);
+    const offReb = Math.floor(Math.random() * 7);
+    let rebounds = Math.floor(Math.random() * 11);
+    rebounds =+ offReb;
     const assists = Math.floor(Math.random() * 13);
     const steals = Math.floor(Math.random() * 6);
     const blocks = Math.floor(Math.random() * 6);

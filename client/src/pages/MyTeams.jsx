@@ -2,17 +2,14 @@ import { QUERY_ME } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 import TeamCard from '../components/TeamCard';
 
-export default function Dashboard () {
-  // const [teams, setTeams] = useState([]);
+export default function MyTeams() {
   const { loading, data, error } = useQuery(QUERY_ME);
   const teams = data?.me.teams;
 
   return (
     <>
-      <h2>Dashboard</h2>
+      <h2>My Teams</h2>
       <div>
-        <h3>My Teams</h3>
-        {loading &&  <p>Loading...</p>}
         {
           teams
           ?
