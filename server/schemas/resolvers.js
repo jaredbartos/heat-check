@@ -127,7 +127,7 @@ const resolvers = {
       return team;
     },
     login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ email }).populate('teams');
 
       if (!user) {
         throw AuthenticationError;
