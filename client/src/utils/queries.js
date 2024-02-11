@@ -17,3 +17,22 @@ export const QUERY_TEAMS = gql`
   }
 `;
 
+export const QUERY_ME = gql`
+  query me {
+    me {
+      _id
+      username
+      teams {
+        _id
+        name
+        league
+        players {
+          _id
+          firstName
+          lastName
+          position
+        }
+      }
+    }
+  }
+`;

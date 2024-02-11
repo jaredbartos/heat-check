@@ -14,7 +14,7 @@ export default function SignupPage () {
 
   // Handler function for onChange behavior
   const handleInputChange = (e) => {
-    // Declare variables for values based on target of click
+    // Declare variables for values based on target
     const { name, value } = e.target;
     setFormState({
       ...formState,
