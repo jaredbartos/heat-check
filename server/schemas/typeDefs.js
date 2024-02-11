@@ -84,7 +84,7 @@ const typeDefs = `
     player(_id: ID!): Player
     performances: [Performance]
     performance(_id: ID!): Performance
-    user: User
+    me: User
   }
 
   type Mutation {

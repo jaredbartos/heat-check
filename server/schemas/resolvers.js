@@ -41,6 +41,14 @@ const resolvers = {
       }
 
       return performance;
+    },
+    me: async (parent, args, context) => {
+      if (context.user) {
+        const user = await User.findById(context.user._id);
+        return user;
+      }
+
+      throw new Error('You need to be logged in!');
     }
   },
   Mutation: {
