@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { formatDate } = require('../utils/getters');
 
 const { Schema } = mongoose;
 
@@ -88,7 +87,6 @@ const performanceSchema = new Schema(
     },
     date: {
       type: Date,
-      get: formatDate
     },
   },
   {

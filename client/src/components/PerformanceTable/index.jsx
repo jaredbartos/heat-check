@@ -1,8 +1,13 @@
+import { formatDate } from '../../utils/dates';
+
 export default function PerformanceTable({ player }) {
-  const performanceList = player.performances.map((performance) => {
+  // Create copy of performance array and sort it by date
+  const performancesCopy = [...player.performances];
+  const sortedPerformances = performancesCopy.sort((a, b) => Number(b.date) - Number(a.date));
+  const performanceList = sortedPerformances.map((performance) => {
     return (
       <tr key={performance._id}>
-        <td>{performance.date}</td>
+        <td>{formatDate(Number(performance.date))}</td>
         <td>{performance.fgAtt}</td>
         <td>{performance.fgMade}</td>
         <td>{performance.threePtAtt}</td>
