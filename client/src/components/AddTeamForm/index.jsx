@@ -12,21 +12,27 @@ export default function AddTeamForm(props) {
         id="newTeamNameInput"
         type="text"
         name="newTeamName"
+        onChange={props.handleInputChange}
         value={props.newTeamName}
       />
       <label htmlFor="newTeamLeagueOption">
         League: 
       </label>
-      <select value={props.newTeamLeague} name="newTeamLeague">
+      <select
+        onChange={props.handleInputChange}
+        value={props.newTeamLeague}
+        name="newTeamLeague"
+      >
         {leagueOptions}
         <option value="None">None</option>
-        <options value="Enter New League Name">Enter New League Name</options>
+        <option value="Enter New League Name">Enter New League Name</option>
       </select>
       {
         (props.newTeamLeague === 'Enter New League Name')
         &&
         <input
           id="customTeamLeagueInput"
+          onChange={props.handleInputChange}
           type="text"
           name="customTeamLeague"
           value={props.customTeamLeague}

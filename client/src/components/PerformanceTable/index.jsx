@@ -7,7 +7,7 @@ export default function PerformanceTable({ player }) {
   const performanceList = sortedPerformances.map((performance) => {
     return (
       <tr key={performance._id}>
-        <td>{formatDate(Number(performance.date))}</td>
+        <td>{formatDate(performance.date)}</td>
         <td>{performance.fgAtt}</td>
         <td>{performance.fgMade}</td>
         <td>{performance.threePtAtt}</td>

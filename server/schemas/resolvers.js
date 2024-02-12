@@ -47,7 +47,7 @@ const resolvers = {
         const user = await User.findById(context.user._id).populate({
           path: 'teams',
           populate: { path: 'players' }
-        });
+        }).populate('players');
         return user;
       }
 

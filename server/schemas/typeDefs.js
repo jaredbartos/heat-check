@@ -70,6 +70,7 @@ const typeDefs = `
     username: String!
     email: String!
     teams: [Team]
+    players: [Player]
   }
 
   type Auth {
