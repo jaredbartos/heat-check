@@ -1,37 +1,37 @@
 export default function SignupForm(props) {
   return (
     <form onSubmit={props.handleFormSubmit}>
-      <label htmlFor="username">
+      <label htmlFor="newUsernameInput">
         Username: 
       </label>
       <input
-        id="usernameInput"
+        id="newUsernameInput"
         name="username"
         type="text"
         value={props.username}
         onChange={props.handleInputChange}
       />
-      <label htmlFor="email">
+      <label htmlFor="newEmailInput">
         Email: 
       </label>
       <input
-        id="emailInput"
+        id="newEmailInput"
         name="email"
         type="email"
         value={props.email}
         onChange={props.handleInputChange}
       />
-      <label htmlFor="password">
+      <label htmlFor="newPasswordInput">
         Password: 
       </label>
       <input
-        id="passwordInput"
+        id="newPasswordInput"
         type="password"
         name="password"
         value={props.password}
         onChange={props.handleInputChange}
       />
-      <button type="submit" id="loginBtn">Submit</button>
+      <button type="submit" id="signUpBtn">Sign Up</button>
     </form>
   )
 }

@@ -1,7 +1,7 @@
 export default function LoginForm(props) {
   return (
     <form onSubmit={props.handleFormSubmit}>
-      <label htmlFor="email">
+      <label htmlFor="emailInput">
         Email: 
       </label>
       <input
@@ -11,7 +11,7 @@ export default function LoginForm(props) {
         value={props.email}
         onChange={props.handleInputChange}
       />
-      <label htmlFor="password">
+      <label htmlFor="passwordInput">
         Password: 
       </label>
       <input
@@ -21,7 +21,7 @@ export default function LoginForm(props) {
         value={props.password}
         onChange={props.handleInputChange}
       />
-      <button type="submit" id="loginBtn">Submit</button>
+      <button type="submit" id="loginBtn">Login</button>
     </form>
-  )
+  );
 }
