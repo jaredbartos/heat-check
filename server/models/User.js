@@ -26,6 +26,12 @@ const userSchema = new Schema(
         ref: 'Team'
       }
     ],
+    players: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Player'
+      }
+    ]
   },
   {
     timestamps: true
