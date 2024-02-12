@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { formatHeight } = require('../utils/getters');
 
 const { Schema } = mongoose;
 
@@ -24,6 +25,7 @@ const playerSchema = new Schema(
     },
     height: {
       type: Number,
+      get: formatHeight
     },
     weight: {
       type: Number
@@ -40,6 +42,9 @@ const playerSchema = new Schema(
     ],
   },
   {
+    toJSON: {
+      getters: true
+    },
     timestamps: true
   }
 );

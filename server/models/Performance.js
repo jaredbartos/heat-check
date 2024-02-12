@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { formatDate } = require('../utils/getters');
 
 const { Schema } = mongoose;
 
@@ -86,10 +87,14 @@ const performanceSchema = new Schema(
       required: true
     },
     date: {
-      type: Date
+      type: Date,
+      get: formatDate
     },
   },
   {
+    toJSON: {
+      getters: true
+    },
     timestamps: true
   }
 );

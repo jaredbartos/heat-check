@@ -7,8 +7,9 @@ import App from './App.jsx'
 import Home from './pages/Home.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import SignupPage from './pages/SignupPage.jsx';
-import MyTeams from './pages/MyTeams.jsx';
+import Dashboard from './pages/Dashboard.jsx';
 import SinglePlayer from './pages/SinglePlayer.jsx';
+import TeamsPage from './pages/TeamsPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -28,12 +29,16 @@ const router = createBrowserRouter([
         element: <SignupPage />
       },
       {
-        path: '/myteams',
-        element: <MyTeams />
+        path: '/dashboard',
+        element: <Dashboard />
       },
       {
         path: '/player/:id',
         element: <SinglePlayer />
+      },
+      {
+        path: '/teams',
+        element: <TeamsPage />
       }
     ]
   }

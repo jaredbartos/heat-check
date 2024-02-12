@@ -6,11 +6,12 @@ export default function Nav() {
     <>
       <nav>
         <Link to="/">Home</Link>
+        <Link to="/teams">Teams</Link>
         {
           Auth.loggedIn()
           ?
           <div>
-            <Link to="/myteams">My Teams</Link>
+            <Link to="/dashboard">Your Dashboard</Link>
             <a href="/" id="logout" onClick={() => Auth.logout()}>Logout</a>
           </div>
 

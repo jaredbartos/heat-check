@@ -42,7 +42,7 @@ const typeDefs = `
     lastName: String
     position: String!
     number: Int
-    height: Int
+    height: String
     weight: Int
     team: Team
     performances: [Performance]
@@ -53,7 +53,7 @@ const typeDefs = `
     lastName: String
     position: String
     number: Int
-    height: Int
+    height: String
     weight: Int
     team: ID
   }

@@ -31,7 +31,15 @@ export const QUERY_ME = gql`
           firstName
           lastName
           position
+          number
         }
+      }
+      players {
+        _id
+        firstName
+        lastName
+        position
+        number
       }
     }
   }

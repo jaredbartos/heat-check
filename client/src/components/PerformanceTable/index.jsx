@@ -1,6 +1,4 @@
 export default function PerformanceTable({ player }) {
-  const performancesCopy = [...player.performances];
-  const sortedPerformances = performancesCopy.sort((a, b) => b.date - a.date);
   const performanceList = player.performances.map((performance) => {
     return (
       <tr key={performance._id}>
