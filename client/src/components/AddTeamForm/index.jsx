@@ -4,7 +4,7 @@ export default function AddTeamForm(props) {
   );
 
   return (
-    <form>
+    <form onSubmit={props.handleSubmit}>
       <label htmlFor="newTeamNameInput">
         Name: 
       </label>
@@ -24,7 +24,7 @@ export default function AddTeamForm(props) {
         name="newTeamLeague"
       >
         {leagueOptions}
-        <option value="None">None</option>
+        <option value="Independent">Independent</option>
         <option value="Enter New League Name">Enter New League Name</option>
       </select>
       {

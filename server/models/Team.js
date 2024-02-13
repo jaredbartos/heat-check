@@ -9,7 +9,8 @@ const teamSchema = new Schema(
       required: true
     },
     league: {
-      type: String
+      type: String,
+      required: true
     },
     players: [
       {

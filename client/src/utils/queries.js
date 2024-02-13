@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_TEAMS = gql`
+export const GET_TEAMS = gql`
   query getTeams {
     teams {
       _id
@@ -17,7 +17,7 @@ export const QUERY_TEAMS = gql`
   }
 `;
 
-export const QUERY_ME = gql`
+export const GET_ME = gql`
   query me {
     me {
       _id
@@ -45,7 +45,7 @@ export const QUERY_ME = gql`
   }
 `;
 
-export const QUERY_SINGLE_PLAYER = gql`
+export const GET_SINGLE_PLAYER = gql`
   query getSinglePlayer($id: ID!) {
     player(_id: $id) {
       _id

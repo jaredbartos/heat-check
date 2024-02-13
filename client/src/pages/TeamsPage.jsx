@@ -1,5 +1,6 @@
-import { QUERY_TEAMS } from '../utils/queries';
-import { useQuery } from '@apollo/client';
+import { GET_TEAMS } from '../utils/queries';
+import { ADD_TEAM } from '../utils/mutations';
+import { useQuery, useMutation } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import TeamCard from '../components/TeamCard';
 import AddTeamForm from '../components/AddTeamForm';
@@ -8,7 +9,13 @@ import { Link } from 'react-router-dom';
 
 export default function TeamsPage() {
   // Query all teams from database
-  const { loading, data, error } = useQuery(QUERY_TEAMS);
+  const { loading, data, error } = useQuery(GET_TEAMS);
+  const [addTeam] = useMutation(ADD_TEAM, {
+    refetchQueries: [
+      GET_TEAMS,
+      'getTeams'
+    ]
+  });
   // Declare state variables for holding the teams and form values
   const [teams, setTeams] = useState([]);
   const [leagues, setLeagues] = useState([]);
@@ -27,7 +34,7 @@ export default function TeamsPage() {
       let teamLeagues = [];
       for (let i = 0; i < data.teams.length; i++) {
         const currentTeamLeague = data.teams[i].league;
-        if (!teamLeagues.includes(currentTeamLeague)) {
+        if (!teamLeagues.includes(currentTeamLeague) && currentTeamLeague !== 'Independent') {
           teamLeagues.push(currentTeamLeague);
         }
       }
@@ -44,6 +51,28 @@ export default function TeamsPage() {
       ...formState,
       [name]: value
     });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const name = formState.newTeamName;
+    // Set league as newTeamLeague value unless user chose to add custom name
+    const league = formState.newTeamLeague !== 'Enter New League Name'
+      ?
+      formState.newTeamLeague
+      :
+      formState.customTeamLeague;
+    const { error } = await addTeam({
+      variables: { name, league }
+    });
+
+    setFormState({
+      newTeamName: '',
+      newTeamLeague: '',
+      customTeamLeague: ''
+    });
+
+    console.log(error);
   };
 
   return (
@@ -69,6 +98,7 @@ export default function TeamsPage() {
           newTeamLeague={formState.newTeamLeague}
           customTeamLeague={formState.customTeamLeague}
           handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
         />
       }
       {

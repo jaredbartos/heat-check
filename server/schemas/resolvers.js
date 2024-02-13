@@ -4,7 +4,7 @@ const { AuthenticationError, signToken } = require('../utils/auth');
 const resolvers = {
   Query: {
     teams: async () => {
-      return await Team.find().populate('players');
+      return await Team.find().populate('players').sort({ createdAt: -1 });
     },
     team: async (parent, { _id }) => {
       const team = await Team.findById(_id).populate('players');
@@ -85,15 +85,9 @@ const resolvers = {
 
       return player;
     },
-    addTeam: async (parent, args) => {
+    addTeam: async (parent, args, context) => {
       if (context.user) {
-        const team = await Team.create(args);
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { teams: team._id } }
-        );
-
-        return team;
+        return await Team.create(args);
       }
 
       throw new Error('You need to be logged in!');

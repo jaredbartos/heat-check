@@ -1,11 +1,11 @@
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
-import { QUERY_SINGLE_PLAYER } from "../utils/queries";
+import { GET_SINGLE_PLAYER } from "../utils/queries";
 import PerformanceTable from "../components/PerformanceTable";
 
 export default function SinglePlayer() {
   const { id } = useParams();
-  const { loading, data, error } = useQuery(QUERY_SINGLE_PLAYER, {
+  const { loading, data, error } = useQuery(GET_SINGLE_PLAYER, {
     variables: { id }
   });
   const player = data?.player;
