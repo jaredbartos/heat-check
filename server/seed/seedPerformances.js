@@ -4,7 +4,7 @@ const db = require('../config/connection');
 const randomizePerformances = () => {
   let performances = [];
 
-  for (let i = 1; i <= 10; i++) {
+  for (let i = 1; i <= 20; i++) {
     const threePtAtt = Math.floor(Math.random() * 11);
     const threePtMade = Math.floor(threePtAtt * Math.random());
     let fgAtt = Math.floor(Math.random() * 15);
@@ -21,6 +21,8 @@ const randomizePerformances = () => {
     const blocks = Math.floor(Math.random() * 6);
     const turnovers = Math.floor(Math.random() * 7);
     const points = (threePtMade * 3) + ((fgMade - threePtMade) * 2) + ftMade;
+    // Create random date in between now and 11/1/2023
+    const date = (Math.floor(Math.random() * (Date.now() - 1698840699000))) + 1698840699000;
   
     const performance = {
       fgAtt,
@@ -36,7 +38,7 @@ const randomizePerformances = () => {
       blocks,
       turnovers,
       points,
-      date: Date.now()
+      date
     };
   
     performances.push(performance);
