@@ -96,6 +96,7 @@ const resolvers = {
         return player;
       }
 
+      throw new Error('You need to be logged in!');
     },
     addTeam: async (parent, args, context) => {
       if (context.user) {

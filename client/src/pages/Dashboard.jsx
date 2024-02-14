@@ -7,7 +7,6 @@ export default function Dashboard() {
   const { loading, data, error } = useQuery(GET_ME);
   const [teams, setTeams] = useState([]);
   const [players, setPlayers] = useState([]);
-  // const teams = data?.me.teams;
 
   useEffect(() => {
     if (data) {

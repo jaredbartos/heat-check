@@ -40,3 +40,13 @@ export const ADD_TEAM = gql`
     }
   }
 `;
+
+export const ADD_PLAYER = gql`
+  mutation addPlayer($input: PlayerInput) {
+    addPlayer(input: $input) {
+      _id
+      firstName
+      lastName
+    }
+  }
+`;

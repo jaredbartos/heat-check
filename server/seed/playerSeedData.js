@@ -46,8 +46,11 @@ for (let i = 1; i <= 60; i++) {
   const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
   const position = positions[Math.floor(Math.random() * positions.length)];
   const number = Math.floor(Math.random() * 100);
-  const height = Math.floor(Math.random() * 15) + 66;
-  const weight = Math.floor(height * 2.5);
+  const heightNum = Math.floor(Math.random() * 15) + 66;
+  const feet = Math.floor(heightNum / 12);
+  const inches = heightNum % 12;
+  const height = `${feet}'${inches}"`
+  const weight = Math.floor(heightNum * 2.5);
 
   playerSeedData.push({
     firstName,

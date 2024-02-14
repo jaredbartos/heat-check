@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { GET_SINGLE_TEAM } from '../utils/queries';
-import { useQuery } from '@apollo/client';
+import { ADD_PLAYER } from '../utils/mutations';
+import { useQuery, useMutation } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import PlayersTable from '../components/PlayersTable';
 import Auth from '../utils/auth';
@@ -15,14 +16,20 @@ export default function SingleTeam() {
     firstName: '',
     lastName: '',
     number: '',
-    position: '',
+    position: 'Guard',
     height: {
       feet: '',
       inches: ''
     },
     weight: ''
-  })
-  const { loading, data, error } = useQuery(GET_SINGLE_TEAM, {
+  });
+  const [addPlayer] = useMutation(ADD_PLAYER, {
+    refetchQueries: [
+      GET_SINGLE_TEAM,
+      'getSingleTeam'
+    ]
+  });
+  const { loading, data } = useQuery(GET_SINGLE_TEAM, {
     variables: { id }
   });
 
@@ -50,7 +57,43 @@ export default function SingleTeam() {
         }
       });
     }
+  };
 
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    // Format height to string for database entry
+    const { feet, inches } = formState.height;
+    const height = `${feet}'${inches}"`;
+    try {
+      const input = {
+        ...formState,
+        number: Number(formState.number),
+        weight: Number(formState.weight),
+        height,
+        team: team._id
+      };
+      await addPlayer({
+        variables: {
+            input
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
+
+    setFormState({
+      firstName: '',
+      lastName: '',
+      number: '',
+      position: '',
+      height: {
+        feet: '',
+        inches: ''
+      },
+      weight: ''
+    });
+
+    setFormVisible(false);
   };
 
   if (loading) {
@@ -88,6 +131,7 @@ export default function SingleTeam() {
               height={formState.height}
               weight={formState.weight}
               handleInputChange={handleInputChange}
+              handleFormSubmit={handleFormSubmit}
             />
           }
           <PlayersTable team={team} />

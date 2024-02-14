@@ -1,6 +1,6 @@
 export default function AddPlayerForm(props) {
   return (
-    <form>
+    <form onSubmit={props.handleFormSubmit}>
       <label htmlFor="firstNameInput">
         First Name: 
       </label>
