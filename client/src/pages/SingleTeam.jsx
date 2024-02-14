@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import PlayersTable from '../components/PlayersTable';
 import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
-import AddPlayerForm from '../components/AddPlayerForm';
+import PlayerForm from '../components/PlayerForm';
 
 export default function SingleTeam() {
   const { id } = useParams();
@@ -123,7 +123,7 @@ export default function SingleTeam() {
           {
             formVisible
             &&
-            <AddPlayerForm
+            <PlayerForm
               firstName={formState.firstName}
               lastName={formState.lastName}
               number={formState.number}

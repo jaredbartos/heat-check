@@ -1,4 +1,4 @@
-export default function AddTeamForm(props) {
+export default function TeamForm(props) {
   const leagueOptions = props.leagues.map((league, index) => 
     <option key={index} value={league}>{league}</option>
   );

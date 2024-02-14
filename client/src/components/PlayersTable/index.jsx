@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function PlayersTable({ team }) {
   const playersCopy = [...team.players];
   const sortedPlayers = playersCopy.sort((a, b) => a.number - b.number);
@@ -5,7 +7,7 @@ export default function PlayersTable({ team }) {
     return (
       <tr key={player._id}>
         <td>{player.number}</td>
-        <td>{`${player.firstName} ${player.lastName}`}</td>
+        <td><Link to={`/player/${player._id}`}>{`${player.firstName} ${player.lastName}`}</Link></td>
         <td>{player.position}</td>
         <td>{player.height}</td>
         <td>{player.weight}</td>

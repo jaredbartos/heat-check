@@ -79,6 +79,7 @@ const performanceSchema = new Schema(
     points: {
       type: Number,
       required: true,
+      default: 0
     },
     player: {
       type: Schema.Types.ObjectId,
@@ -87,6 +88,7 @@ const performanceSchema = new Schema(
     },
     date: {
       type: Date,
+      set: (timestamp) => new Date(timestamp)
     },
   },
   {

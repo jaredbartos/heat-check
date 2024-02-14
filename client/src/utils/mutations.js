@@ -50,3 +50,14 @@ export const ADD_PLAYER = gql`
     }
   }
 `;
+
+export const ADD_PERFORMANCE = gql`
+  mutation addPerformance($input: PerformanceInput) {
+    addPerformance(input: $input) {
+      _id
+      player
+      points
+      date
+    }
+  }
+`;

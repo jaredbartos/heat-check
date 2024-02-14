@@ -3,7 +3,7 @@ import { ADD_TEAM } from '../utils/mutations';
 import { useQuery, useMutation } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import TeamCard from '../components/TeamCard';
-import AddTeamForm from '../components/AddTeamForm';
+import TeamForm from '../components/TeamForm';
 import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
 
@@ -92,7 +92,7 @@ export default function TeamsPage() {
       {
         formVisible
         &&
-        <AddTeamForm
+        <TeamForm
           leagues={leagues}
           newTeamName={formState.newTeamName}
           newTeamLeague={formState.newTeamLeague}
