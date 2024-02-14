@@ -72,7 +72,7 @@ export default function TeamsPage() {
       customTeamLeague: ''
     });
 
-    console.log(error);
+    setFormVisible(false);
   };
 
   return (
@@ -107,6 +107,7 @@ export default function TeamsPage() {
         teams.map(team => 
           <TeamCard
             key={team._id}
+            teamId={team._id}
             players={team.players}
             teamName={team.name}
             league={team.league}

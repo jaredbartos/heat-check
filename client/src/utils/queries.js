@@ -17,6 +17,25 @@ export const GET_TEAMS = gql`
   }
 `;
 
+export const GET_SINGLE_TEAM = gql`
+  query getSingleTeam($id: ID!) {
+    team(_id: $id) {
+      _id
+      name
+      league
+      players {
+        _id
+        firstName
+        lastName
+        position
+        number
+        height
+        weight
+      }
+    }
+  }
+`;
+
 export const GET_ME = gql`
   query me {
     me {

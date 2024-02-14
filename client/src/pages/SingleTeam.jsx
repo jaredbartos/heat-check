@@ -1,0 +1,99 @@
+import { useParams } from 'react-router-dom';
+import { GET_SINGLE_TEAM } from '../utils/queries';
+import { useQuery } from '@apollo/client';
+import { useState, useEffect } from 'react';
+import PlayersTable from '../components/PlayersTable';
+import Auth from '../utils/auth';
+import { Link } from 'react-router-dom';
+import AddPlayerForm from '../components/AddPlayerForm';
+
+export default function SingleTeam() {
+  const { id } = useParams();
+  const [team, setTeam] = useState();
+  const [formVisible, setFormVisible] = useState(false)
+  const [formState, setFormState] = useState({
+    firstName: '',
+    lastName: '',
+    number: 23,
+    position: '',
+    height: {
+      feet: 5,
+      inches: 9
+    },
+    weight: 160
+  })
+  const { loading, data, error } = useQuery(GET_SINGLE_TEAM, {
+    variables: { id }
+  });
+
+  // Set useEffect to set team value to prepare
+  // for future retrieval from indexedDB for PWA
+  useEffect(() => {
+    if (data) {
+      setTeam(data.team);
+    }
+  }, [data, setTeam]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name != 'feet' && name != 'inches') {
+      setFormState({
+        ...formState,
+        [name]: value
+      });
+    } else {
+      setFormState({
+        ...formState,
+        height: {
+          ...formState.height,
+          [name]: value
+        }
+      });
+    }
+
+  };
+
+  if (loading) {
+    return <h3>Loading...</h3>
+  }
+
+  return (
+    <>
+      {
+        team
+        &&
+        <>
+          <h2>{team.name} ({team.league})</h2>
+          <h3>Players</h3>
+          {
+            Auth.loggedIn()
+            ?
+            <button
+              type="button"
+              onClick={() => setFormVisible(true)}
+            >
+              Add Player
+            </button>
+            :
+            <p><Link to="/login">Login</Link> or <Link to="/signup">create an account</Link> to add a new player!</p>
+          }
+          {
+            formVisible
+            &&
+            <AddPlayerForm
+              firstName={formState.firstName}
+              lastName={formState.lastName}
+              number={formState.number}
+              position={formState.position}
+              height={formState.height}
+              weight={formState.weight}
+              handleInputChange={handleInputChange}
+            />
+          }
+          <PlayersTable team={team} />
+        </>
+      }
+      
+    </>
+  );
+}

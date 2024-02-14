@@ -10,6 +10,7 @@ import SignupPage from './pages/SignupPage.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import SinglePlayer from './pages/SinglePlayer.jsx';
 import TeamsPage from './pages/TeamsPage.jsx';
+import SingleTeam from './pages/SingleTeam.jsx';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: '/teams',
         element: <TeamsPage />
+      },
+      {
+        path: '/team/:id',
+        element: <SingleTeam />
       }
     ]
   }

@@ -70,24 +70,43 @@ const resolvers = {
 
       return performance;
     },
-    addPlayer: async (parent, { input }) => {
-      const player = await Player.create(input);
+    addPlayer: async (parent, { input }, context) => {
+      if (context.user) {
+        const player = await Player.create(input);
 
-      const updatedTeam = await Team.findOneAndUpdate(
-        { _id: input.team },
-        { $addToSet: { players: player._id } },
-        { new: true }
-      );
+        const updatedTeam = await Team.findOneAndUpdate(
+          { _id: input.team },
+          { $addToSet: { players: player._id } },
+          { new: true }
+        );
+        
+        if (!updatedTeam) {
+          throw new Error('Something went wrong adding player to the team');
+        }
 
-      if (!updatedTeam) {
-        throw new Error('Something went wrong adding player to the team');
+        const updatedUser = await User.findOneAndUpdate(
+          { email: context.user.email },
+          { $addToSet: { players: player._id } }
+        );
+
+        if (!updatedUser) {
+          throw new Error('Something went wrong adding player to the user');
+        }
+
+        return player;
       }
 
-      return player;
     },
     addTeam: async (parent, args, context) => {
       if (context.user) {
-        return await Team.create(args);
+        const team = await Team.create(args);
+        await User.findOneAndUpdate(
+          { email: context.user.email },
+          { $addToSet: { teams: team._id } },
+          { new: true }
+        );
+
+        return team;
       }
 
       throw new Error('You need to be logged in!');

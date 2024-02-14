@@ -47,8 +47,7 @@ export default function PerformanceTable({ player }) {
       </thead>
       <tbody>
         {performanceList}
-      </tbody>
-     
+      </tbody>    
     </table>
   );
 }
