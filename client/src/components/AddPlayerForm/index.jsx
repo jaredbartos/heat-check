@@ -57,7 +57,8 @@ export default function AddPlayerForm(props) {
         name="feet"
         onChange={props.handleInputChange}
         value={props.height.feet}
-      />
+      ></input>
+      feet 
       <input
         id="inchesInput"
         type="number"
@@ -67,6 +68,7 @@ export default function AddPlayerForm(props) {
         onChange={props.handleInputChange}
         value={props.height.inches}
       />
+      inches 
       <label htmlFor="weightInput">
         Weight: 
       </label>

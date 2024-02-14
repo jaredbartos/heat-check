@@ -14,13 +14,13 @@ export default function SingleTeam() {
   const [formState, setFormState] = useState({
     firstName: '',
     lastName: '',
-    number: 23,
+    number: '',
     position: '',
     height: {
-      feet: 5,
-      inches: 9
+      feet: '',
+      inches: ''
     },
-    weight: 160
+    weight: ''
   })
   const { loading, data, error } = useQuery(GET_SINGLE_TEAM, {
     variables: { id }
