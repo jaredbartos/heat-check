@@ -55,7 +55,28 @@ export const ADD_PERFORMANCE = gql`
   mutation addPerformance($input: PerformanceInput) {
     addPerformance(input: $input) {
       _id
-      player
+      points
+      date
+    }
+  }
+`;
+
+export const UPDATE_PERFORMANCE = gql`
+  mutation updatePerformance($_id: ID, $input: PerformanceInput) {
+    updatePerformance(_id: $_id, input: $input) {
+      _id
+      fgAtt
+      fgMade
+      threePtAtt
+      threePtMade
+      ftAtt
+      ftMade
+      offReb
+      rebounds
+      assists
+      steals
+      blocks
+      turnovers
       points
       date
     }

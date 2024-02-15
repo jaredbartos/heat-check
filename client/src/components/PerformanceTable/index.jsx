@@ -1,8 +1,65 @@
-import { formatDate } from '../../utils/dates';
+import { formatDate, formatEditDate } from '../../utils/dates';
+import { UPDATE_PERFORMANCE } from '../../utils/mutations';
+import { GET_SINGLE_PLAYER } from '../../utils/queries';
+import PerformanceForm from '../PerformanceForm';
+import { useState } from 'react';
+import { useMutation } from '@apollo/client';
 
-export default function PerformanceTable({ player }) {
+export default function PerformanceTable(props) {
+  const [formVisible, setFormVisible] = useState(false)
+  const [updatePerformance] = useMutation(UPDATE_PERFORMANCE, {
+    refetchQueries: [
+      GET_SINGLE_PLAYER,
+      'getSinglePlayer'
+    ]
+  });
+
+  const handleEditClick = (e, performance) => {
+    e.preventDefault();
+
+    props.setFormState({
+      _id: performance._id,
+      date: formatEditDate(performance.date),
+      fgAtt: performance.fgAtt,
+      fgMade: performance.fgMade,
+      threePtAtt: performance.threePtAtt,
+      threePtMade: performance.threePtMade,
+      ftAtt: performance.ftAtt,
+      ftMade: performance.ftMade,
+      offReb: performance.offReb,
+      rebounds: performance.rebounds,
+      assists: performance.assists,
+      steals: performance.steals,
+      blocks: performance.blocks,
+      turnovers: performance.turnovers,
+      points: performance.points
+    });
+
+    setFormVisible(true);
+  }
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    const { _id, ...input } = props.formState;
+    const date = new Date(input.date);
+    console.log(_id);
+    try {
+      await updatePerformance({
+        variables: {
+          _id,
+          input: {
+            ...input,
+            date
+          }
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   // Create copy of performance array and sort it by date
-  const performancesCopy = [...player.performances];
+  const performancesCopy = [...props.player.performances];
   const sortedPerformances = performancesCopy.sort((a, b) => Number(b.date) - Number(a.date));
   const performanceList = sortedPerformances.map((performance) => {
     return (
@@ -21,11 +78,21 @@ export default function PerformanceTable({ player }) {
         <td>{performance.blocks}</td>
         <td>{performance.turnovers}</td>
         <td>{performance.points}</td>
+        <td>
+          <button
+            type="button"
+            className="editPerformanceBtn"
+            onClick={(e) => handleEditClick(e, performance)}
+          >
+            Edit
+          </button>
+        </td>
       </tr>
     );
   })
 
   return (
+    <>
     <table>
       <thead>
         <tr>
@@ -49,5 +116,16 @@ export default function PerformanceTable({ player }) {
         {performanceList}
       </tbody>    
     </table>
+    {
+      formVisible
+      &&
+      <PerformanceForm
+        handleInputChange={props.handleInputChange}
+        handleFormSubmit={handleFormSubmit}
+        formState={props.formState}
+        action='update'
+      />
+    }
+    </>
   );
 }

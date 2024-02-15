@@ -18,10 +18,11 @@ export default function SinglePlayer() {
       GET_SINGLE_PLAYER,
       'getSinglePlayer'
     ]
-  })
+  });
   const [player, setPlayer] = useState();
-  const [formVisible, setFormVisible] = useState(false);
-  const [formState, setFormState] = useState({
+  const [createFormVisible, setCreateFormVisible] = useState(false);
+  const [perfFormState, setPerfFormState] = useState({
+    _id: '',
     date: '',
     fgAtt: '',
     fgMade: '',
@@ -51,28 +52,28 @@ export default function SinglePlayer() {
     // When setting formState
     // if any key other than date is being updated, convert value to number type
     // for submission to database
-    setFormState(
+    setPerfFormState(
       name != 'date' ?
       {
-        ...formState,
+        ...perfFormState,
         [name]: Number(value)
       } :
       {
-        ...formState,
+        ...perfFormState,
         [name]: value
       }
     );
   };
 
   const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    const date = new Date(formState.date);
-
+    e.preventDefault();    
+    const { _id, ...input } = perfFormState;
+    const date = new Date(input.date);
     try {
       await addPerformance({
         variables: {
           input: {
-            ...formState,
+            ...input,
             date,
             player: player._id
           }
@@ -105,7 +106,7 @@ export default function SinglePlayer() {
             ?
             <button
               type="button"
-              onClick={() => setFormVisible(true)}
+              onClick={() => setCreateFormVisible(true)}
             >
               Add Game Entry
             </button>
@@ -113,15 +114,21 @@ export default function SinglePlayer() {
             <p><Link to="/login">Login</Link> or <Link to="/signup">create an account</Link> to add a new game to this player!</p>
           }
           {
-            formVisible
+            createFormVisible
             &&
             <PerformanceForm
-              formState={formState}
+              formState={perfFormState}
               handleInputChange={handleInputChange}
               handleFormSubmit={handleFormSubmit}
+              action='create'
             />
           }
-          <PerformanceTable player={player} />
+          <PerformanceTable
+            player={player}
+            formState={perfFormState}
+            setFormState={setPerfFormState}
+            handleInputChange={handleInputChange}
+          />
         </>     
       }      
     </>

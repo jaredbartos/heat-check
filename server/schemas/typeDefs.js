@@ -96,7 +96,7 @@ const typeDefs = `
   type Mutation {
     addPerformance(input: PerformanceInput): Performance
     addPlayer(input: PlayerInput): Player
-    addTeam(name: String!, league: String!): Team
+    addTeam(name: String!, league: String!, createdBy: ID!): Team
     updatePerformance(_id: ID, input: PerformanceInput): Performance
     updatePlayer(_id: ID, input: PlayerInput): Player
     updateTeam(_id: ID, name: String, league: String): Team

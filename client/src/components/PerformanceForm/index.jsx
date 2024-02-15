@@ -220,7 +220,13 @@ export default function PerformanceForm(props) {
           </tr>
         </tbody>
       </table>
-      <button type="submit" id="submitNewPerformanceBtn">Add Game</button>
+      {
+        props.action === 'create'
+        ?
+        <button type="submit" id="submitNewPerformanceBtn">Add Game</button>
+        :
+        <button type="submit" id="updatePerformanceBtn">Update Game</button>
+      }      
     </form>
   );
 }

@@ -70,7 +70,7 @@ const resolvers = {
   },
   Mutation: {
     addPerformance: async (parent, { input }) => {
-      const performance = await Performance.create(input);
+      const performance = await Performance.create(input)
 
       const updatedPlayer = await Player.findOneAndUpdate(
         { _id: input.player },
@@ -126,23 +126,27 @@ const resolvers = {
 
       throw new Error('You need to be logged in!');
     },
-    updatePerformance: async (parent, { _id, input }) => {
-      const performance = await Performance.findOneAndUpdate(
-        { _id },
-        { input },
-        { new: true }
-      );
-      
-      if (!performance) {
-        throw new Error('No performance found with that ID!');
+    updatePerformance: async (parent, { _id, input }, context) => {
+      if (context.user) {
+        const performance = await Performance.findOneAndUpdate(
+          { _id },
+          { ...input },
+          { new: true }
+        );
+        
+        if (!performance) {
+          throw new Error('No performance found with that ID!');
+        }
+
+        return performance;
       }
 
-      return performance;
+      throw new Error('You need to be logged in!');
     },
     updatePlayer: async (parent, { _id, input }) => {
       const player = await Player.findOneAndUpdate(
         { _id },
-        { input },
+        { ...input },
         { new: true }
       );
 
@@ -155,7 +159,7 @@ const resolvers = {
     updateTeam: async (parent, { _id, ...fields }) => {
       const team = await Team.findOneAndUpdate(
         { _id },
-        { fields },
+        { ...fields },
         { new: true }
       );
 
