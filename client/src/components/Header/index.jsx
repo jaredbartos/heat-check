@@ -3,7 +3,7 @@ import Nav from "../Nav";
 export default function Header() {
   return (
     <header>
-      <h1>Heat Check</h1>
+      <h1>HeatCheck</h1>
       <Nav />
     </header>   
   );
