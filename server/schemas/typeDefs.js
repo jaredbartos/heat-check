@@ -16,6 +16,7 @@ const typeDefs = `
     points: Int!
     player: ID!
     date: String
+    createdBy: ID
   }
 
   input PerformanceInput {
@@ -34,6 +35,7 @@ const typeDefs = `
     points: Int
     player: ID
     date: String
+    createdBy: ID
   }
 
   type Player {
@@ -46,6 +48,7 @@ const typeDefs = `
     weight: Int
     team: Team
     performances: [Performance]
+    createdBy: ID
   }
 
   input PlayerInput {
@@ -56,6 +59,7 @@ const typeDefs = `
     height: String
     weight: Int
     team: ID
+    createdBy: ID
   }
 
   type Team {
@@ -63,6 +67,7 @@ const typeDefs = `
     name: String!
     league: String!
     players: [Player]
+    createdBy: ID
   }
 
   type User {

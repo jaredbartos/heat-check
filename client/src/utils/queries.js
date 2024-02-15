@@ -13,6 +13,7 @@ export const GET_TEAMS = gql`
         position
         height
       }
+      createdBy
     }
   }
 `;
@@ -32,6 +33,7 @@ export const GET_SINGLE_TEAM = gql`
         height
         weight
       }
+      createdBy
     }
   }
 `;
@@ -96,6 +98,7 @@ export const GET_SINGLE_PLAYER = gql`
         points
         date
       }
+      createdBy
     }
   }
 `;

@@ -4,10 +4,15 @@ const { AuthenticationError, signToken } = require('../utils/auth');
 const resolvers = {
   Query: {
     teams: async () => {
-      return await Team.find().populate('players').sort({ createdAt: -1 });
+      return await Team.find()
+        .populate('players')
+        .populate('createdBy')
+        .sort({ createdAt: -1 });
     },
     team: async (parent, { _id }) => {
-      const team = await Team.findById(_id).populate('players');
+      const team = await Team.findById(_id)
+        .populate('players')
+        .populate('createdBy');
 
       if (!team) {
         throw new Error('No team found with that ID!');
@@ -16,10 +21,15 @@ const resolvers = {
       return team;
     },
     players: async () => {
-      return await Player.find().populate('team');
+      return await Player.find()
+        .populate('team')
+        .populate('createdBy')
     },
     player: async (parent, { _id }) => {
-      const player = await Player.findById(_id).populate('team').populate('performances');
+      const player = await Player.findById(_id)
+        .populate('team')
+        .populate('performances')
+        .populate('createdBy');
 
       if (!player) {
         throw new Error('No player found with that ID!');
@@ -28,13 +38,17 @@ const resolvers = {
       return player;
     },
     performances: async () => {
-      return await Performance.find().populate('player');
+      return await Performance.find()
+        .populate('player')
+        .populate('createdBy');
     },
     performance: async (parent, { _id }) => {
-      const performance = await Performance.findById(_id).populate({
-        path: 'player',
-        populate: { path: 'team' }
-      });
+      const performance = await Performance.findById(_id)
+        .populate({
+          path: 'player',
+          populate: { path: 'team' }
+        })
+        .populate('createdBy');
 
       if (!performance) {
         throw new Error('No performance found with that ID!');
