@@ -132,6 +132,7 @@ export default function SingleTeam() {
               weight={formState.weight}
               handleInputChange={handleInputChange}
               handleFormSubmit={handleFormSubmit}
+              action='create'
             />
           }
           <PlayersTable team={team} />

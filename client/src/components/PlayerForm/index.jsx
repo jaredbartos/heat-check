@@ -80,7 +80,14 @@ export default function PlayerForm(props) {
         onChange={props.handleInputChange}
         value={props.weight}
       />
-      <button type="submit" id="submitNewPlayerBtn">Add Player</button>
+      {
+        props.action === 'create'
+        ?
+        <button type="submit" id="submitNewPlayerBtn">Add Player</button>
+        :
+        <button type="submit" id="updatePlayerBtn">Update Player</button>
+      }
+      
     </form>
   );
 }

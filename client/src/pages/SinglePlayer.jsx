@@ -4,6 +4,7 @@ import { GET_SINGLE_PLAYER } from "../utils/queries";
 import { ADD_PERFORMANCE } from "../utils/mutations";
 import PerformanceTable from "../components/PerformanceTable";
 import PerformanceForm from "../components/PerformanceForm";
+import PlayerForm from "../components/PlayerForm";
 import { useState, useEffect } from 'react';
 import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
@@ -20,7 +21,7 @@ export default function SinglePlayer() {
     ]
   });
   const [player, setPlayer] = useState();
-  const [createFormVisible, setCreateFormVisible] = useState(false);
+  const [perfFormVisible, setPerfFormVisible] = useState(false);
   const [perfFormState, setPerfFormState] = useState({
     _id: '',
     date: '',
@@ -38,14 +39,40 @@ export default function SinglePlayer() {
     turnovers: '',
     points: ''
   });
+  const [playerFormVisible, setPlayerFormVisible] = useState(false);
+  const [playerFormState, setPlayerFormState] = useState({
+    firstName: '',
+    lastName: '',
+    number: '',
+    position: '',
+    height: {
+      feet: '',
+      inches: ''
+    },
+    weight: ''
+  })
 
   // Set useEffect to set player value to prepare
   // for future retrieval from indexedDB for PWA
   useEffect(() => {
     if (data) {
       setPlayer(data.player);
+      const heightArr = data.player.height.split("'");
+      const feet = heightArr[0];
+      const inches = heightArr[1].split('"')[0];
+      setPlayerFormState({
+        firstName: data.player.firstName,
+        lastName: data.player.lastName,
+        number: data.player.number,
+        position: data.player.position,
+        height: {
+          feet,
+          inches
+        },
+        weight: data.player.weight
+      });
     }
-  },[data, setPlayer]);
+  },[data, setPlayer, setPlayerFormState]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -99,6 +126,30 @@ export default function SinglePlayer() {
           <p>Position: {player.position}</p>
           <p>Height: {player.height}</p>
           <p>Weight: {player.weight}</p>
+          {
+            Auth.loggedIn()
+            &&
+            <button
+              type="button"
+              onClick={() => setPlayerFormVisible(true)}
+            >
+              Edit Player
+            </button>
+          }
+          {
+            playerFormVisible
+            &&
+            <PlayerForm 
+              firstName={playerFormState.firstName}
+              lastName={playerFormState.lastName}
+              number={playerFormState.number}
+              position={playerFormState.position}
+              height={playerFormState.height}
+              weight={playerFormState.weight}
+              handleInputChange={handleInputChange}
+              action='update'
+            />
+          }
 
           <h3>Game Log</h3>
           {
@@ -106,7 +157,7 @@ export default function SinglePlayer() {
             ?
             <button
               type="button"
-              onClick={() => setCreateFormVisible(true)}
+              onClick={() => setPerfFormVisible(true)}
             >
               Add Game Entry
             </button>
@@ -114,7 +165,7 @@ export default function SinglePlayer() {
             <p><Link to="/login">Login</Link> or <Link to="/signup">create an account</Link> to add a new game to this player!</p>
           }
           {
-            createFormVisible
+            perfFormVisible
             &&
             <PerformanceForm
               formState={perfFormState}
