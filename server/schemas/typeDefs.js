@@ -14,7 +14,7 @@ const typeDefs = `
     blocks: Int!
     turnovers: Int!
     points: Int!
-    player: ID!
+    player: Player!
     date: String
     createdBy: ID
   }
@@ -48,7 +48,7 @@ const typeDefs = `
     weight: Int
     team: Team
     performances: [Performance]
-    createdBy: ID
+    createdBy: User
   }
 
   input PlayerInput {
@@ -67,7 +67,7 @@ const typeDefs = `
     name: String!
     league: String!
     players: [Player]
-    createdBy: ID
+    createdBy: User
   }
 
   type User {
