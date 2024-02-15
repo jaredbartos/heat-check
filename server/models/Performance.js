@@ -90,6 +90,10 @@ const performanceSchema = new Schema(
       type: Date,
       set: (timestamp) => new Date(timestamp)
     },
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
   },
   {
     toJSON: {

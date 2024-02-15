@@ -25,6 +25,11 @@ const addTeamsToUsers = async () => {
       { _id: userIds[k] },
       { $addToSet: { teams: teamIds[k] } }
     );
+
+    await Team.findOneAndUpdate(
+      { _id: teamIds[k] },
+      { createdBy: userIds[k] }
+    );
   }
 };
 

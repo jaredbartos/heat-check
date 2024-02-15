@@ -37,6 +37,10 @@ const playerSchema = new Schema(
         ref: 'Performance'
       }
     ],
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
   },
   {
     timestamps: true

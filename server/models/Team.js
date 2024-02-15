@@ -18,6 +18,10 @@ const teamSchema = new Schema(
         ref: 'Player'
       }
     ],
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
   },
   {
     timestamps: true
