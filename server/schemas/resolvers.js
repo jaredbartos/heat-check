@@ -143,20 +143,24 @@ const resolvers = {
 
       throw new Error('You need to be logged in!');
     },
-    updatePlayer: async (parent, { _id, input }) => {
-      const player = await Player.findOneAndUpdate(
-        { _id },
-        { ...input },
-        { new: true }
-      );
+    updatePlayer: async (parent, { _id, input }, context) => {
+      if (context.user) {
+        const player = await Player.findOneAndUpdate(
+          { _id },
+          { ...input },
+          { new: true }
+        );
 
-      if (!player) {
-        throw new Error('No player found with that ID!');
+        if (!player) {
+          throw new Error('No player found with that ID!');
+        }
+
+        return player;
       }
 
-      return player;
+      throw new Error('You need to be logged in!');
     },
-    updateTeam: async (parent, { _id, ...fields }) => {
+    updateTeam: async (parent, { _id, ...fields }, context) => {
       const team = await Team.findOneAndUpdate(
         { _id },
         { ...fields },

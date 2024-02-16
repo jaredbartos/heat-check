@@ -82,3 +82,13 @@ export const UPDATE_PERFORMANCE = gql`
     }
   }
 `;
+
+export const UPDATE_PLAYER = gql`
+  mutation updatePlayer($_id: ID, $input: PlayerInput) {
+    updatePlayer(_id: $_id, input: $input) {
+      _id
+      firstName
+      lastName
+    }
+  }
+`;

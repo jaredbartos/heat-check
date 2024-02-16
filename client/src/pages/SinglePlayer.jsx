@@ -1,7 +1,7 @@
 import { useQuery, useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { GET_SINGLE_PLAYER } from "../utils/queries";
-import { ADD_PERFORMANCE } from "../utils/mutations";
+import { ADD_PERFORMANCE, UPDATE_PLAYER } from "../utils/mutations";
 import PerformanceTable from "../components/PerformanceTable";
 import PerformanceForm from "../components/PerformanceForm";
 import PlayerForm from "../components/PlayerForm";
@@ -15,6 +15,12 @@ export default function SinglePlayer() {
     variables: { id }
   });
   const [addPerformance] = useMutation(ADD_PERFORMANCE, {
+    refetchQueries: [
+      GET_SINGLE_PLAYER,
+      'getSinglePlayer'
+    ]
+  });
+  const [updatePlayer] = useMutation(UPDATE_PLAYER, {
     refetchQueries: [
       GET_SINGLE_PLAYER,
       'getSinglePlayer'
@@ -50,7 +56,7 @@ export default function SinglePlayer() {
       inches: ''
     },
     weight: ''
-  })
+  });
 
   // Set useEffect to set player value to prepare
   // for future retrieval from indexedDB for PWA
@@ -92,6 +98,24 @@ export default function SinglePlayer() {
     );
   };
 
+  const handlePlayerInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name != 'feet' && name != 'inches') {
+      setPlayerFormState({
+        ...playerFormState,
+        [name]: value
+      });
+    } else {
+      setPlayerFormState({
+        ...playerFormState,
+        height: {
+          ...playerFormState.height,
+          [name]: value
+        }
+      });
+    }
+  }
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();    
     const { _id, ...input } = perfFormState;
@@ -108,6 +132,29 @@ export default function SinglePlayer() {
       })
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  // Handler function for edit player submit
+  const handlePlayerSubmit = async (e) => {
+    e.preventDefault();
+    const {feet, inches} = playerFormState.height;
+    const height = `${feet}'${inches}"`;
+    const input = {
+      ...playerFormState,
+      number: Number(playerFormState.number),
+      weight: Number(playerFormState.weight),
+      height
+    }
+    try {
+      await updatePlayer({
+        variables: {
+          _id: player._id,
+          input
+        }
+      })
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -146,7 +193,8 @@ export default function SinglePlayer() {
               position={playerFormState.position}
               height={playerFormState.height}
               weight={playerFormState.weight}
-              handleInputChange={handleInputChange}
+              handleInputChange={handlePlayerInputChange}
+              handleFormSubmit={handlePlayerSubmit}
               action='update'
             />
           }
