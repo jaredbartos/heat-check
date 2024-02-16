@@ -123,7 +123,8 @@ export default function SingleTeam() {
       };
       await addPlayer({
         variables: {
-            input
+            input,
+            createdBy: Auth.getProfile().data._id
           }
         });
     } catch (error) {

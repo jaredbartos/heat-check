@@ -35,7 +35,6 @@ const typeDefs = `
     points: Int
     player: ID
     date: String
-    createdBy: ID
   }
 
   type Player {
@@ -59,7 +58,6 @@ const typeDefs = `
     height: String
     weight: Int
     team: ID
-    createdBy: ID
   }
 
   type Team {
@@ -94,8 +92,8 @@ const typeDefs = `
   }
 
   type Mutation {
-    addPerformance(input: PerformanceInput): Performance
-    addPlayer(input: PlayerInput): Player
+    addPerformance(input: PerformanceInput, createdBy: ID!): Performance
+    addPlayer(input: PlayerInput, createdBy: ID!): Player
     addTeam(name: String!, league: String!, createdBy: ID!): Team
     updatePerformance(_id: ID, input: PerformanceInput): Performance
     updatePlayer(_id: ID, input: PlayerInput): Player

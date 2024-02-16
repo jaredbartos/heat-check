@@ -127,7 +127,8 @@ export default function SinglePlayer() {
             ...input,
             date,
             player: player._id
-          }
+          },
+          createdBy: Auth.getProfile().data._id
         }
       })
     } catch (error) {

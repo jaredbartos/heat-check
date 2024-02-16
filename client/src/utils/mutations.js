@@ -42,8 +42,8 @@ export const ADD_TEAM = gql`
 `;
 
 export const ADD_PLAYER = gql`
-  mutation addPlayer($input: PlayerInput) {
-    addPlayer(input: $input) {
+  mutation addPlayer($input: PlayerInput, $createdBy: ID!) {
+    addPlayer(input: $input, createdBy: $createdBy) {
       _id
       firstName
       lastName
@@ -52,8 +52,8 @@ export const ADD_PLAYER = gql`
 `;
 
 export const ADD_PERFORMANCE = gql`
-  mutation addPerformance($input: PerformanceInput) {
-    addPerformance(input: $input) {
+  mutation addPerformance($input: PerformanceInput, $createdBy: ID!) {
+    addPerformance(input: $input, createdBy: $createdBy) {
       _id
       points
       date
