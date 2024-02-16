@@ -184,7 +184,15 @@ export default function SingleTeam() {
             <>
               <button
                 type="button"
-                onClick={() => setTeamFormVisible(true)}
+                onClick={() => {
+                    setTeamFormVisible(true);
+                    setTeamFormState({
+                      newTeamName: team.name,
+                      newTeamLeague: team.league,
+                      customTeamLeague: ''
+                    })
+                  }
+                }
               >
                 Edit Team
               </button>
