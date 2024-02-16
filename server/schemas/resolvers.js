@@ -173,6 +173,19 @@ const resolvers = {
 
       throw new Error('You need to be logged in!');
     },
+    deletePlayer: async (parent, { _id }, context) => {
+      if (context.user) {
+        const player = await Player.findByIdAndDelete(_id);
+
+        if (!player) {
+          throw new Error('No player found with that ID!');
+        }
+
+        return player;
+      }
+
+      throw new Error('You need to be logged in!');
+    },
     updateTeam: async (parent, { _id, ...fields }, context) => {
       const team = await Team.findOneAndUpdate(
         { _id },

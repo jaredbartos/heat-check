@@ -112,3 +112,13 @@ export const DELETE_PERFORMANCE = gql`
     }
   }
 `;
+
+export const DELETE_PLAYER = gql`
+  mutation deletePlayer($_id: ID!) {
+    deletePlayer(_id: $_id) {
+      _id
+      firstName
+      lastName
+    }
+  }
+`;

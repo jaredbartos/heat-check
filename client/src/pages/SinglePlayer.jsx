@@ -1,7 +1,10 @@
 import { useQuery, useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { GET_SINGLE_PLAYER } from "../utils/queries";
-import { ADD_PERFORMANCE, UPDATE_PLAYER } from "../utils/mutations";
+import { ADD_PERFORMANCE,
+  UPDATE_PLAYER,
+  DELETE_PLAYER
+} from "../utils/mutations";
 import PerformanceTable from "../components/PerformanceTable";
 import PerformanceForm from "../components/PerformanceForm";
 import PlayerForm from "../components/PlayerForm";
@@ -26,6 +29,7 @@ export default function SinglePlayer() {
       'getSinglePlayer'
     ]
   });
+  const [deletePlayer] = useMutation(DELETE_PLAYER);
   const [player, setPlayer] = useState();
   const [perfFormVisible, setPerfFormVisible] = useState(false);
   const [perfFormState, setPerfFormState] = useState({
@@ -157,7 +161,25 @@ export default function SinglePlayer() {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+
+    if (confirm(`Are you sure you want to delete ${player.firstName} ${player.lastName}?`)) {
+      try {
+        await deletePlayer({
+          variables: {
+            _id: player._id
+          }
+        });
+      } catch (err) {
+        console.log(err);
+      }
+      location.replace(`/team/${player.team._id}`);
+    }
+   
+  };
 
   if (loading) {
     return <h3>Loading...</h3>
@@ -175,14 +197,22 @@ export default function SinglePlayer() {
           <p>Height: {player.height}</p>
           <p>Weight: {player.weight}</p>
           {
-            Auth.loggedIn()
+            (Auth.loggedIn() && Auth.getProfile().data._id === player.createdBy._id)
             &&
-            <button
-              type="button"
-              onClick={() => setPlayerFormVisible(true)}
-            >
-              Edit Player
-            </button>
+            <>
+              <button
+                type="button"
+                onClick={() => setPlayerFormVisible(true)}
+              >
+                Edit Player
+              </button>
+              <button
+                type="button"
+                onClick={handleDelete}
+              >
+                Delete Player
+              </button>
+            </>
           }
           {
             playerFormVisible
@@ -202,16 +232,14 @@ export default function SinglePlayer() {
 
           <h3>Game Log</h3>
           {
-            Auth.loggedIn()
-            ?
+            (Auth.loggedIn() && Auth.getProfile().data._id === player.createdBy._id)
+            &&
             <button
               type="button"
               onClick={() => setPerfFormVisible(true)}
             >
               Add Game Entry
             </button>
-            :
-            <p><Link to="/login">Login</Link> or <Link to="/signup">create an account</Link> to add a new game to this player!</p>
           }
           {
             perfFormVisible

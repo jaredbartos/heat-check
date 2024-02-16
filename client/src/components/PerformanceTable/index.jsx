@@ -71,7 +71,7 @@ export default function PerformanceTable(props) {
         variables: {
           _id: id
         }
-      })
+      });
     } catch (err) {
       console.log(err);
     }
