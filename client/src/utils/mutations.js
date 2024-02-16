@@ -32,8 +32,8 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_TEAM = gql`
-  mutation addTeam($name: String!, $league: String!) {
-    addTeam(name: $name, league: $league){
+  mutation addTeam($name: String!, $league: String!, $createdBy: ID!) {
+    addTeam(name: $name, league: $league, createdBy: $createdBy){
       _id
       name
       league
@@ -89,6 +89,16 @@ export const UPDATE_PLAYER = gql`
       _id
       firstName
       lastName
+    }
+  }
+`;
+
+export const UPDATE_TEAM = gql`
+  mutation updateTeam($_id: ID, $name: String, $league: String) {
+    updateTeam(_id: $_id, name: $name, league: $league) {
+      _id
+      name
+      league
     }
   }
 `;

@@ -18,10 +18,9 @@ export default function TeamsPage() {
   });
   // Declare state variables for holding the teams and form values
   const [teams, setTeams] = useState([]);
-  const [leagues, setLeagues] = useState([]);
   const [formState, setFormState] = useState({
     newTeamName: '',
-    newTeamLeague: '',
+    newTeamLeague: 'Independent',
     customTeamLeague: ''
   });
   // State for add team form visibility
@@ -30,20 +29,10 @@ export default function TeamsPage() {
   // Use database data to set teams and league states
   useEffect(() => {
     if (data) {
-      // Extract leagues from the team data
-      let teamLeagues = [];
-      for (let i = 0; i < data.teams.length; i++) {
-        const currentTeamLeague = data.teams[i].league;
-        if (!teamLeagues.includes(currentTeamLeague) && currentTeamLeague !== 'Independent') {
-          teamLeagues.push(currentTeamLeague);
-        }
-      }
-      // Set teams and leagues
       setTeams(data.teams);
-      setLeagues(teamLeagues);
     }
     
-  }, [data, setTeams, setLeagues]);
+  }, [data, setTeams]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -53,7 +42,7 @@ export default function TeamsPage() {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     const name = formState.newTeamName;
     // Set league as newTeamLeague value unless user chose to add custom name
@@ -63,12 +52,16 @@ export default function TeamsPage() {
       :
       formState.customTeamLeague;
     const { error } = await addTeam({
-      variables: { name, league }
+      variables: {
+        name,
+        league,
+        createdBy: Auth.getProfile().data._id
+      }
     });
 
     setFormState({
       newTeamName: '',
-      newTeamLeague: '',
+      newTeamLeague: 'Independent',
       customTeamLeague: ''
     });
 
@@ -93,12 +86,11 @@ export default function TeamsPage() {
         formVisible
         &&
         <TeamForm
-          leagues={leagues}
           newTeamName={formState.newTeamName}
           newTeamLeague={formState.newTeamLeague}
           customTeamLeague={formState.customTeamLeague}
           handleInputChange={handleInputChange}
-          handleSubmit={handleSubmit}
+          handleFormSubmit={handleFormSubmit}
         />
       }
       {
