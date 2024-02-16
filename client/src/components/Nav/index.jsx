@@ -1,24 +1,28 @@
-import { Link } from 'react-router-dom';
+import { Link as ReactRouterLink } from 'react-router-dom';
+import {
+  Link as ChakraLink,
+  HStack
+} from '@chakra-ui/react';
 import Auth from '../../utils/auth';
 
 export default function Nav() {
   return (
     <>
       <nav>
-        <Link to="/">Home</Link>
-        <Link to="/teams">Teams</Link>
+        <ChakraLink as={ReactRouterLink} to="/">Home</ChakraLink>
+        <ChakraLink as={ReactRouterLink} to="/teams">Teams</ChakraLink>
         {
           Auth.loggedIn()
           ?
           <div>
-            <Link to="/dashboard">Your Dashboard</Link>
-            <a href="/" id="logout" onClick={() => Auth.logout()}>Logout</a>
+            <ChakraLink as={ReactRouterLink} to="/dashboard">Your Dashboard</ChakraLink>
+            <ChakraLink href="/" id="logout" onClick={() => Auth.logout()}>Logout</ChakraLink>
           </div>
 
           :
           <div>
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Signup</Link>
+            <ChakraLink as={ReactRouterLink} to="/login">Login</ChakraLink>
+            <ChakraLink as={ReactRouterLink} to="/signup">Signup</ChakraLink>
           </div>
         }
       </nav>
