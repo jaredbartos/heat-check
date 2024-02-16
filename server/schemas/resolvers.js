@@ -84,9 +84,12 @@ const resolvers = {
 
       return performance;
     },
-    addPlayer: async (parent, { input }, context) => {
+    addPlayer: async (parent, { input, createdBy }, context) => {
       if (context.user) {
-        const player = await Player.create(input);
+        const player = await Player.create({
+          ...input,
+          createdBy
+        });
 
         const updatedTeam = await Team.findOneAndUpdate(
           { _id: input.team },

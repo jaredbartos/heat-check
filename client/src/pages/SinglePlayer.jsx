@@ -24,12 +24,7 @@ export default function SinglePlayer() {
       'getSinglePlayer'
     ]
   });
-  const [updatePlayer] = useMutation(UPDATE_PLAYER, {
-    refetchQueries: [
-      GET_SINGLE_PLAYER,
-      'getSinglePlayer'
-    ]
-  });
+
   const [deletePlayer] = useMutation(DELETE_PLAYER);
   const [player, setPlayer] = useState();
   const [perfFormVisible, setPerfFormVisible] = useState(false);
@@ -51,39 +46,14 @@ export default function SinglePlayer() {
     points: ''
   });
   const [playerFormVisible, setPlayerFormVisible] = useState(false);
-  const [playerFormState, setPlayerFormState] = useState({
-    firstName: '',
-    lastName: '',
-    number: '',
-    position: '',
-    height: {
-      feet: '',
-      inches: ''
-    },
-    weight: ''
-  });
 
   // Set useEffect to set player value to prepare
   // for future retrieval from indexedDB for PWA
   useEffect(() => {
     if (data) {
       setPlayer(data.player);
-      const heightArr = data.player.height.split("'");
-      const feet = heightArr[0];
-      const inches = heightArr[1].split('"')[0];
-      setPlayerFormState({
-        firstName: data.player.firstName,
-        lastName: data.player.lastName,
-        number: data.player.number,
-        position: data.player.position,
-        height: {
-          feet,
-          inches
-        },
-        weight: data.player.weight
-      });
     }
-  },[data, setPlayer, setPlayerFormState]);
+  }, [data, setPlayer]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -102,24 +72,6 @@ export default function SinglePlayer() {
       }
     );
   };
-
-  const handlePlayerInputChange = (e) => {
-    const { name, value } = e.target;
-    if (name != 'feet' && name != 'inches') {
-      setPlayerFormState({
-        ...playerFormState,
-        [name]: value
-      });
-    } else {
-      setPlayerFormState({
-        ...playerFormState,
-        height: {
-          ...playerFormState.height,
-          [name]: value
-        }
-      });
-    }
-  }
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();    
@@ -140,29 +92,6 @@ export default function SinglePlayer() {
       console.log(error);
     }
   }
-
-  // Handler function for edit player submit
-  const handlePlayerSubmit = async (e) => {
-    e.preventDefault();
-    const {feet, inches} = playerFormState.height;
-    const height = `${feet}'${inches}"`;
-    const input = {
-      ...playerFormState,
-      number: Number(playerFormState.number),
-      weight: Number(playerFormState.weight),
-      height
-    }
-    try {
-      await updatePlayer({
-        variables: {
-          _id: player._id,
-          input
-        }
-      })
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -241,14 +170,8 @@ export default function SinglePlayer() {
             playerFormVisible
             &&
             <PlayerForm 
-              firstName={playerFormState.firstName}
-              lastName={playerFormState.lastName}
-              number={playerFormState.number}
-              position={playerFormState.position}
-              height={playerFormState.height}
-              weight={playerFormState.weight}
-              handleInputChange={handlePlayerInputChange}
-              handleFormSubmit={handlePlayerSubmit}
+              makeFormInvisible={() => setPlayerFormVisible(false)}
+              currentPlayer={player}
               action='update'
             />
           }

@@ -1,9 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { GET_SINGLE_TEAM } from '../utils/queries';
-import { ADD_PLAYER,
-  UPDATE_TEAM,
-  DELETE_TEAM
-} from '../utils/mutations';
+import { ADD_PLAYER, DELETE_TEAM } from '../utils/mutations';
 import { useQuery, useMutation } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import PlayersTable from '../components/PlayersTable';
@@ -17,23 +14,6 @@ export default function SingleTeam() {
   const [team, setTeam] = useState();
   const [playerFormVisible, setPlayerFormVisible] = useState(false)
   const [teamFormVisible, setTeamFormVisible] = useState(false);
-  const [playerFormState, setPlayerFormState] = useState({
-    firstName: '',
-    lastName: '',
-    number: '',
-    position: 'Guard',
-    height: {
-      feet: '',
-      inches: ''
-    },
-    weight: ''
-  });
-  const [addPlayer] = useMutation(ADD_PLAYER, {
-    refetchQueries: [
-      GET_SINGLE_TEAM,
-      'getSingleTeam'
-    ]
-  });
   const [deleteTeam] = useMutation(DELETE_TEAM);
   const { loading, data } = useQuery(GET_SINGLE_TEAM, {
     variables: { id }
@@ -47,63 +27,7 @@ export default function SingleTeam() {
     }
   }, [data, setTeam]);
 
-  // Onchange handler function for new player form
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    if (name != 'feet' && name != 'inches') {
-      setPlayerFormState({
-        ...playerFormState,
-        [name]: value
-      });
-    } else {
-      setPlayerFormState({
-        ...playerFormState,
-        height: {
-          ...playerFormState.height,
-          [name]: value
-        }
-      });
-    }
-  };
 
-  // Submit handler function for new player form
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    // Format height to string for database entry
-    const { feet, inches } = playerFormState.height;
-    const height = `${feet}'${inches}"`;
-    try {
-      const input = {
-        ...playerFormState,
-        number: Number(playerFormState.number),
-        weight: Number(playerFormState.weight),
-        height,
-        team: team._id
-      };
-      await addPlayer({
-        variables: {
-            input,
-            createdBy: Auth.getProfile().data._id
-          }
-        });
-    } catch (error) {
-      console.log(error);
-    }
-
-    setPlayerFormState({
-      firstName: '',
-      lastName: '',
-      number: '',
-      position: '',
-      height: {
-        feet: '',
-        inches: ''
-      },
-      weight: ''
-    });
-
-    setPlayerFormVisible(false);
-  };
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -157,13 +81,10 @@ export default function SingleTeam() {
             <TeamForm
               makeFormInvisible={() => setTeamFormVisible(false)}
               currentTeam={team}
+              action='update'
             />
           }
-          {
-            team.players.length
-            ?
-            <>
-              <h3>Players</h3>
+            <h3>Players</h3>
           {
             (Auth.loggedIn() && Auth.getProfile().data._id === team.createdBy._id)
             &&
@@ -178,23 +99,19 @@ export default function SingleTeam() {
             playerFormVisible
             &&
             <PlayerForm
-              firstName={playerFormState.firstName}
-              lastName={playerFormState.lastName}
-              number={playerFormState.number}
-              position={playerFormState.position}
-              height={playerFormState.height}
-              weight={playerFormState.weight}
-              handleInputChange={handleInputChange}
-              handleFormSubmit={handleFormSubmit}
               action='create'
+              makeFormInvisible={() => setPlayerFormVisible(false)}
+              currentTeam={team}
             />
           }
-          <PlayersTable team={team} />
-            </>
+          {
+            team.players.length
+            ?
+            <PlayersTable team={team} />
             :
-            <p>No players added yet!</p>
+            <p>No players have been added yet!</p>
           }         
-        </>
+        </>       
       }
       
     </>
