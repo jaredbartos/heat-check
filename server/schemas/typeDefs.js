@@ -98,6 +98,7 @@ const typeDefs = `
     updatePerformance(_id: ID, input: PerformanceInput): Performance
     updatePlayer(_id: ID, input: PlayerInput): Player
     updateTeam(_id: ID, name: String, league: String): Team
+    deletePerformance(_id: ID): Performance
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
   }

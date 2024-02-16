@@ -1,13 +1,20 @@
 import { formatDate, formatEditDate } from '../../utils/dates';
-import { UPDATE_PERFORMANCE } from '../../utils/mutations';
+import { UPDATE_PERFORMANCE, DELETE_PERFORMANCE } from '../../utils/mutations';
 import { GET_SINGLE_PLAYER } from '../../utils/queries';
 import PerformanceForm from '../PerformanceForm';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
+import Auth from '../../utils/auth';
 
 export default function PerformanceTable(props) {
   const [formVisible, setFormVisible] = useState(false)
   const [updatePerformance] = useMutation(UPDATE_PERFORMANCE, {
+    refetchQueries: [
+      GET_SINGLE_PLAYER,
+      'getSinglePlayer'
+    ]
+  });
+  const [deletePerformance] = useMutation(DELETE_PERFORMANCE, {
     refetchQueries: [
       GET_SINGLE_PLAYER,
       'getSinglePlayer'
@@ -42,7 +49,6 @@ export default function PerformanceTable(props) {
     e.preventDefault();
     const { _id, ...input } = props.formState;
     const date = new Date(input.date);
-    console.log(_id);
     try {
       await updatePerformance({
         variables: {
@@ -55,6 +61,19 @@ export default function PerformanceTable(props) {
       });
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  const handleDelete = async (e, id) => {
+    e.preventDefault();
+    try {
+      await deletePerformance({
+        variables: {
+          _id: id
+        }
+      })
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -79,13 +98,28 @@ export default function PerformanceTable(props) {
         <td>{performance.turnovers}</td>
         <td>{performance.points}</td>
         <td>
-          <button
-            type="button"
-            className="editPerformanceBtn"
-            onClick={(e) => handleEditClick(e, performance)}
-          >
-            Edit
-          </button>
+          {
+            // Only allow user to edit or delete if they created the entry
+            (Auth.loggedIn() && Auth.getProfile().data._id === props.player.createdBy._id)
+            &&
+            <>
+              <button
+                type="button"
+                className="editPerformanceBtn"
+                onClick={(e) => handleEditClick(e, performance)}
+              >
+                Edit
+              </button>
+              <button
+                type="button"
+                className="deletePerformanceBtn"
+                onClick={(e) => handleDelete(e, performance._id)}
+              >
+                Delete
+              </button>
+            </>
+          }
+
         </td>
       </tr>
     );

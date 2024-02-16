@@ -143,6 +143,19 @@ const resolvers = {
 
       throw new Error('You need to be logged in!');
     },
+    deletePerformance: async (parent, { _id }, context) => {
+      if (context.user) {
+        const performance = await Performance.findByIdAndDelete(_id);
+
+        if (!performance) {
+          throw new Error('No performance found with that ID!');
+        }
+
+        return performance;
+      }
+
+      throw new Error('You need to be logged in!')
+    },
     updatePlayer: async (parent, { _id, input }, context) => {
       if (context.user) {
         const player = await Player.findOneAndUpdate(

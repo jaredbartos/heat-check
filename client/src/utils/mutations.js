@@ -102,3 +102,13 @@ export const UPDATE_TEAM = gql`
     }
   }
 `;
+
+export const DELETE_PERFORMANCE = gql`
+  mutation deletePerformance($_id: ID!) {
+    deletePerformance(_id: $_id) {
+      _id
+      points
+      date
+    }
+  }
+`;
