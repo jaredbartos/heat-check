@@ -36,7 +36,7 @@ export default function PlayerForm({ action, currentPlayer, currentTeam, makeFor
         weight: currentPlayer.weight
       });
     }
-  }, [currentPlayer, setFormState])
+  }, [currentPlayer, setFormState]);
 
 
   const [addPlayer] = useMutation(ADD_PLAYER, {

@@ -69,8 +69,11 @@ const resolvers = {
     }
   },
   Mutation: {
-    addPerformance: async (parent, { input }) => {
-      const performance = await Performance.create(input)
+    addPerformance: async (parent, { input, createdBy }) => {
+      const performance = await Performance.create({
+        ...input,
+        createdBy
+      });
 
       const updatedPlayer = await Player.findOneAndUpdate(
         { _id: input.player },

@@ -1,6 +1,143 @@
-export default function PerformanceForm(props) {
+import { useState, useEffect } from 'react';
+import Auth from '../../utils/auth';
+import { GET_SINGLE_PLAYER } from '../../utils/queries';
+import { ADD_PERFORMANCE, UPDATE_PERFORMANCE } from '../../utils/mutations';
+import { useMutation } from '@apollo/client';
+import { formatEditDate } from '../../utils/dates';
+
+export default function PerformanceForm({ action, currentPlayer, currentPerformance, makeFormInvisible }) {
+  const [formState, setFormState] = useState({
+    _id: '',
+    date: '',
+    fgAtt: '',
+    fgMade: '',
+    threePtAtt: '',
+    threePtMade: '',
+    ftAtt: '',
+    ftMade: '',
+    offReb: '',
+    rebounds: '',
+    assists: '',
+    steals: '',
+    blocks: '',
+    turnovers: '',
+    points: ''
+  });
+
+  useEffect(() => {
+    // If current performance prop is provided,
+    // set formState to attributes for editing
+    if (currentPerformance) {
+      setFormState({
+        _id: currentPerformance._id,
+        date: formatEditDate(currentPerformance.date),
+        fgAtt: currentPerformance.fgAtt,
+        fgMade: currentPerformance.fgMade,
+        threePtAtt: currentPerformance.threePtAtt,
+        threePtMade: currentPerformance.threePtMade,
+        ftAtt: currentPerformance.ftAtt,
+        ftMade: currentPerformance.ftMade,
+        offReb: currentPerformance.offReb,
+        rebounds: currentPerformance.rebounds,
+        assists: currentPerformance.assists,
+        steals: currentPerformance.steals,
+        blocks: currentPerformance.blocks,
+        turnovers: currentPerformance.turnovers,
+        points: currentPerformance.points
+      });
+    }
+  }, [currentPerformance, setFormState]);
+
+  const [addPerformance] = useMutation(ADD_PERFORMANCE, {
+    refetchQueries: [
+      GET_SINGLE_PLAYER,
+      'getSinglePlayer'
+    ]
+  });
+  const [updatePerformance] = useMutation(UPDATE_PERFORMANCE, {
+    refetchQueries: [
+      GET_SINGLE_PLAYER,
+      'getSinglePlayer'
+    ]
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    // When setting formState
+    // if any key other than date is being updated, convert value to number type
+    // for submission to database
+    setFormState(
+      name != 'date' ?
+      {
+        ...formState,
+        [name]: Number(value)
+      } :
+      {
+        ...formState,
+        [name]: value
+      }
+    );
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();    
+    const { _id, ...input } = formState;
+    const date = new Date(input.date);
+
+    if (action === 'create') {
+      try {
+        await addPerformance({
+          variables: {
+            input: {
+              ...input,
+              date,
+              player: currentPlayer._id
+            },
+            createdBy: Auth.getProfile().data._id
+          }
+        })
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        await updatePerformance({
+          variables: {
+            _id,
+            input: {
+              ...input,
+              date
+            }
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    setFormState({
+      _id: '',
+      date: '',
+      fgAtt: '',
+      fgMade: '',
+      threePtAtt: '',
+      threePtMade: '',
+      ftAtt: '',
+      ftMade: '',
+      offReb: '',
+      rebounds: '',
+      assists: '',
+      steals: '',
+      blocks: '',
+      turnovers: '',
+      points: ''
+    });
+
+    makeFormInvisible();    
+  }
+
   return (
-    <form onSubmit={props.handleFormSubmit}>
+    <form onSubmit={handleFormSubmit}>
       <table>
         <thead>
           <tr>
@@ -83,8 +220,8 @@ export default function PerformanceForm(props) {
                 id="dateInput"
                 type="date"
                 name="date"
-                onChange={props.handleInputChange}
-                value={props.formState.date}
+                onChange={handleInputChange}
+                value={formState.date}
               />
             </td>
             <td>
@@ -93,8 +230,8 @@ export default function PerformanceForm(props) {
                 type="number"
                 name="fgAtt"
                 min="0"
-                onChange={props.handleInputChange}
-                value={props.formState.fgAtt}
+                onChange={handleInputChange}
+                value={formState.fgAtt}
               />
             </td>
             <td>
@@ -103,8 +240,8 @@ export default function PerformanceForm(props) {
                 type="number"
                 name="fgMade"
                 min="0"
-                onChange={props.handleInputChange}
-                value={props.formState.fgMade}
+                onChange={handleInputChange}
+                value={formState.fgMade}
               />
             </td>
             <td>
@@ -113,8 +250,8 @@ export default function PerformanceForm(props) {
                 type="number"
                 name="threePtAtt"
                 min="0"
-                onChange={props.handleInputChange}
-                value={props.formState.threePtAtt}
+                onChange={handleInputChange}
+                value={formState.threePtAtt}
               />
             </td>
             <td>
@@ -123,8 +260,8 @@ export default function PerformanceForm(props) {
                 type="number"
                 name="threePtMade"
                 min="0"
-                onChange={props.handleInputChange}
-                value={props.formState.threePtMade}
+                onChange={handleInputChange}
+                value={formState.threePtMade}
               />
             </td>
             <td>
@@ -133,8 +270,8 @@ export default function PerformanceForm(props) {
                 type="number"
                 name="ftAtt"
                 min="0"
-                onChange={props.handleInputChange}
-                value={props.formState.ftAtt}
+                onChange={handleInputChange}
+                value={formState.ftAtt}
               />
             </td>
             <td>
@@ -143,8 +280,8 @@ export default function PerformanceForm(props) {
                 type="number"
                 name="ftMade"
                 min="0"
-                onChange={props.handleInputChange}
-                value={props.formState.ftMade}
+                onChange={handleInputChange}
+                value={formState.ftMade}
               />
             </td>
             <td>
@@ -153,8 +290,8 @@ export default function PerformanceForm(props) {
                 type="number"
                 name="offReb"
                 min="0"
-                onChange={props.handleInputChange}
-                value={props.formState.offReb}
+                onChange={handleInputChange}
+                value={formState.offReb}
               />
             </td>
             <td>
@@ -163,8 +300,8 @@ export default function PerformanceForm(props) {
                 type="number"
                 name="rebounds"
                 min="0"
-                onChange={props.handleInputChange}
-                value={props.formState.rebounds}
+                onChange={handleInputChange}
+                value={formState.rebounds}
               />
             </td>
             <td>
@@ -173,8 +310,8 @@ export default function PerformanceForm(props) {
                 type="number"
                 name="assists"
                 min="0"
-                onChange={props.handleInputChange}
-                value={props.formState.assists}
+                onChange={handleInputChange}
+                value={formState.assists}
               />
             </td>
             <td>
@@ -183,8 +320,8 @@ export default function PerformanceForm(props) {
                 type="number"
                 name="steals"
                 min="0"
-                onChange={props.handleInputChange}
-                value={props.formState.steals}
+                onChange={handleInputChange}
+                value={formState.steals}
               />
             </td>
             <td>
@@ -193,8 +330,8 @@ export default function PerformanceForm(props) {
                 type="number"
                 name="blocks"
                 min="0"
-                onChange={props.handleInputChange}
-                value={props.formState.blocks}
+                onChange={handleInputChange}
+                value={formState.blocks}
               />
             </td>
             <td>
@@ -203,8 +340,8 @@ export default function PerformanceForm(props) {
                 type="number"
                 name="turnovers"
                 min="0"
-                onChange={props.handleInputChange}
-                value={props.formState.turnovers}
+                onChange={handleInputChange}
+                value={formState.turnovers}
               />
             </td>
             <td>
@@ -213,15 +350,15 @@ export default function PerformanceForm(props) {
                 type="number"
                 name="points"
                 min="0"
-                onChange={props.handleInputChange}
-                value={props.formState.points}
+                onChange={handleInputChange}
+                value={formState.points}
               />
             </td>
           </tr>
         </tbody>
       </table>
       {
-        props.action === 'create'
+        action === 'create'
         ?
         <button type="submit" id="submitNewPerformanceBtn">Add Game</button>
         :

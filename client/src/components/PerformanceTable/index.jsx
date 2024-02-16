@@ -1,44 +1,21 @@
 import { formatDate } from '../../utils/dates';
-import { UPDATE_PERFORMANCE, DELETE_PERFORMANCE } from '../../utils/mutations';
+import { DELETE_PERFORMANCE } from '../../utils/mutations';
 import { GET_SINGLE_PLAYER } from '../../utils/queries';
 import PerformanceForm from '../PerformanceForm';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
 
-export default function PerformanceTable(props) {
+export default function PerformanceTable({ player }) {
   const [formVisible, setFormVisible] = useState(false)
-  const [updatePerformance] = useMutation(UPDATE_PERFORMANCE, {
-    refetchQueries: [
-      GET_SINGLE_PLAYER,
-      'getSinglePlayer'
-    ]
-  });
+  const [selectedPerformance, setSelectedPerformance] = useState();
+
   const [deletePerformance] = useMutation(DELETE_PERFORMANCE, {
     refetchQueries: [
       GET_SINGLE_PLAYER,
       'getSinglePlayer'
     ]
   });
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    const { _id, ...input } = props.formState;
-    const date = new Date(input.date);
-    try {
-      await updatePerformance({
-        variables: {
-          _id,
-          input: {
-            ...input,
-            date
-          }
-        }
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   const handleDelete = async (e, id) => {
     e.preventDefault();
@@ -54,7 +31,7 @@ export default function PerformanceTable(props) {
   }
 
   // Create copy of performance array and sort it by date
-  const performancesCopy = [...props.player.performances];
+  const performancesCopy = [...player.performances];
   const sortedPerformances = performancesCopy.sort((a, b) => Number(b.date) - Number(a.date));
   const performanceList = sortedPerformances.map((performance) => {
     return (
@@ -76,15 +53,15 @@ export default function PerformanceTable(props) {
         <td>
           {
             // Only allow user to edit or delete if they created the entry
-            (Auth.loggedIn() && Auth.getProfile().data._id === props.player.createdBy._id)
+            (Auth.loggedIn() && Auth.getProfile().data._id === player.createdBy._id)
             &&
             <>
               <button
                 type="button"
                 className="editPerformanceBtn"
-                onClick={(e) => {
-                    props.handleEditClick(e, performance);
+                onClick={() => {
                     setFormVisible(true);
+                    setSelectedPerformance(performance);
                   }
                 }
               >
@@ -108,7 +85,7 @@ export default function PerformanceTable(props) {
   return (
     <>
     {
-      props.player.performances
+      player.performances
       ?
       <>
         <table>
@@ -138,9 +115,8 @@ export default function PerformanceTable(props) {
           formVisible
           &&
           <PerformanceForm
-            handleInputChange={props.handleInputChange}
-            handleFormSubmit={handleFormSubmit}
-            formState={props.formState}
+            makeFormInvisible={() => setFormVisible(false)}
+            currentPerformance={selectedPerformance}
             action='update'
           />
         }
