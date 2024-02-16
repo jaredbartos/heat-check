@@ -28,18 +28,7 @@ export default function SingleTeam() {
     },
     weight: ''
   });
-  const [teamFormState, setTeamFormState] = useState({
-    newTeamName: '',
-    newTeamLeague: 'Independent',
-    customTeamLeague: ''
-  })
   const [addPlayer] = useMutation(ADD_PLAYER, {
-    refetchQueries: [
-      GET_SINGLE_TEAM,
-      'getSingleTeam'
-    ]
-  });
-  const [updateTeam] = useMutation(UPDATE_TEAM, {
     refetchQueries: [
       GET_SINGLE_TEAM,
       'getSingleTeam'
@@ -76,40 +65,6 @@ export default function SingleTeam() {
       });
     }
   };
-
-  // Onchange handler for edit team form
-  const handleTeamInputChange = (e) => {
-    const { name, value } = e.target;
-    setTeamFormState({
-      ...teamFormState,
-      [name]: value
-    });
-  };
-
-  // Submit handler function for edit team form
-  const handleTeamFormSubmit = async (e) => {
-    e.preventDefault();
-    
-    const name = teamFormState.newTeamName;
-    // Set league as newTeamLeague value unless user chose to add custom name
-    const league = teamFormState.newTeamLeague !== 'Enter New League Name'
-      ?
-      teamFormState.newTeamLeague
-      :
-      teamFormState.customTeamLeague;
-
-    try{
-      const { error } = await updateTeam({
-        variables: {
-          _id: team._id,
-          name,
-          league
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }
 
   // Submit handler function for new player form
   const handleFormSubmit = async (e) => {
@@ -184,15 +139,7 @@ export default function SingleTeam() {
             <>
               <button
                 type="button"
-                onClick={() => {
-                    setTeamFormVisible(true);
-                    setTeamFormState({
-                      newTeamName: team.name,
-                      newTeamLeague: team.league,
-                      customTeamLeague: ''
-                    })
-                  }
-                }
+                onClick={() => setTeamFormVisible(true)}
               >
                 Edit Team
               </button>
@@ -208,11 +155,8 @@ export default function SingleTeam() {
             teamFormVisible
             &&
             <TeamForm
-              newTeamName={teamFormState.newTeamName}
-              newTeamLeague={teamFormState.newTeamLeague}
-              customTeamLeague={teamFormState.customTeamLeague}
-              handleInputChange={handleTeamInputChange}
-              handleFormSubmit={handleTeamFormSubmit}
+              makeFormInvisible={() => setTeamFormVisible(false)}
+              currentTeam={team}
             />
           }
           {
