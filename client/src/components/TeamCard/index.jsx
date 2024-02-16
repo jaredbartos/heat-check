@@ -10,10 +10,18 @@ export default function TeamCard({ teamId, players, teamName, league }) {
   return (
     <>
       <Link to={`/team/${teamId}`}><h3>{teamName} ({league})</h3></Link>
-      <h4>Players</h4>
-      <ul>
-        {playerLinks}
-      </ul>
+      {
+        players.length
+        ?
+        <>
+        <h4>Players</h4>
+        <ul>
+          {playerLinks}
+        </ul>
+        </>
+        :
+        <p>No players have been added to this team yet!</p>
+      }     
     </>
   );
 }

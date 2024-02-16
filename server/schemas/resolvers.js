@@ -199,6 +199,19 @@ const resolvers = {
 
       return team;
     },
+    deleteTeam: async (parent, { _id }, context) => {
+      if (context.user) {
+        const team = await Team.findByIdAndDelete(_id);
+
+        if (!team) {
+          throw new Error('No team found with that ID!');
+        }
+
+        return team;
+      }
+
+      throw new Error('You need to be logged in!');
+    },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email }).populate('teams');
 

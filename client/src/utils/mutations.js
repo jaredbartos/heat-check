@@ -122,3 +122,12 @@ export const DELETE_PLAYER = gql`
     }
   }
 `;
+
+export const DELETE_TEAM = gql`
+  mutation deleteTeam($_id: ID!) {
+    deleteTeam(_id: $_id) {
+      _id
+      name
+    }
+  }
+`;

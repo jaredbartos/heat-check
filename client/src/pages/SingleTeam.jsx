@@ -1,6 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { GET_SINGLE_TEAM } from '../utils/queries';
-import { ADD_PLAYER, UPDATE_TEAM } from '../utils/mutations';
+import { ADD_PLAYER,
+  UPDATE_TEAM,
+  DELETE_TEAM
+} from '../utils/mutations';
 import { useQuery, useMutation } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import PlayersTable from '../components/PlayersTable';
@@ -41,7 +44,8 @@ export default function SingleTeam() {
       GET_SINGLE_TEAM,
       'getSingleTeam'
     ]
-  })
+  });
+  const [deleteTeam] = useMutation(DELETE_TEAM);
   const { loading, data } = useQuery(GET_SINGLE_TEAM, {
     variables: { id }
   });
@@ -146,6 +150,23 @@ export default function SingleTeam() {
     setPlayerFormVisible(false);
   };
 
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    if (confirm(`Are you sure you want to delete the ${team.name}?`)) {
+      try {
+        await deleteTeam({
+          variables: {
+            _id: team._id
+          }
+        });
+      } catch (err) {
+        console.log(err);
+      }
+
+      location.replace('/teams');
+    }
+  }
+
   if (loading) {
     return <h3>Loading...</h3>
   }
@@ -158,14 +179,22 @@ export default function SingleTeam() {
         <>
           <h2>{team.name} ({team.league})</h2>
           {
-            Auth.loggedIn()
+            (Auth.loggedIn() && Auth.getProfile().data._id === team.createdBy._id)
             &&
-            <button
-              type="button"
-              onClick={() => setTeamFormVisible(true)}
-            >
-              Edit Team
-            </button>
+            <>
+              <button
+                type="button"
+                onClick={() => setTeamFormVisible(true)}
+              >
+                Edit Team
+              </button>
+              <button
+                type="button"
+                onClick={handleDelete}
+              >
+                Delete Team
+              </button>
+            </>
           }
           {
             teamFormVisible
@@ -178,18 +207,20 @@ export default function SingleTeam() {
               handleFormSubmit={handleTeamFormSubmit}
             />
           }
-          <h3>Players</h3>
           {
-            Auth.loggedIn()
+            team.players.length
             ?
+            <>
+              <h3>Players</h3>
+          {
+            (Auth.loggedIn() && Auth.getProfile().data._id === team.createdBy._id)
+            &&
             <button
               type="button"
               onClick={() => setPlayerFormVisible(true)}
             >
               Add Player
             </button>
-            :
-            <p><Link to="/login">Login</Link> or <Link to="/signup">create an account</Link> to add a new player!</p>
           }
           {
             playerFormVisible
@@ -207,6 +238,10 @@ export default function SingleTeam() {
             />
           }
           <PlayersTable team={team} />
+            </>
+            :
+            <p>No players added yet!</p>
+          }         
         </>
       }
       
