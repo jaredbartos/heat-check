@@ -1,4 +1,5 @@
 import { useQuery, useMutation } from "@apollo/client";
+import { formatEditDate } from "../utils/dates";
 import { useParams } from "react-router-dom";
 import { GET_SINGLE_PLAYER } from "../utils/queries";
 import { ADD_PERFORMANCE,
@@ -181,6 +182,28 @@ export default function SinglePlayer() {
    
   };
 
+  const handleEditClick = (e, performance) => {
+    e.preventDefault();
+
+    setPerfFormState({
+      _id: performance._id,
+      date: formatEditDate(performance.date),
+      fgAtt: performance.fgAtt,
+      fgMade: performance.fgMade,
+      threePtAtt: performance.threePtAtt,
+      threePtMade: performance.threePtMade,
+      ftAtt: performance.ftAtt,
+      ftMade: performance.ftMade,
+      offReb: performance.offReb,
+      rebounds: performance.rebounds,
+      assists: performance.assists,
+      steals: performance.steals,
+      blocks: performance.blocks,
+      turnovers: performance.turnovers,
+      points: performance.points
+    });
+  }
+
   if (loading) {
     return <h3>Loading...</h3>
   }
@@ -254,7 +277,7 @@ export default function SinglePlayer() {
           <PerformanceTable
             player={player}
             formState={perfFormState}
-            setFormState={setPerfFormState}
+            handleEditClick={handleEditClick}
             handleInputChange={handleInputChange}
           />
         </>     

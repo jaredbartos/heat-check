@@ -1,4 +1,4 @@
-import { formatDate, formatEditDate } from '../../utils/dates';
+import { formatDate } from '../../utils/dates';
 import { UPDATE_PERFORMANCE, DELETE_PERFORMANCE } from '../../utils/mutations';
 import { GET_SINGLE_PLAYER } from '../../utils/queries';
 import PerformanceForm from '../PerformanceForm';
@@ -20,30 +20,6 @@ export default function PerformanceTable(props) {
       'getSinglePlayer'
     ]
   });
-
-  const handleEditClick = (e, performance) => {
-    e.preventDefault();
-
-    props.setFormState({
-      _id: performance._id,
-      date: formatEditDate(performance.date),
-      fgAtt: performance.fgAtt,
-      fgMade: performance.fgMade,
-      threePtAtt: performance.threePtAtt,
-      threePtMade: performance.threePtMade,
-      ftAtt: performance.ftAtt,
-      ftMade: performance.ftMade,
-      offReb: performance.offReb,
-      rebounds: performance.rebounds,
-      assists: performance.assists,
-      steals: performance.steals,
-      blocks: performance.blocks,
-      turnovers: performance.turnovers,
-      points: performance.points
-    });
-
-    setFormVisible(true);
-  }
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -106,7 +82,11 @@ export default function PerformanceTable(props) {
               <button
                 type="button"
                 className="editPerformanceBtn"
-                onClick={(e) => handleEditClick(e, performance)}
+                onClick={(e) => {
+                    props.handleEditClick(e, performance);
+                    setFormVisible(true);
+                  }
+                }
               >
                 Edit
               </button>
@@ -127,39 +107,47 @@ export default function PerformanceTable(props) {
 
   return (
     <>
-    <table>
-      <thead>
-        <tr>
-          <th>DATE</th>
-          <th>FGA</th>
-          <th>FGM</th>
-          <th>3PA</th>
-          <th>3PM</th>
-          <th>FTA</th>
-          <th>FTM</th>
-          <th>OREB</th>
-          <th>TREB</th>
-          <th>AST</th>
-          <th>STL</th>
-          <th>BLK</th>
-          <th>TO</th>
-          <th>PTS</th>
-        </tr>
-      </thead>
-      <tbody>
-        {performanceList}
-      </tbody>    
-    </table>
     {
-      formVisible
-      &&
-      <PerformanceForm
-        handleInputChange={props.handleInputChange}
-        handleFormSubmit={handleFormSubmit}
-        formState={props.formState}
-        action='update'
-      />
-    }
+      props.player.performances
+      ?
+      <>
+        <table>
+          <thead>
+            <tr>
+              <th>DATE</th>
+              <th>FGA</th>
+              <th>FGM</th>
+              <th>3PA</th>
+              <th>3PM</th>
+              <th>FTA</th>
+              <th>FTM</th>
+              <th>OREB</th>
+              <th>TREB</th>
+              <th>AST</th>
+              <th>STL</th>
+              <th>BLK</th>
+              <th>TO</th>
+              <th>PTS</th>
+            </tr>
+          </thead>
+          <tbody>
+            {performanceList}
+          </tbody>    
+        </table>
+        {
+          formVisible
+          &&
+          <PerformanceForm
+            handleInputChange={props.handleInputChange}
+            handleFormSubmit={handleFormSubmit}
+            formState={props.formState}
+            action='update'
+          />
+        }
+      </>
+      :
+      <p>This player has no games played!</p>
+    }    
     </>
   );
 }
