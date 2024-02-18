@@ -50,14 +50,12 @@ export default function PerformanceForm({ action, currentPlayer, currentPerforma
 
   const [addPerformance] = useMutation(ADD_PERFORMANCE, {
     refetchQueries: [
-      GET_SINGLE_PLAYER,
-      'getSinglePlayer'
+      GET_SINGLE_PLAYER
     ]
   });
   const [updatePerformance] = useMutation(UPDATE_PERFORMANCE, {
     refetchQueries: [
-      GET_SINGLE_PLAYER,
-      'getSinglePlayer'
+      GET_SINGLE_PLAYER
     ]
   });
 

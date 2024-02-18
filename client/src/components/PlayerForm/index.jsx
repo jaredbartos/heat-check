@@ -41,14 +41,12 @@ export default function PlayerForm({ action, currentPlayer, currentTeam, makeFor
 
   const [addPlayer] = useMutation(ADD_PLAYER, {
     refetchQueries: [
-      GET_SINGLE_TEAM,
-      'getSingleTeam'
+      GET_SINGLE_TEAM
     ]
   });
   const [updatePlayer] = useMutation(UPDATE_PLAYER, {
     refetchQueries: [
-      GET_SINGLE_PLAYER,
-      'getSinglePlayer'
+      GET_SINGLE_PLAYER
     ]
   });
 

@@ -1,4 +1,4 @@
-import { GET_TEAMS } from '../../utils/queries';
+import { GET_TEAMS, GET_ME } from '../../utils/queries';
 import { useQuery, useMutation } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import { GET_SINGLE_TEAM } from '../../utils/queries';
@@ -20,14 +20,13 @@ export default function TeamForm({ currentTeam, action, makeFormInvisible }) {
   );
   const [addTeam] = useMutation(ADD_TEAM, {
     refetchQueries: [
+      GET_ME,
       GET_TEAMS,
-      'getTeams'
     ]
   });
   const [updateTeam] = useMutation(UPDATE_TEAM, {
     refetchQueries: [
-      GET_SINGLE_TEAM,
-      'getSingleTeam'
+      GET_SINGLE_TEAM
     ]
   });
   const { data } = useQuery(GET_TEAMS);

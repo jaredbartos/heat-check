@@ -11,7 +11,8 @@ import {
   Td,
   TableCaption,
   TableContainer,
-  Box
+  Box,
+  Text
 } from '@chakra-ui/react';
 
 export default function TeamCard({ teamId, players, teamName, league }) {
@@ -63,7 +64,7 @@ export default function TeamCard({ teamId, players, teamName, league }) {
             </Table>
           </TableContainer>
           :
-          <p>No players have been added to this team yet!</p>
+          <Text>No players have been added to this team yet!</Text>
         }
       </Box>
     </>

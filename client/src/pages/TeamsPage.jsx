@@ -6,7 +6,8 @@ import {
   Heading,
   Center,
   Wrap,
-  WrapItem
+  WrapItem,
+  Text
 } from '@chakra-ui/react';
 
 
@@ -48,7 +49,7 @@ export default function TeamsPage() {
             </WrapItem>           
           )
           :
-          <p>No teams have been added yet!</p>
+          <Text>No teams have been added yet!</Text>
         }
       </Wrap>
       

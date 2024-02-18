@@ -26,8 +26,7 @@ export default function PerformanceTable({ player }) {
 
   const [deletePerformance] = useMutation(DELETE_PERFORMANCE, {
     refetchQueries: [
-      GET_SINGLE_PLAYER,
-      'getSinglePlayer'
+      GET_SINGLE_PLAYER
     ]
   });
 

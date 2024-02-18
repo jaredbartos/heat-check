@@ -3,6 +3,15 @@ import { useQuery } from "@apollo/client";
 import TeamCard from '../components/TeamCard';
 import TeamForm from '../components/TeamForm';
 import { useState, useEffect } from 'react';
+import {
+  Heading,
+  Center,
+  Wrap,
+  WrapItem,
+  Text,
+  Button,
+  VStack
+} from '@chakra-ui/react';
 
 export default function Dashboard() {
   const { loading, data, error } = useQuery(GET_ME);
@@ -19,13 +28,18 @@ export default function Dashboard() {
 
   return (
     <>
-      <h2>Your Dashboard</h2>
-      <button
-          type="button"
-          onClick={() => setFormVisible(true)}
-        >
-          Add Team
-      </button>
+      <Center h={100} mb={10}>
+        <VStack>
+          <Heading as='h2' size='lg'm={2}>Your Dashboard</Heading>
+          <Button
+              mt={2}
+              type="button"
+              onClick={() => setFormVisible(true)}
+            >
+              Add Team
+          </Button>
+        </VStack>
+      </Center>
       {
         formVisible
         &&
@@ -34,25 +48,24 @@ export default function Dashboard() {
           action='create'  
         />
       }
-      <div>
+      <Wrap m='auto' w='90%'>
         {
           teams.length
           ?
-          teams.map((team) => {
-            return (
-              <TeamCard
-                key={team._id}
+          teams.map(team => 
+            <WrapItem key={team._id}>
+              <TeamCard               
                 teamId={team._id}
+                players={team.players}
                 teamName={team.name}
                 league={team.league}
-                players={team.players}
               />
-            )
-          })
+            </WrapItem>           
+          )
           :
-          <p>You don't have any teams yet!</p>
+          <Text>No teams have been added yet!</Text>
         }
-      </div>
+      </Wrap>
     </>
   );
 }
