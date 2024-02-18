@@ -2,8 +2,13 @@ import { GET_TEAMS } from '../utils/queries';
 import { useQuery } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import TeamCard from '../components/TeamCard';
-import Auth from '../utils/auth';
-import { Link } from 'react-router-dom';
+import {
+  Heading,
+  Center,
+  Wrap,
+  WrapItem
+} from '@chakra-ui/react';
+
 
 export default function TeamsPage() {
   // Query all teams from database
@@ -25,21 +30,28 @@ export default function TeamsPage() {
 
   return (
     <>
-      {
-        teams.length
-        ?
-        teams.map(team => 
-          <TeamCard
-            key={team._id}
-            teamId={team._id}
-            players={team.players}
-            teamName={team.name}
-            league={team.league}
-          />
-        )
-        :
-        <p>No teams have been added yet!</p>
-      }
+      <Center h={100}>
+        <Heading as='h2' size='lg'>Teams</Heading>
+      </Center>
+      <Wrap m='auto' w='90%'>
+        {
+          teams.length
+          ?
+          teams.map(team => 
+            <WrapItem key={team._id}>
+              <TeamCard               
+                teamId={team._id}
+                players={team.players}
+                teamName={team.name}
+                league={team.league}
+              />
+            </WrapItem>           
+          )
+          :
+          <p>No teams have been added yet!</p>
+        }
+      </Wrap>
+      
     </>
   );
 }

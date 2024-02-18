@@ -8,6 +8,7 @@ export const GET_TEAMS = gql`
       league
       players {
         _id
+        number
         firstName
         lastName
         position

@@ -12,7 +12,7 @@ export default function Header() {
     <header>
       <Flex w="95%" ml={2} mb={10} alignItems="flex-end"  h={50}>
         <ChakraLink as={ReactRouterLink} to="/">
-          <Heading>HeatCheck</Heading>
+          <Heading as='h1'>HeatCheck</Heading>
         </ChakraLink>
         <Spacer />
         <Nav />
