@@ -2,7 +2,6 @@ import { GET_TEAMS } from '../utils/queries';
 import { useQuery } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import TeamCard from '../components/TeamCard';
-import TeamForm from '../components/TeamForm';
 import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
 
@@ -12,9 +11,6 @@ export default function TeamsPage() {
 
   // Declare state variables for holding the teams and form values
   const [teams, setTeams] = useState([]);
-
-  // State for add team form visibility
-  const [formVisible, setFormVisible] = useState(false);
 
   // Use database data to set teams and league states
   useEffect(() => {
@@ -29,26 +25,6 @@ export default function TeamsPage() {
 
   return (
     <>
-      {
-        Auth.loggedIn()
-        ?
-        <button
-          type="button"
-          onClick={() => setFormVisible(true)}
-        >
-          Add Team
-        </button>
-        :
-        <p><Link to="/login">Login</Link> or <Link to="/signup">create an account</Link> to add a new team!</p>
-      }
-      {
-        formVisible
-        &&
-        <TeamForm
-          makeFormInvisible={() => setFormVisible(false)}
-          action='create'  
-        />
-      }
       {
         teams.length
         ?

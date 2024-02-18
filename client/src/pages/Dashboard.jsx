@@ -1,12 +1,14 @@
 import { GET_ME } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 import TeamCard from '../components/TeamCard';
+import TeamForm from '../components/TeamForm';
 import { useState, useEffect } from 'react';
 
 export default function Dashboard() {
   const { loading, data, error } = useQuery(GET_ME);
   const [teams, setTeams] = useState([]);
   const [players, setPlayers] = useState([]);
+  const [formVisible, setFormVisible] = useState(false);
 
   useEffect(() => {
     if (data) {
@@ -17,7 +19,21 @@ export default function Dashboard() {
 
   return (
     <>
-      <h2>My Teams</h2>
+      <h2>Your Dashboard</h2>
+      <button
+          type="button"
+          onClick={() => setFormVisible(true)}
+        >
+          Add Team
+      </button>
+      {
+        formVisible
+        &&
+        <TeamForm
+          makeFormInvisible={() => setFormVisible(false)}
+          action='create'  
+        />
+      }
       <div>
         {
           teams.length
