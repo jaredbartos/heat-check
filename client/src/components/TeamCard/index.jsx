@@ -36,7 +36,7 @@ export default function TeamCard({ teamId, players, teamName, league }) {
 
   return (
     <>
-      <Box m={5} p={5} borderWidth={2} borderRadius={20}>
+      <Box m={5} p={5} borderWidth={2} w={432} borderRadius={20}>
         <ChakraLink
           as={ReactRouterLink}
           to={`/team/${teamId}`}

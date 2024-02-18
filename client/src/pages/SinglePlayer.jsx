@@ -7,7 +7,18 @@ import PerformanceForm from "../components/PerformanceForm";
 import PlayerForm from "../components/PlayerForm";
 import { useState, useEffect } from 'react';
 import Auth from '../utils/auth';
-import { Link } from 'react-router-dom';
+import { Link as ReactRouterLink } from 'react-router-dom';
+import {
+  Link as ChakraLink,
+  Heading,
+  Text,
+  Box,
+  Center,
+  VStack,
+  HStack,
+  Button,
+  ButtonGroup
+} from '@chakra-ui/react';
 
 export default function SinglePlayer() {
   const { id } = useParams();
@@ -53,29 +64,34 @@ export default function SinglePlayer() {
       {
         player
         &&
-        <>
-          <h2>{player.firstName} {player.lastName} #{player.number}</h2>
-          <p>Team: {player.team.name} ({player.team.league})</p>
-          <p>Position: {player.position}</p>
-          <p>Height: {player.height}</p>
-          <p>Weight: {player.weight}</p>
+        <Box m={12}>
+          <Heading as='h2' size='lg' mb={2}>{player.firstName} {player.lastName} #{player.number}</Heading>
+          <Text fontSize='xl' mb={2}>
+            Team:{' '}
+            <ChakraLink as={ReactRouterLink} to={`/team/${player.team._id}`}>
+              {player.team.name} ({player.team.league})
+            </ChakraLink>
+          </Text>
+          <Text fontSize='xl' mb={2}>Position: {player.position}</Text>
+          <Text fontSize='xl' mb={2}>Height: {player.height}</Text>
+          <Text fontSize='xl' mb={2}>Weight: {player.weight}</Text>
           {
             (Auth.loggedIn() && Auth.getProfile().data._id === player.createdBy._id)
             &&
-            <>
-              <button
+            <ButtonGroup mb={5}>
+              <Button
                 type="button"
                 onClick={() => setPlayerFormVisible(true)}
               >
                 Edit Player
-              </button>
-              <button
+              </Button>
+              <Button
                 type="button"
                 onClick={handleDelete}
               >
                 Delete Player
-              </button>
-            </>
+              </Button>
+            </ButtonGroup>
           }
           {
             playerFormVisible
@@ -86,18 +102,20 @@ export default function SinglePlayer() {
               action='update'
             />
           }
-
-          <h3>Game Log</h3>
+          <HStack>
+          <Heading as='h3' size='md' mt={3} mb={3}>Game Log</Heading>
           {
             (Auth.loggedIn() && Auth.getProfile().data._id === player.createdBy._id)
             &&
-            <button
-              type="button"
+            <Button
+              size='xs'
+              type='button'
               onClick={() => setPerfFormVisible(true)}
             >
-              Add Game Entry
-            </button>
+              Add Game
+            </Button>
           }
+          </HStack>
           {
             perfFormVisible
             &&
@@ -110,7 +128,7 @@ export default function SinglePlayer() {
           <PerformanceTable
             player={player}
           />
-        </>     
+        </Box>     
       }      
     </>
   );
