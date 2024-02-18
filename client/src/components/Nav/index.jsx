@@ -9,23 +9,29 @@ export default function Nav() {
   return (
     <>
       <nav>
+        <HStack spacing={12}>
         <ChakraLink as={ReactRouterLink} to="/">Home</ChakraLink>
         <ChakraLink as={ReactRouterLink} to="/teams">Teams</ChakraLink>
         {
           Auth.loggedIn()
           ?
-          <div>
-            <ChakraLink as={ReactRouterLink} to="/dashboard">Your Dashboard</ChakraLink>
-            <ChakraLink href="/" id="logout" onClick={() => Auth.logout()}>Logout</ChakraLink>
-          </div>
-
+          <ChakraLink as={ReactRouterLink} to="/dashboard">Your Dashboard</ChakraLink>
           :
-          <div>
-            <ChakraLink as={ReactRouterLink} to="/login">Login</ChakraLink>
-            <ChakraLink as={ReactRouterLink} to="/signup">Signup</ChakraLink>
-          </div>
+          <ChakraLink as={ReactRouterLink} to="/login">Login</ChakraLink>
         }
+        {
+          Auth.loggedIn()
+          ?
+          <ChakraLink href="/" id="logout" onClick={() => Auth.logout()}>Logout</ChakraLink>
+          :
+          <ChakraLink as={ReactRouterLink} to="/signup">Signup</ChakraLink>
+        }
+        </HStack>       
       </nav>
     </>
   );
 }
+
+
+
+

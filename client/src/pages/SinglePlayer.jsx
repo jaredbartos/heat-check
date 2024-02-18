@@ -41,10 +41,8 @@ export default function SinglePlayer() {
         console.log(err);
       }
       location.replace(`/team/${player.team._id}`);
-    }
-   
+    }  
   };
-
 
   if (loading) {
     return <h3>Loading...</h3>

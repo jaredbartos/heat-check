@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { GET_SINGLE_TEAM } from '../utils/queries';
-import { ADD_PLAYER, DELETE_TEAM } from '../utils/mutations';
+import { DELETE_TEAM } from '../utils/mutations';
 import { useQuery, useMutation } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import PlayersTable from '../components/PlayersTable';
@@ -26,8 +26,6 @@ export default function SingleTeam() {
       setTeam(data.team);
     }
   }, [data, setTeam]);
-
-
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -112,8 +110,7 @@ export default function SingleTeam() {
             <p>No players have been added yet!</p>
           }         
         </>       
-      }
-      
+      }     
     </>
   );
 }

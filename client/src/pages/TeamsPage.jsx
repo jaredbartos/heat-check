@@ -20,8 +20,7 @@ export default function TeamsPage() {
   useEffect(() => {
     if (data) {
       setTeams(data.teams);
-    }
-    
+    }   
   }, [data, setTeams]);
 
   if (loading) {
