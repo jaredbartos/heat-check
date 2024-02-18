@@ -16,7 +16,6 @@ import {
 
 export default function TeamCard({ teamId, players, teamName, league }) {
   const playerLinks = players.map((player) => {
-    console.log(player);
     return (
       <Tr key={player._id}>
         <Td>{player.number}</Td>

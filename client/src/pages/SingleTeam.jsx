@@ -5,9 +5,17 @@ import { useQuery, useMutation } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import PlayersTable from '../components/PlayersTable';
 import Auth from '../utils/auth';
-import { Link } from 'react-router-dom';
 import PlayerForm from '../components/PlayerForm';
 import TeamForm from '../components/TeamForm';
+import {
+  Heading,
+  Text,
+  Box,
+  Center,
+  VStack,
+  Button,
+  ButtonGroup
+} from '@chakra-ui/react';
 
 export default function SingleTeam() {
   const { id } = useParams();
@@ -53,26 +61,31 @@ export default function SingleTeam() {
       {
         team
         &&
-        <>
-          <h2>{team.name} ({team.league})</h2>
-          {
-            (Auth.loggedIn() && Auth.getProfile().data._id === team.createdBy._id)
-            &&
-            <>
-              <button
-                type="button"
-                onClick={() => setTeamFormVisible(true)}
-              >
-                Edit Team
-              </button>
-              <button
-                type="button"
-                onClick={handleDelete}
-              >
-                Delete Team
-              </button>
-            </>
-          }
+        <Box m={12}>
+          <Center>
+            <VStack>
+              <Heading as='h2' mb={2} size='lg'>{team.name}</Heading>
+              <Text fontSize='xl' mb={2}>League: {team.league}</Text>
+              {
+                (Auth.loggedIn() && Auth.getProfile().data._id === team.createdBy._id)
+                &&
+                <ButtonGroup>
+                  <Button
+                    type="button"
+                    onClick={() => setTeamFormVisible(true)}
+                  >
+                    Edit Team
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={handleDelete}
+                  >
+                    Delete Team
+                  </Button>
+                </ButtonGroup>
+              }
+            </VStack>
+          </Center>
           {
             teamFormVisible
             &&
@@ -81,17 +94,6 @@ export default function SingleTeam() {
               currentTeam={team}
               action='update'
             />
-          }
-            <h3>Players</h3>
-          {
-            (Auth.loggedIn() && Auth.getProfile().data._id === team.createdBy._id)
-            &&
-            <button
-              type="button"
-              onClick={() => setPlayerFormVisible(true)}
-            >
-              Add Player
-            </button>
           }
           {
             playerFormVisible
@@ -107,9 +109,21 @@ export default function SingleTeam() {
             ?
             <PlayersTable team={team} />
             :
-            <p>No players have been added yet!</p>
-          }         
-        </>       
+            <Text fontSize='lg' mt={2}>No players have been added yet!</Text>
+          }
+          {
+            (Auth.loggedIn() && Auth.getProfile().data._id === team.createdBy._id)
+            &&
+            <Center mt={5}>
+              <Button
+                type="button"
+                onClick={() => setPlayerFormVisible(true)}
+              >
+                Add Player
+              </Button>
+            </Center>
+          }
+        </Box>       
       }     
     </>
   );
