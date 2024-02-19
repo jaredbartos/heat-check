@@ -6,12 +6,19 @@ import {
 } from '@chakra-ui/react';
 import Auth from '../../utils/auth';
 import LoginModal from '../LoginModal';
+import SignupModal from '../SignupModal';
 
 export default function Nav() {
   const {
     isOpen: isLoginOpen,
     onOpen: onLoginOpen,
     onClose: onLoginClose
+  } = useDisclosure();
+
+  const {
+    isOpen: isSignupOpen,
+    onOpen: onSignupOpen,
+    onClose: onSignupClose
   } = useDisclosure();
 
   return (
@@ -32,13 +39,17 @@ export default function Nav() {
           ?
           <ChakraLink href="/" id="logout" onClick={() => Auth.logout()}>Logout</ChakraLink>
           :
-          <ChakraLink as={ReactRouterLink} to="/signup">Signup</ChakraLink>
+          <ChakraLink onClick={onSignupOpen}>Signup</ChakraLink>
         }
         </HStack>       
       </nav>
       <LoginModal
         isOpen={isLoginOpen}
         onClose={onLoginClose}
+      />
+      <SignupModal
+        isOpen={isSignupOpen}
+        onClose={onSignupClose}
       />
     </>
   );

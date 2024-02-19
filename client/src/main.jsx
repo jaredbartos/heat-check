@@ -6,7 +6,6 @@ import { ChakraProvider } from '@chakra-ui/react';
 
 import App from './App.jsx'
 import Home from './pages/Home.jsx';
-import SignupPage from './pages/SignupPage.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import SinglePlayer from './pages/SinglePlayer.jsx';
 import TeamsPage from './pages/TeamsPage.jsx';
@@ -20,10 +19,6 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />
-      },
-      {
-        path: '/signup',
-        element: <SignupPage />
       },
       {
         path: '/dashboard',

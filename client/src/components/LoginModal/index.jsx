@@ -18,7 +18,7 @@ import { useMutation } from '@apollo/client';
 import { LOGIN } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
-export default function LoginModal({ isOpen, onOpen, onClose }) {
+export default function LoginModal({ isOpen, onClose }) {
   const [login, { error: loginError }] = useMutation(LOGIN);
 
   return (
