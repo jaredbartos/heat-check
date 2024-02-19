@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import PlayersTable from '../components/PlayersTable';
 import Auth from '../utils/auth';
 import PlayerForm from '../components/PlayerForm';
-import TeamForm from '../components/TeamForm';
+import TeamModal from '../components/TeamModal';
 import {
   Heading,
   Text,

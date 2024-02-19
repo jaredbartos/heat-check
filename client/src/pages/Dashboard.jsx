@@ -1,7 +1,7 @@
 import { GET_ME } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 import TeamCard from '../components/TeamCard';
-import TeamForm from '../components/TeamForm';
+import TeamModal from '../components/TeamModal';
 import { useState, useEffect } from 'react';
 import {
   Heading,
@@ -10,14 +10,16 @@ import {
   WrapItem,
   Text,
   Button,
-  VStack
+  VStack,
+  useDisclosure
 } from '@chakra-ui/react';
 
 export default function Dashboard() {
   const { loading, data, error } = useQuery(GET_ME);
   const [teams, setTeams] = useState([]);
   const [players, setPlayers] = useState([]);
-  const [formVisible, setFormVisible] = useState(false);
+  // const [formVisible, setFormVisible] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     if (data) {
@@ -34,20 +36,12 @@ export default function Dashboard() {
           <Button
               mt={2}
               type="button"
-              onClick={() => setFormVisible(true)}
+              onClick={onOpen}
             >
               Add Team
           </Button>
         </VStack>
       </Center>
-      {
-        formVisible
-        &&
-        <TeamForm
-          makeFormInvisible={() => setFormVisible(false)}
-          action='create'  
-        />
-      }
       <Wrap m='auto' w='90%'>
         {
           teams.length
@@ -66,6 +60,11 @@ export default function Dashboard() {
           <Text>No teams have been added yet!</Text>
         }
       </Wrap>
+      <TeamModal
+        action='create'
+        isOpen={isOpen}
+        onClose={onClose}
+      />
     </>
   );
 }

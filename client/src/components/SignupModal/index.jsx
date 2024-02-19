@@ -54,13 +54,11 @@ export default function SignupModal({ isOpen, onClose }) {
         <ModalCloseButton />
         <ModalBody>
           <Formik
-            initialValues={
-              {
+            initialValues={{
                 username: '',
                 email: '',
                 password: ''
-              }
-            }
+            }}
             validate={validate}
             onSubmit={async ({ username, email, password }, { setSubmitting }) => {
               const { data } = await addUser({
@@ -71,6 +69,7 @@ export default function SignupModal({ isOpen, onClose }) {
                 }
               });
               Auth.login(data.addUser.token);
+              setSubmitting(false)
             }}
           >
             {props =>
