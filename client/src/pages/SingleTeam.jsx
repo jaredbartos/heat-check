@@ -14,18 +14,23 @@ import {
   Center,
   VStack,
   Button,
-  ButtonGroup
+  ButtonGroup,
+  useDisclosure
 } from '@chakra-ui/react';
 
 export default function SingleTeam() {
   const { id } = useParams();
   const [team, setTeam] = useState();
   const [playerFormVisible, setPlayerFormVisible] = useState(false)
-  const [teamFormVisible, setTeamFormVisible] = useState(false);
   const [deleteTeam] = useMutation(DELETE_TEAM);
   const { loading, data } = useQuery(GET_SINGLE_TEAM, {
     variables: { id }
   });
+  const {
+    isOpen: isTeamOpen,
+    onOpen: onTeamOpen,
+    onClose: onTeamClose
+  } = useDisclosure();
 
   // Set useEffect to set team value to prepare
   // for future retrieval from indexedDB for PWA
@@ -72,7 +77,7 @@ export default function SingleTeam() {
                 <ButtonGroup>
                   <Button
                     type="button"
-                    onClick={() => setTeamFormVisible(true)}
+                    onClick={onTeamOpen}
                   >
                     Edit Team
                   </Button>
@@ -86,15 +91,6 @@ export default function SingleTeam() {
               }
             </VStack>
           </Center>
-          {
-            teamFormVisible
-            &&
-            <TeamForm
-              makeFormInvisible={() => setTeamFormVisible(false)}
-              currentTeam={team}
-              action='update'
-            />
-          }
           {
             playerFormVisible
             &&
@@ -123,7 +119,13 @@ export default function SingleTeam() {
               </Button>
             </Center>
           }
-        </Box>       
+          <TeamModal
+            action='update'
+            currentTeam={team}
+            isOpen={isTeamOpen}
+            onClose={onTeamClose}
+          />
+        </Box>    
       }     
     </>
   );

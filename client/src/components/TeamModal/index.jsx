@@ -55,7 +55,7 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
 
   const handleFormSubmit = async (values, { setSubmitting }) => {
     const name = values.teamName;
-    // Set league as newTeamLeague value unless user chose to add custom name
+    // Set league as teamLeague value unless user chose to add custom name
     const league = values.teamLeague !== 'Enter New League Name'
       ?
       values.teamLeague
@@ -71,6 +71,8 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
             createdBy: Auth.getProfile().data._id
           }
         });
+        setSubmitting(false);
+        onClose();
       } catch (err) {
         console.log(err);
       }
@@ -83,13 +85,12 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
             league
           }
         });
+        setSubmitting(false);
+        onClose();
       } catch (err) {
         console.log(err);
       }
-    }
-
-    setSubmitting(false);
-    onClose();
+    }   
   };
 
   const getInitialValues = () => {
@@ -120,7 +121,7 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
       <ModalOverlay />
       <ModalContent p={4}>
           <ModalHeader>
-            {(action === 'create') ? 'Add Team' : 'Edit Team'}
+            {(action === 'create') ? 'Add New Team' : 'Edit Team'}
           </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
@@ -206,53 +207,5 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
         </ModalBody>
       </ModalContent>
     </Modal>
-
-
-
-
-
-    // <form onSubmit={handleFormSubmit}>
-    //   <label htmlFor="newTeamNameInput">
-    //     Name: 
-    //   </label>
-    //   <input
-    //     id="newTeamNameInput"
-    //     type="text"
-    //     name="newTeamName"
-    //     onChange={handleInputChange}
-    //     value={formState.newTeamName}
-    //   />
-    //   <label htmlFor="newTeamLeagueOption">
-    //     League: 
-    //   </label>
-    //   <select
-    //     onChange={handleInputChange}
-    //     value={formState.newTeamLeague}
-    //     name="newTeamLeague"
-    //   >
-    //     <option value="Independent">Independent</option>
-    //     {leagueOptions}       
-    //     <option value="Enter New League Name">Enter New League Name</option>
-    //   </select>
-    //   {
-    //     (formState.newTeamLeague === 'Enter New League Name')
-    //     &&
-    //     <input
-    //       id="customTeamLeagueInput"
-    //       onChange={handleInputChange}
-    //       type="text"
-    //       name="customTeamLeague"
-    //       value={formState.customTeamLeague}
-    //     />
-    //   }
-    //   {
-    //     action === 'create'
-    //     ?
-    //     <button type="submit" id="submitNewTeamBtn">Add Team</button>
-    //     :
-    //     <button type="submit" id="updateTeamBtn">Update Team</button>
-    //   }
-      
-    // </form>
   );
 }

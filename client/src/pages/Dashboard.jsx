@@ -17,16 +17,13 @@ import {
 export default function Dashboard() {
   const { loading, data, error } = useQuery(GET_ME);
   const [teams, setTeams] = useState([]);
-  const [players, setPlayers] = useState([]);
-  // const [formVisible, setFormVisible] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     if (data) {
       setTeams(data.me.teams);
-      setPlayers(data.me.players);
     }
-  }, [data, setTeams, setPlayers]);
+  }, [data, setTeams]);
 
   return (
     <>
