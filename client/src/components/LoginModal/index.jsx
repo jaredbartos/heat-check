@@ -14,7 +14,6 @@ import {
   Center
 } from '@chakra-ui/react';
 import { Formik, Form, Field } from 'formik';
-import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../../utils/mutations';
 import Auth from '../../utils/auth';
