@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../utils/mutations';
 import Auth from '../utils/auth';
-import LoginForm from '../components/LoginForm';
+// import LoginForm from '../components/LoginForm';
 
 export default function LoginPage() {
   const [formState, setFormState] = useState({

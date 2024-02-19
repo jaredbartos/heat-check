@@ -1,11 +1,19 @@
 import { Link as ReactRouterLink } from 'react-router-dom';
 import {
   Link as ChakraLink,
-  HStack
+  HStack,
+  useDisclosure
 } from '@chakra-ui/react';
 import Auth from '../../utils/auth';
+import LoginModal from '../LoginModal';
 
 export default function Nav() {
+  const {
+    isOpen: isLoginOpen,
+    onOpen: onLoginOpen,
+    onClose: onLoginClose
+  } = useDisclosure();
+
   return (
     <>
       <nav>
@@ -17,7 +25,7 @@ export default function Nav() {
           ?
           <ChakraLink as={ReactRouterLink} to="/dashboard">Your Dashboard</ChakraLink>
           :
-          <ChakraLink as={ReactRouterLink} to="/login">Login</ChakraLink>
+          <ChakraLink onClick={onLoginOpen}>Login</ChakraLink>
         }
         {
           Auth.loggedIn()
@@ -28,6 +36,10 @@ export default function Nav() {
         }
         </HStack>       
       </nav>
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={onLoginClose}
+      />
     </>
   );
 }
