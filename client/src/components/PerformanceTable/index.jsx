@@ -1,7 +1,7 @@
 import { formatDate } from '../../utils/dates';
 import { DELETE_PERFORMANCE } from '../../utils/mutations';
 import { GET_SINGLE_PLAYER } from '../../utils/queries';
-import PerformanceForm from '../PerformanceForm';
+import PerformanceModal from '../PerformanceModal';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
@@ -17,12 +17,14 @@ import {
   TableContainer,
   ButtonGroup,
   Button,
-  Box
+  Box,
+  useDisclosure,
+  Text
 } from '@chakra-ui/react';
 
 export default function PerformanceTable({ player }) {
-  const [formVisible, setFormVisible] = useState(false)
   const [selectedPerformance, setSelectedPerformance] = useState();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [deletePerformance] = useMutation(DELETE_PERFORMANCE, {
     refetchQueries: [
@@ -32,16 +34,19 @@ export default function PerformanceTable({ player }) {
 
   const handleDelete = async (e, id) => {
     e.preventDefault();
-    try {
-      await deletePerformance({
-        variables: {
-          _id: id
-        }
-      });
-    } catch (err) {
-      console.log(err);
+
+    if (confirm('Are you sure you want to delete this game?')) {
+      try {
+        await deletePerformance({
+          variables: {
+            _id: id
+          }
+        });
+      } catch (err) {
+        console.log(err);
+      }
     }
-  }
+  };
 
   // Create copy of performance array and sort it by date
   const performancesCopy = [...player.performances];
@@ -73,8 +78,8 @@ export default function PerformanceTable({ player }) {
                   type="button"
                   className="editPerformanceBtn"
                   onClick={() => {
-                      setFormVisible(true);
                       setSelectedPerformance(performance);
+                      onOpen();
                     }
                   }
                 >
@@ -97,7 +102,7 @@ export default function PerformanceTable({ player }) {
   return (
     <>
     {
-      player.performances
+      player.performances.length
       ?
       <Box w={1000}>
         <TableContainer>
@@ -125,18 +130,15 @@ export default function PerformanceTable({ player }) {
             </Tbody>    
           </Table>
         </TableContainer>
-        {
-          formVisible
-          &&
-          <PerformanceForm
-            makeFormInvisible={() => setFormVisible(false)}
-            currentPerformance={selectedPerformance}
-            action='update'
-          />
-        }
+        <PerformanceModal
+          currentPerformance={selectedPerformance}
+          action='update'
+          isOpen={isOpen}
+          onClose={onClose}
+        />
       </Box>
       :
-      <p>This player has no games played!</p>
+      <Text>This player has no games played!</Text>
     }    
     </>
   );

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { GET_SINGLE_PLAYER } from "../utils/queries";
 import { DELETE_PLAYER } from "../utils/mutations";
 import PerformanceTable from "../components/PerformanceTable";
-import PerformanceForm from "../components/PerformanceForm";
+import PerformanceModal from "../components/PerformanceModal";
 import PlayerModal from "../components/PlayerModal";
 import { useState, useEffect } from 'react';
 import Auth from '../utils/auth';
@@ -33,7 +33,11 @@ export default function SinglePlayer() {
     onOpen: onPlayerOpen,
     onClose: onPlayerClose
   } = useDisclosure();
-  const [perfFormVisible, setPerfFormVisible] = useState(false);
+  const {
+    isOpen: isPerformanceOpen,
+    onOpen: onPerformanceOpen,
+    onClose: onPerformanceClose
+  } = useDisclosure();
 
   // Set useEffect to set player value to prepare
   // for future retrieval from indexedDB for PWA
@@ -106,21 +110,12 @@ export default function SinglePlayer() {
             <Button
               size='xs'
               type='button'
-              onClick={() => setPerfFormVisible(true)}
+              onClick={onPerformanceOpen}
             >
               Add Game
             </Button>
           }
           </HStack>
-          {
-            perfFormVisible
-            &&
-            <PerformanceForm
-              currentPlayer={player}
-              action='create'
-              makeFormInvisible={() => setPerfFormVisible(false)}
-            />
-          }
           <PerformanceTable
             player={player}
           />
@@ -129,6 +124,12 @@ export default function SinglePlayer() {
             action='update'
             isOpen={isPlayerOpen}
             onClose={onPlayerClose}
+          />
+          <PerformanceModal
+            currentPlayer={player}
+            action='create'
+            isOpen={isPerformanceOpen}
+            onClose={onPerformanceClose}
           />
         </Box>     
       }      
