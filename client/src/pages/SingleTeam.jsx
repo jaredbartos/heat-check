@@ -5,7 +5,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import PlayersTable from '../components/PlayersTable';
 import Auth from '../utils/auth';
-import PlayerForm from '../components/PlayerForm';
+import PlayerModal from '../components/PlayerModal';
 import TeamModal from '../components/TeamModal';
 import {
   Heading,
@@ -21,7 +21,6 @@ import {
 export default function SingleTeam() {
   const { id } = useParams();
   const [team, setTeam] = useState();
-  const [playerFormVisible, setPlayerFormVisible] = useState(false)
   const [deleteTeam] = useMutation(DELETE_TEAM);
   const { loading, data } = useQuery(GET_SINGLE_TEAM, {
     variables: { id }
@@ -30,6 +29,11 @@ export default function SingleTeam() {
     isOpen: isTeamOpen,
     onOpen: onTeamOpen,
     onClose: onTeamClose
+  } = useDisclosure();
+  const {
+    isOpen: isPlayerOpen,
+    onOpen: onPlayerOpen,
+    onClose: onPlayerClose
   } = useDisclosure();
 
   // Set useEffect to set team value to prepare
@@ -92,15 +96,6 @@ export default function SingleTeam() {
             </VStack>
           </Center>
           {
-            playerFormVisible
-            &&
-            <PlayerForm
-              action='create'
-              makeFormInvisible={() => setPlayerFormVisible(false)}
-              currentTeam={team}
-            />
-          }
-          {
             team.players.length
             ?
             <PlayersTable team={team} />
@@ -113,7 +108,7 @@ export default function SingleTeam() {
             <Center mt={5}>
               <Button
                 type="button"
-                onClick={() => setPlayerFormVisible(true)}
+                onClick={onPlayerOpen}
               >
                 Add Player
               </Button>
@@ -124,6 +119,12 @@ export default function SingleTeam() {
             currentTeam={team}
             isOpen={isTeamOpen}
             onClose={onTeamClose}
+          />
+          <PlayerModal
+            action='create'
+            currentTeam={team}
+            isOpen={isPlayerOpen}
+            onClose={onPlayerClose}
           />
         </Box>    
       }     

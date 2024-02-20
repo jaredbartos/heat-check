@@ -4,7 +4,7 @@ import { GET_SINGLE_PLAYER } from "../utils/queries";
 import { DELETE_PLAYER } from "../utils/mutations";
 import PerformanceTable from "../components/PerformanceTable";
 import PerformanceForm from "../components/PerformanceForm";
-import PlayerForm from "../components/PlayerForm";
+import PlayerModal from "../components/PlayerModal";
 import { useState, useEffect } from 'react';
 import Auth from '../utils/auth';
 import { Link as ReactRouterLink } from 'react-router-dom';
@@ -17,7 +17,8 @@ import {
   VStack,
   HStack,
   Button,
-  ButtonGroup
+  ButtonGroup,
+  useDisclosure
 } from '@chakra-ui/react';
 
 export default function SinglePlayer() {
@@ -27,8 +28,12 @@ export default function SinglePlayer() {
   });
   const [deletePlayer] = useMutation(DELETE_PLAYER);
   const [player, setPlayer] = useState();
+  const {
+    isOpen: isPlayerOpen,
+    onOpen: onPlayerOpen,
+    onClose: onPlayerClose
+  } = useDisclosure();
   const [perfFormVisible, setPerfFormVisible] = useState(false);
-  const [playerFormVisible, setPlayerFormVisible] = useState(false);
 
   // Set useEffect to set player value to prepare
   // for future retrieval from indexedDB for PWA
@@ -81,7 +86,7 @@ export default function SinglePlayer() {
             <ButtonGroup mb={5}>
               <Button
                 type="button"
-                onClick={() => setPlayerFormVisible(true)}
+                onClick={onPlayerOpen}
               >
                 Edit Player
               </Button>
@@ -92,15 +97,6 @@ export default function SinglePlayer() {
                 Delete Player
               </Button>
             </ButtonGroup>
-          }
-          {
-            playerFormVisible
-            &&
-            <PlayerForm 
-              makeFormInvisible={() => setPlayerFormVisible(false)}
-              currentPlayer={player}
-              action='update'
-            />
           }
           <HStack>
           <Heading as='h3' size='md' mt={3} mb={3}>Game Log</Heading>
@@ -127,6 +123,12 @@ export default function SinglePlayer() {
           }
           <PerformanceTable
             player={player}
+          />
+          <PlayerModal
+            currentPlayer={player}
+            action='update'
+            isOpen={isPlayerOpen}
+            onClose={onPlayerClose}
           />
         </Box>     
       }      

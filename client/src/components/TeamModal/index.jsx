@@ -110,7 +110,7 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
     }
 
     return initialValues;
-  }
+  };
 
   const leagueOptions = leagues.map((league, index) => 
     <option key={index} value={league}>{league}</option>
@@ -120,9 +120,9 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent p={4}>
-          <ModalHeader>
-            {(action === 'create') ? 'Add New Team' : 'Edit Team'}
-          </ModalHeader>
+        <ModalHeader>
+          {(action === 'create') ? 'Add New Team' : `Edit ${currentTeam.name} (${currentTeam.league})`}
+        </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Formik
@@ -175,23 +175,12 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
                   }
                   <FormErrorMessage>Something went wrong. Please try again.</FormErrorMessage>
                   <ModalFooter pr={1}>
-                    {
-                      (action === 'create')
-                      ?
-                      <Button
-                        type='submit'
-                        isLoading={props.isSubmitting}
-                      >
-                        Add Team
-                      </Button>
-                      :
-                      <Button
-                        type='submit'
-                        isLoading={props.isSubmitting}
-                      >
-                        Update Team
-                      </Button>
-                    }
+                    <Button
+                      type='submit'
+                      isLoading={props.isSubmitting}
+                    >
+                      {(action === 'create') ? 'Add Team' : 'Update Team'}
+                    </Button>
                     <Button
                       type='button'
                       ml={3}
