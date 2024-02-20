@@ -39,11 +39,12 @@ export default function Dashboard() {
           </Button>
         </VStack>
       </Center>
-      <Wrap m='auto' w='90%'>
+      
         {
           teams.length
           ?
-          teams.map(team => 
+          <Wrap m='auto' w='90%'>
+          {teams.map(team => 
             <WrapItem key={team._id}>
               <TeamCard               
                 teamId={team._id}
@@ -51,12 +52,14 @@ export default function Dashboard() {
                 teamName={team.name}
                 league={team.league}
               />
-            </WrapItem>           
-          )
+            </WrapItem>
+          )}
+          </Wrap>
           :
-          <Text>No teams have been added yet!</Text>
+          <Center>
+            <Text fontSize='lg' my={20}>No teams have been added yet!</Text>
+          </Center>
         }
-      </Wrap>
       <TeamModal
         action='create'
         isOpen={isOpen}

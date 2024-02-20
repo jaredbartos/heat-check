@@ -112,6 +112,28 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
     return initialValues;
   };
 
+  const validate = values => {
+    const errors = {};
+
+    if (!values.teamName) {
+      errors.teamName = 'Name is required';
+    }
+
+    if (!values.teamLeague) {
+      errors.teamLeague = 'League is required';
+    }
+
+    if (
+      (values.teamLeague === 'Enter New League Name')
+      &&
+      !values.customTeamLeague  
+    ) {
+      errors.customTeamLeague = 'League is required'
+    }
+
+    return errors;
+  }
+
   const leagueOptions = leagues.map((league, index) => 
     <option key={index} value={league}>{league}</option>
   );
@@ -127,6 +149,7 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
         <ModalBody>
           <Formik
             initialValues={getInitialValues()}
+            validate={validate}
             onSubmit={handleFormSubmit}
           >
             {props =>
@@ -134,19 +157,22 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
                 <FormControl isInvalid={addTeamError || updateTeamError}>
                   <Field name='teamName'>
                     {({ field, form }) =>
-                      <FormControl>
+                      <FormControl isInvalid={form.errors.teamName && form.touched.teamName}>
                         <FormLabel>Team Name</FormLabel>
                         <Input
                           type='text'
                           { ...field }
                         />
+                        <FormErrorMessage>
+                          {form.errors.teamName}
+                        </FormErrorMessage>
                       </FormControl>
                     }
                   </Field>
                   <Field name='teamLeague'>
                     {({ field, form }) =>
-                      <FormControl>
-                        <FormLabel>League</FormLabel>
+                      <FormControl isInvalid={form.errors.teamLeague && form.touched.teamLeague}>
+                        <FormLabel mt={3}>League</FormLabel>
                         <Select
                           placeholder='Select League'
                           { ...field }
@@ -155,6 +181,9 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
                           <option value='Independent'>Independent</option>
                           <option value='Enter New League Name'>Enter New League Name</option>
                         </Select>
+                        <FormErrorMessage>
+                          {form.errors.teamLeague}
+                        </FormErrorMessage>
                       </FormControl>
                     }
                   </Field>
@@ -163,12 +192,15 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
                     &&
                     <Field name='customTeamLeague'>
                       {({ field, form }) =>
-                        <FormControl>
+                        <FormControl isInvalid={form.errors.customTeamLeague && form.touched.customTeamLeague}>
                           <Input
                             mt={2}
                             type='text'
                             { ...field }
                           />
+                          <FormErrorMessage>
+                            {form.errors.customTeamLeague}
+                          </FormErrorMessage>
                         </FormControl>
                       }
                     </Field>

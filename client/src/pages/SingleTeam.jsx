@@ -15,7 +15,7 @@ import {
   VStack,
   Button,
   ButtonGroup,
-  useDisclosure
+  useDisclosure,
 } from '@chakra-ui/react';
 
 export default function SingleTeam() {
@@ -57,7 +57,7 @@ export default function SingleTeam() {
         console.log(err);
       }
 
-      location.replace('/teams');
+      location.replace('/dashboard');
     }
   }
 
@@ -100,7 +100,9 @@ export default function SingleTeam() {
             ?
             <PlayersTable team={team} />
             :
-            <Text fontSize='lg' mt={2}>No players have been added yet!</Text>
+            <Center>
+              <Text fontSize='lg' my={20}>No players have been added yet!</Text>
+            </Center>
           }
           {
             (Auth.loggedIn() && Auth.getProfile().data._id === team.createdBy._id)
