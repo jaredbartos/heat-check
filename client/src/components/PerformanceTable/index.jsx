@@ -19,8 +19,12 @@ import {
   Button,
   Box,
   useDisclosure,
-  Text
+  Text,
+  Icon
 } from '@chakra-ui/react';
+import { IoMdAddCircle } from "react-icons/io";
+import { FaEdit } from "react-icons/fa";
+import { TiDelete } from "react-icons/ti";
 
 export default function PerformanceTable({ player }) {
   const [selectedPerformance, setSelectedPerformance] = useState();
@@ -85,7 +89,7 @@ export default function PerformanceTable({ player }) {
                     }
                   }
                 >
-                  Edit
+                  <Icon as={FaEdit} />
                 </Button>
                 <Button
                   boxShadow='xl'
@@ -94,7 +98,7 @@ export default function PerformanceTable({ player }) {
                   className="deletePerformanceBtn"
                   onClick={(e) => handleDelete(e, performance._id)}
                 >
-                  Delete
+                  <Icon as={TiDelete} boxSize={4} />
                 </Button>
               </ButtonGroup>
             </Td>

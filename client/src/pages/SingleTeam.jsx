@@ -16,7 +16,11 @@ import {
   Button,
   ButtonGroup,
   useDisclosure,
+  Icon
 } from '@chakra-ui/react';
+import { IoMdAddCircle } from "react-icons/io";
+import { FaEdit } from "react-icons/fa";
+import { TiDelete } from "react-icons/ti";
 
 export default function SingleTeam() {
   const { id } = useParams();
@@ -85,6 +89,10 @@ export default function SingleTeam() {
                     type="button"
                     onClick={onTeamOpen}
                   >
+                    <Icon
+                      as={FaEdit}
+                      mr={1}
+                    />
                     Edit Team
                   </Button>
                   <Button
@@ -93,6 +101,10 @@ export default function SingleTeam() {
                     type="button"
                     onClick={handleDelete}
                   >
+                    <Icon
+                      as={TiDelete}
+                      boxSize={6}
+                    />
                     Delete Team
                   </Button>
                 </ButtonGroup>
@@ -118,6 +130,10 @@ export default function SingleTeam() {
                 type="button"
                 onClick={onPlayerOpen}
               >
+                <Icon
+                  as={IoMdAddCircle}
+                  mr={1}
+                />
                 Add Player
               </Button>
             </Center>

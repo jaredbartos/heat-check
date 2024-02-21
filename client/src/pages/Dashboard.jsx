@@ -11,8 +11,10 @@ import {
   Text,
   Button,
   VStack,
-  useDisclosure
+  useDisclosure,
+  Icon
 } from '@chakra-ui/react';
+import { IoMdAddCircle } from "react-icons/io";
 
 export default function Dashboard() {
   const { loading, data, error } = useQuery(GET_ME);
@@ -41,6 +43,10 @@ export default function Dashboard() {
             type="button"
             onClick={onOpen}
           >
+            <Icon
+              as={IoMdAddCircle}
+              mr={1}
+            />
             Add Team
           </Button>
         </VStack>

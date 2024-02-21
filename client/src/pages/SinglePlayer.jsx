@@ -18,8 +18,12 @@ import {
   HStack,
   Button,
   ButtonGroup,
-  useDisclosure
+  useDisclosure,
+  Icon
 } from '@chakra-ui/react';
+import { IoMdAddCircle } from "react-icons/io";
+import { FaEdit } from "react-icons/fa";
+import { TiDelete } from "react-icons/ti";
 
 export default function SinglePlayer() {
   const { id } = useParams();
@@ -94,6 +98,10 @@ export default function SinglePlayer() {
                 type="button"
                 onClick={onPlayerOpen}
               >
+                <Icon
+                  as={FaEdit}
+                  mr={1}
+                />
                 Edit Player
               </Button>
               <Button
@@ -102,6 +110,10 @@ export default function SinglePlayer() {
                 type="button"
                 onClick={handleDelete}
               >
+                <Icon
+                  as={TiDelete}
+                  boxSize={6}
+                />
                 Delete Player
               </Button>
             </ButtonGroup>
@@ -118,6 +130,10 @@ export default function SinglePlayer() {
               type='button'
               onClick={onPerformanceOpen}
             >
+              <Icon
+                as={IoMdAddCircle}
+                mr={1}
+              />
               Add Game
             </Button>
           }
