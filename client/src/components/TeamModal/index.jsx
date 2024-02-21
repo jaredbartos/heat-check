@@ -142,7 +142,7 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent p={4}>
-        <ModalHeader>
+        <ModalHeader color='custom.blueGreen'>
           {(action === 'create') ? 'Add New Team' : `Edit ${currentTeam.name} (${currentTeam.league})`}
         </ModalHeader>
         <ModalCloseButton />
@@ -208,12 +208,15 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
                   <FormErrorMessage>Something went wrong. Please try again.</FormErrorMessage>
                   <ModalFooter pr={1}>
                     <Button
+                      colorScheme='blue'
+                      boxShadow='xl'
                       type='submit'
                       isLoading={props.isSubmitting}
                     >
                       {(action === 'create') ? 'Add Team' : 'Update Team'}
                     </Button>
                     <Button
+                      boxShadow='md'
                       type='button'
                       ml={3}
                       onClick={onClose}

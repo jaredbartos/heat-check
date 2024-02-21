@@ -134,7 +134,7 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent p={4}>
-        <ModalHeader>
+        <ModalHeader color='custom.blueGreen'>
           {(action === 'create') ? 'Add New Player' : `Edit ${currentPlayer.firstName} ${currentPlayer.lastName}`}
         </ModalHeader>
         <ModalCloseButton />
@@ -249,12 +249,15 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
                   </Field>
                   <ModalFooter pr={1}>
                     <Button
+                      colorScheme='blue'
+                      boxShadow='xl'
                       type='submit'
                       isLoading={props.isSubmitting}
                     >
                       {(action === 'create') ? 'Add Player' : 'Update Player'}
                     </Button>
                     <Button
+                      boxShadow='md'
                       type='button'
                       ml={3}
                       onClick={onClose}
@@ -269,96 +272,5 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
         </ModalBody>
       </ModalContent>
     </Modal>
-
-
-
-    // <form onSubmit={handleFormSubmit}>
-    //   <label htmlFor="firstNameInput">
-    //     First Name: 
-    //   </label>
-    //   <input
-    //     id="firstNameInput"
-    //     type="text"
-    //     name="firstName"
-    //     onChange={handleInputChange}
-    //     value={formState.firstName}
-    //   />
-    //   <label htmlFor="lastNameInput">
-    //     Last Name: 
-    //   </label>
-    //   <input
-    //     id="lastNameInput"
-    //     type="text"
-    //     name="lastName"
-    //     onChange={handleInputChange}
-    //     value={formState.lastName}
-    //   />
-    //   <label htmlFor="numberInput">
-    //     Number: 
-    //   </label>
-    //   <input
-    //     id="numberInput"
-    //     type="number"
-    //     name="number"
-    //     min="0"
-    //     max="99"
-    //     onChange={handleInputChange}
-    //     value={formState.number}
-    //   />
-    //   <label htmlFor="positionSelect">
-    //     Position: 
-    //   </label>
-    //   <select
-    //     onChange={handleInputChange}
-    //     value={formState.position}
-    //     id="positionSelect"
-    //     name="position"
-    //   >
-    //     <option value="Guard">Guard</option>
-    //     <option value="Forward">Forward</option>
-    //     <option value="Center">Center</option>
-    //   </select>
-    //   <label htmlFor="feetInput">
-    //     Height:  
-    //   </label>
-    //   <input
-    //     id="feetInput"
-    //     type="number"
-    //     min="3"
-    //     max="7"
-    //     name="feet"
-    //     onChange={handleInputChange}
-    //     value={formState.height.feet}
-    //   ></input>
-    //   feet 
-    //   <input
-    //     id="inchesInput"
-    //     type="number"
-    //     min="0"
-    //     max="11"
-    //     name="inches"
-    //     onChange={handleInputChange}
-    //     value={formState.height.inches}
-    //   />
-    //   inches 
-    //   <label htmlFor="weightInput">
-    //     Weight: 
-    //   </label>
-    //   <input
-    //     id="weightInput"
-    //     type="number"
-    //     min="0"
-    //     name="weight"
-    //     onChange={handleInputChange}
-    //     value={formState.weight}
-    //   />
-    //   {
-    //     action === 'create'
-    //     ?
-    //     <button type="submit" id="submitNewPlayerBtn">Add Player</button>
-    //     :
-    //     <button type="submit" id="updatePlayerBtn">Update Player</button>
-    //   }     
-    // </form>
   );
 }

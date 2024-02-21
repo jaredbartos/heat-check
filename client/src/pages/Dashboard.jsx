@@ -35,7 +35,7 @@ export default function Dashboard() {
         <VStack>
           <Heading as='h2' color='custom.blueGreen' size='lg'm={2}>Your Dashboard</Heading>
           <Button
-            boxShadow='lg'
+            boxShadow='xl'
             colorScheme='blue'
             mt={2}
             type="button"

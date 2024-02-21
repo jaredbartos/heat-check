@@ -80,7 +80,7 @@ export default function SingleTeam() {
                 &&
                 <ButtonGroup>
                   <Button
-                    boxShadow='lg'
+                    boxShadow='xl'
                     colorScheme='blue'
                     type="button"
                     onClick={onTeamOpen}
@@ -88,7 +88,7 @@ export default function SingleTeam() {
                     Edit Team
                   </Button>
                   <Button
-                    boxShadow='lg'
+                    boxShadow='xl'
                     colorScheme='red'
                     type="button"
                     onClick={handleDelete}
@@ -113,7 +113,7 @@ export default function SingleTeam() {
             &&
             <Center mt={5}>
               <Button
-                boxShadow='lg'
+                boxShadow='xl'
                 colorScheme='blue'
                 type="button"
                 onClick={onPlayerOpen}

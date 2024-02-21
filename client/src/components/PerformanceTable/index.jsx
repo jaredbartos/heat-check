@@ -75,7 +75,7 @@ export default function PerformanceTable({ player }) {
             <Td>
               <ButtonGroup size='xs'>
                 <Button
-                  boxShadow='lg'
+                  boxShadow='xl'
                   colorScheme='blue'
                   type="button"
                   className="editPerformanceBtn"
@@ -88,7 +88,7 @@ export default function PerformanceTable({ player }) {
                   Edit
                 </Button>
                 <Button
-                  boxShadow='lg'
+                  boxShadow='xl'
                   colorScheme='red'
                   type="button"
                   className="deletePerformanceBtn"

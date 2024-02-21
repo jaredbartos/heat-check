@@ -25,9 +25,7 @@ export default function LoginModal({ isOpen, onClose }) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent p={4}>
-        <Center>
-          <ModalHeader>Login</ModalHeader>
-        </Center>
+        <ModalHeader color='custom.blueGreen'>Login</ModalHeader>
         <ModalCloseButton />
         <ModalBody> 
           <Formik
@@ -75,12 +73,21 @@ export default function LoginModal({ isOpen, onClose }) {
                   <FormErrorMessage>Incorrect email or password</FormErrorMessage>
                   <ModalFooter pr={1}>
                     <Button
+                      boxShadow='xl'
+                      colorScheme='blue'
                       type='submit'
                       isLoading={props.isSubmitting}
                     >
                       Log in
                     </Button>
-                    <Button type="button" ml={3} onClick={onClose}>Cancel</Button>
+                    <Button
+                      boxShadow='md'
+                      type="button"
+                      ml={3}
+                      onClick={onClose}
+                    >
+                      Cancel
+                    </Button>
                   </ModalFooter>
                 </FormControl>
               </Form>

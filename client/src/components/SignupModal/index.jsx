@@ -48,9 +48,7 @@ export default function SignupModal({ isOpen, onClose }) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent p={4}>
-        <Center>
-          <ModalHeader>Signup</ModalHeader>
-        </Center>
+        <ModalHeader color='custom.blueGreen'>Sign Up</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Formik
@@ -114,12 +112,15 @@ export default function SignupModal({ isOpen, onClose }) {
                   </Field>
                   <ModalFooter pr={1}>
                     <Button
+                      colorScheme='blue'
+                      boxShadow='xl'
                       type='submit'
                       isLoading={props.isSubmitting}
                     >
                       Sign Up
                     </Button>
                     <Button
+                      boxShadow='md'
                       type='button'
                       ml={3}
                       onClick={onClose}

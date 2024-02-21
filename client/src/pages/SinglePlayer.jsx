@@ -89,7 +89,7 @@ export default function SinglePlayer() {
             &&
             <ButtonGroup mb={5}>
               <Button
-                boxShadow='lg'
+                boxShadow='xl'
                 colorScheme='blue'
                 type="button"
                 onClick={onPlayerOpen}
@@ -97,7 +97,7 @@ export default function SinglePlayer() {
                 Edit Player
               </Button>
               <Button
-                boxShadow='lg'
+                boxShadow='xl'
                 colorScheme='red'
                 type="button"
                 onClick={handleDelete}
@@ -112,7 +112,7 @@ export default function SinglePlayer() {
             (Auth.loggedIn() && Auth.getProfile().data._id === player.createdBy._id)
             &&
             <Button
-              boxShadow='lg'
+              boxShadow='xl'
               colorScheme='blue'
               size='xs'
               type='button'

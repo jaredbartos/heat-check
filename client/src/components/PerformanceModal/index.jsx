@@ -161,7 +161,7 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent p={4}>
-        <ModalHeader>
+        <ModalHeader color='custom.blueGreen'>
           {(action === 'create') ? 'Add Game' : 'Edit Game'}
         </ModalHeader>
         <ModalCloseButton />
@@ -254,12 +254,15 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
                   </FormErrorMessage>
                   <ModalFooter pr={1}>
                     <Button
+                      colorScheme='blue'
+                      boxShadow='xl'
                       type='submit'
                       isLoading={props.isSubmitting}
                     >
                       {(action === 'create') ? 'Add Game' : 'Update Game'}
                     </Button>
                     <Button
+                      boxShadow='md'
                       type='button'
                       ml={3}
                       onClick={onClose}
