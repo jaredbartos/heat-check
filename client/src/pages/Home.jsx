@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { GET_RECENTLY_UPDATED_TEAMS } from '../utils/queries';
+import { GET_RECENTLY_UPDATED_TEAMS, GET_RANKED_PERFORMANCES } from '../utils/queries';
 import {
   Heading,
   Center,
@@ -8,6 +8,7 @@ import {
   Text
 } from '@chakra-ui/react';
 import TeamCard from '../components/TeamCard';
+import PerformanceTable from '../components/PerformanceTable';
 import { useState, useEffect } from 'react';
 
 export default function Home() {
@@ -17,12 +18,21 @@ export default function Home() {
     error: teamError
   } = useQuery(GET_RECENTLY_UPDATED_TEAMS);
   const [teams, setTeams] = useState([]);
+  const [performances, setPerformances] = useState([]);
+
+  const {
+    loading: loadingPerformances,
+    data: performancesData
+  } = useQuery(GET_RANKED_PERFORMANCES, { variables: { field: 'points' } })
 
   useEffect(() => {
     if (teamData) {
       setTeams(teamData.recentlyUpdatedTeams);
     }
-  }, [teamData, setTeams]);
+    if (performancesData) {
+      setPerformances(performancesData.rankPerformanceByField);
+    }
+  }, [teamData, performancesData, setTeams, setPerformances]);
 
 
   return (
@@ -52,6 +62,17 @@ export default function Home() {
           <Text fontSize='lg' my={20}>No teams have been added yet!</Text>
         </Center>
       }
+
+      <Center h={100}>
+        <Heading as='h2' color='custom.blueGreen' size='lg'>
+          Highest Scoring Games By Players
+        </Heading>
+      </Center>
+      <Center>
+        <PerformanceTable
+          performances={performances}
+        />
+      </Center>      
     </>
   )
 }

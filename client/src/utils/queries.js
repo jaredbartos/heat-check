@@ -166,6 +166,12 @@ export const GET_RANKED_PERFORMANCES = gql`
           league
         }
       }
+      date
+      createdBy {
+        _id
+        username
+        email
+      }
     }
   }
 `;

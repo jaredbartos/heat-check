@@ -75,6 +75,7 @@ const resolvers = {
           path: 'player',
           populate: { path: 'team' }
         })
+        .populate('createdBy')
         .sort({ [field]: -1 })
         .limit(10);
     },
