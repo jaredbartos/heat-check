@@ -24,23 +24,23 @@ export default function Nav() {
   return (
     <>
       <nav>
-        <HStack spacing={12}>
-        <ChakraLink as={ReactRouterLink} to="/">Home</ChakraLink>
-        <ChakraLink as={ReactRouterLink} to="/teams">Teams</ChakraLink>
-        {
-          Auth.loggedIn()
-          ?
-          <ChakraLink as={ReactRouterLink} to="/dashboard">Your Dashboard</ChakraLink>
-          :
-          <ChakraLink onClick={onLoginOpen}>Login</ChakraLink>
-        }
-        {
-          Auth.loggedIn()
-          ?
-          <ChakraLink href="/" id="logout" onClick={() => Auth.logout()}>Logout</ChakraLink>
-          :
-          <ChakraLink onClick={onSignupOpen}>Signup</ChakraLink>
-        }
+        <HStack color='custom.blueGreen' spacing={12}>
+          <ChakraLink as={ReactRouterLink} to="/">Home</ChakraLink>
+          <ChakraLink as={ReactRouterLink} to="/teams">Teams</ChakraLink>
+          {
+            Auth.loggedIn()
+            ?
+            <ChakraLink as={ReactRouterLink} to="/dashboard">Your Dashboard</ChakraLink>
+            :
+            <ChakraLink onClick={onLoginOpen}>Login</ChakraLink>
+          }
+          {
+            Auth.loggedIn()
+            ?
+            <ChakraLink href="/" id="logout" onClick={() => Auth.logout()}>Logout</ChakraLink>
+            :
+            <ChakraLink onClick={onSignupOpen}>Signup</ChakraLink>
+          }
         </HStack>       
       </nav>
       <LoginModal

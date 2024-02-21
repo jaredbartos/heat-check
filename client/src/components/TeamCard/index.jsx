@@ -37,12 +37,20 @@ export default function TeamCard({ teamId, players, teamName, league }) {
 
   return (
     <>
-      <Box m={5} p={5} borderWidth={2} w={432} borderRadius={20}>
+      <Box
+        m={5}
+        p={0}
+        borderWidth={2}
+        w={432}
+        borderRadius={20}
+        boxShadow='xl'
+      >
         <ChakraLink
+          color='white'
           as={ReactRouterLink}
           to={`/team/${teamId}`}
           >
-            <Heading as='h3' size='md' mb={3} textAlign='center'>
+            <Heading as='h3' borderTopRadius={20} bgColor='custom.red' size='md' pb={3} pt={2} textAlign='center'>
               {teamName} ({league})
             </Heading>
         </ChakraLink>
@@ -51,11 +59,11 @@ export default function TeamCard({ teamId, players, teamName, league }) {
           ?
           <TableContainer>
             <Table variant='simple'>
-              <Thead>
+              <Thead bgColor='custom.red'>
                 <Tr>
-                  <Th>Number</Th>
-                  <Th>Name</Th>
-                  <Th>Position</Th>
+                  <Th color='white'>Number</Th>
+                  <Th color='white'>Name</Th>
+                  <Th color='white'>Position</Th>
                 </Tr>
               </Thead>
               <Tbody>

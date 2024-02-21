@@ -37,15 +37,20 @@ export default function PlayersTable({ team }) {
   })
 
   return (
-    <TableContainer mt={5}>
+    <TableContainer
+      boxShadow='md'
+      borderWidth={2}
+      borderRadius={20}
+      mt={5}
+    >
     <Table variant='simple'>
-      <Thead>
+      <Thead bgColor='custom.red'>
         <Tr>
-          <Th>Number</Th>
-          <Th>Name</Th>
-          <Th>Position</Th>
-          <Th>Height</Th>
-          <Th>Weight</Th>
+          <Th color='white'>Number</Th>
+          <Th color='white'>Name</Th>
+          <Th color='white'>Position</Th>
+          <Th color='white'>Height</Th>
+          <Th color='white'>Weight</Th>
         </Tr>
       </Thead>
       <Tbody>

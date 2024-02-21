@@ -33,13 +33,15 @@ export default function Dashboard() {
     <>
       <Center h={100} mb={10}>
         <VStack>
-          <Heading as='h2' size='lg'm={2}>Your Dashboard</Heading>
+          <Heading as='h2' color='custom.blueGreen' size='lg'm={2}>Your Dashboard</Heading>
           <Button
-              mt={2}
-              type="button"
-              onClick={onOpen}
-            >
-              Add Team
+            boxShadow='lg'
+            colorScheme='blue'
+            mt={2}
+            type="button"
+            onClick={onOpen}
+          >
+            Add Team
           </Button>
         </VStack>
       </Center>

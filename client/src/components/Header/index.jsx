@@ -11,7 +11,7 @@ export default function Header() {
   return (
     <header>
       <Flex w="95%" ml={2} mb={10} alignItems="flex-end"  h={50}>
-        <ChakraLink as={ReactRouterLink} to="/">
+        <ChakraLink color='custom.red' as={ReactRouterLink} to="/">
           <Heading as='h1'>HeatCheck</Heading>
         </ChakraLink>
         <Spacer />

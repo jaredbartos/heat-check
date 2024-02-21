@@ -73,19 +73,23 @@ export default function SingleTeam() {
         <Box m={12}>
           <Center>
             <VStack>
-              <Heading as='h2' mb={2} size='lg'>{team.name}</Heading>
+              <Heading as='h2' color='custom.blueGreen' mb={2} size='lg'>{team.name}</Heading>
               <Text fontSize='xl' mb={2}>League: {team.league}</Text>
               {
                 (Auth.loggedIn() && Auth.getProfile().data._id === team.createdBy._id)
                 &&
                 <ButtonGroup>
                   <Button
+                    boxShadow='lg'
+                    colorScheme='blue'
                     type="button"
                     onClick={onTeamOpen}
                   >
                     Edit Team
                   </Button>
                   <Button
+                    boxShadow='lg'
+                    colorScheme='red'
                     type="button"
                     onClick={handleDelete}
                   >
@@ -109,6 +113,8 @@ export default function SingleTeam() {
             &&
             <Center mt={5}>
               <Button
+                boxShadow='lg'
+                colorScheme='blue'
                 type="button"
                 onClick={onPlayerOpen}
               >

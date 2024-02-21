@@ -75,6 +75,8 @@ export default function PerformanceTable({ player }) {
             <Td>
               <ButtonGroup size='xs'>
                 <Button
+                  boxShadow='lg'
+                  colorScheme='blue'
                   type="button"
                   className="editPerformanceBtn"
                   onClick={() => {
@@ -86,6 +88,8 @@ export default function PerformanceTable({ player }) {
                   Edit
                 </Button>
                 <Button
+                  boxShadow='lg'
+                  colorScheme='red'
                   type="button"
                   className="deletePerformanceBtn"
                   onClick={(e) => handleDelete(e, performance._id)}
@@ -104,25 +108,26 @@ export default function PerformanceTable({ player }) {
     {
       player.performances.length
       ?
-      <Box w={1000}>
-        <TableContainer>
+      <Box w={1020}>
+        <TableContainer borderWidth={2} borderRadius={20} boxShadow='md'>
           <Table size='sm'>
-            <Thead>
+            <Thead bgColor='custom.red'>
               <Tr>
-                <Th>DATE</Th>
-                <Th>FGA</Th>
-                <Th>FGM</Th>
-                <Th>3PA</Th>
-                <Th>3PM</Th>
-                <Th>FTA</Th>
-                <Th>FTM</Th>
-                <Th>OREB</Th>
-                <Th>TREB</Th>
-                <Th>AST</Th>
-                <Th>STL</Th>
-                <Th>BLK</Th>
-                <Th>TO</Th>
-                <Th>PTS</Th>
+                <Th color='white'>DATE</Th>
+                <Th color='white'>FGA</Th>
+                <Th color='white'>FGM</Th>
+                <Th color='white'>3PA</Th>
+                <Th color='white'>3PM</Th>
+                <Th color='white'>FTA</Th>
+                <Th color='white'>FTM</Th>
+                <Th color='white'>OREB</Th>
+                <Th color='white'>TREB</Th>
+                <Th color='white'>AST</Th>
+                <Th color='white'>STL</Th>
+                <Th color='white'>BLK</Th>
+                <Th color='white'>TO</Th>
+                <Th color='white'>PTS</Th>
+                <Th></Th>
               </Tr>
             </Thead>
             <Tbody>

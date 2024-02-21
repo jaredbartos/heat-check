@@ -74,7 +74,7 @@ export default function SinglePlayer() {
         player
         &&
         <Box m={12}>
-          <Heading as='h2' size='lg' mb={2}>{player.firstName} {player.lastName} #{player.number}</Heading>
+          <Heading color='custom.blueGreen' as='h2' size='lg' mb={2}>{player.firstName} {player.lastName} #{player.number}</Heading>
           <Text fontSize='xl' mb={2}>
             Team:{' '}
             <ChakraLink as={ReactRouterLink} to={`/team/${player.team._id}`}>
@@ -89,12 +89,16 @@ export default function SinglePlayer() {
             &&
             <ButtonGroup mb={5}>
               <Button
+                boxShadow='lg'
+                colorScheme='blue'
                 type="button"
                 onClick={onPlayerOpen}
               >
                 Edit Player
               </Button>
               <Button
+                boxShadow='lg'
+                colorScheme='red'
                 type="button"
                 onClick={handleDelete}
               >
@@ -103,11 +107,13 @@ export default function SinglePlayer() {
             </ButtonGroup>
           }
           <HStack>
-          <Heading as='h3' size='md' mt={3} mb={3}>Game Log</Heading>
+          <Heading as='h3' size='md' color='custom.blueGreen' mt={3} mb={3}>Game Log</Heading>
           {
             (Auth.loggedIn() && Auth.getProfile().data._id === player.createdBy._id)
             &&
             <Button
+              boxShadow='lg'
+              colorScheme='blue'
               size='xs'
               type='button'
               onClick={onPerformanceOpen}
