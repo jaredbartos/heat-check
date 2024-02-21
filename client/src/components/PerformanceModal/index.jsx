@@ -23,12 +23,12 @@ import {
 import { Formik, Form, Field } from 'formik';
 
 export default function PerformanceModal({ action, currentPlayer, currentPerformance, isOpen, onClose }) {
-  const [addPerformance] = useMutation(ADD_PERFORMANCE, {
+  const [addPerformance, { error: addPerformanceError }] = useMutation(ADD_PERFORMANCE, {
     refetchQueries: [
       GET_SINGLE_PLAYER
     ]
   });
-  const [updatePerformance] = useMutation(UPDATE_PERFORMANCE, {
+  const [updatePerformance, { error: updatePerformanceError }] = useMutation(UPDATE_PERFORMANCE, {
     refetchQueries: [
       GET_SINGLE_PLAYER
     ]
@@ -134,7 +134,7 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
     return (
       <Field name={fieldName}>
         {({ field, form }) =>
-          <FormControl>
+          <FormControl isRequired>
             <FormLabel>{labelName}</FormLabel>
             <Input
               w={14}
@@ -146,6 +146,16 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
       </Field>
     );
   };
+
+  const validate = values => {
+    const errors = {};
+
+    if (!values.date) {
+      errors.date = 'Date is required';
+    }
+
+    return errors;
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -159,19 +169,23 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
           <Formik
             initialValues={getInitialValues()}
             onSubmit={handleFormSubmit}
+            validate={validate}
           >
             {props =>
               <Form>
-                <FormControl>
+                <FormControl isInvalid={addPerformanceError || updatePerformanceError}>
                   <Field name='date'>
                     {({ field, form }) =>
-                      <FormControl>
+                      <FormControl isRequired isInvalid={form.errors.date && form.touched.date}>
                         <FormLabel>Date</FormLabel>
                         <Input
                           w={40}
                           type='date'
                           { ...field }
                         />
+                        <FormErrorMessage>
+                          {form.errors.date}
+                        </FormErrorMessage>
                       </FormControl>
                     }
                   </Field>
@@ -235,6 +249,9 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
                       labelName='PTS'
                     />
                   </HStack>
+                  <FormErrorMessage>
+                    Make sure all required fields are filled
+                  </FormErrorMessage>
                   <ModalFooter pr={1}>
                     <Button
                       type='submit'

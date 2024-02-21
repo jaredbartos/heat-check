@@ -88,6 +88,7 @@ const performanceSchema = new Schema(
     },
     date: {
       type: Date,
+      required: true,
       set: (timestamp) => new Date(timestamp)
     },
     createdBy: {

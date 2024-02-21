@@ -15,7 +15,7 @@ const typeDefs = `
     turnovers: Int!
     points: Int!
     player: Player!
-    date: String
+    date: String!
     createdBy: ID
   }
 
