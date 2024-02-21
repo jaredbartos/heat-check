@@ -138,3 +138,66 @@ export const GET_RECENTLY_UPDATED_TEAMS = gql`
     }
   }
 `;
+
+export const GET_RANKED_PERFORMANCES = gql`
+  query getRankedPerformances($field: String!) {
+    rankPerformanceByField(field: $field) {
+      _id
+      fgAtt
+      fgMade
+      threePtAtt
+      threePtMade
+      ftAtt
+      ftMade
+      offReb
+      rebounds
+      assists
+      steals
+      blocks
+      turnovers
+      points
+      player {
+        _id
+        firstName
+        lastName
+        team {
+          _id
+          name
+          league
+        }
+      }
+    }
+  }
+`;
+
+export const GET_PERFORMANCES_BY_PLAYER = gql`
+  query getPerformancesByPlayer($id: ID!) {
+    performancesByPlayer(_id: $id) {
+      _id
+      fgAtt
+      fgMade
+      threePtAtt
+      threePtMade
+      ftAtt
+      ftMade
+      offReb
+      rebounds
+      assists
+      steals
+      blocks
+      turnovers
+      points
+      player {
+        _id
+        firstName
+        lastName
+      }
+      date
+      createdBy {
+        _id
+        username
+        email
+      }
+    }
+  }
+`;

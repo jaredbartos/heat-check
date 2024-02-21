@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
-import { GET_SINGLE_PLAYER } from "../utils/queries";
+import { GET_SINGLE_PLAYER, GET_PERFORMANCES_BY_PLAYER } from "../utils/queries";
 import { DELETE_PLAYER } from "../utils/mutations";
 import PerformanceTable from "../components/PerformanceTable";
 import PerformanceModal from "../components/PerformanceModal";
@@ -27,11 +27,19 @@ import { TiDelete } from "react-icons/ti";
 
 export default function SinglePlayer() {
   const { id } = useParams();
-  const { loading, data, error } = useQuery(GET_SINGLE_PLAYER, {
-    variables: { id }
-  });
+  const {
+    loading: loadingPlayer,
+    data: playerData,
+  } = useQuery(GET_SINGLE_PLAYER, { variables: { id } });
+
+  const {
+    loading: loadingPerformances,
+    data: performancesData,
+  } = useQuery(GET_PERFORMANCES_BY_PLAYER, { variables: { id } });
+
   const [deletePlayer] = useMutation(DELETE_PLAYER);
   const [player, setPlayer] = useState();
+  const [performances, setPerformances] = useState([]);
   const {
     isOpen: isPlayerOpen,
     onOpen: onPlayerOpen,
@@ -46,10 +54,13 @@ export default function SinglePlayer() {
   // Set useEffect to set player value to prepare
   // for future retrieval from indexedDB for PWA
   useEffect(() => {
-    if (data) {
-      setPlayer(data.player);
+    if (playerData) {
+      setPlayer(playerData.player);
     }
-  }, [data, setPlayer]);
+    if (performancesData) {
+      setPerformances(performancesData.performancesByPlayer)
+    }
+  }, [playerData, performancesData, setPlayer, setPerformances]);
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -68,7 +79,7 @@ export default function SinglePlayer() {
     }  
   };
 
-  if (loading) {
+  if (loadingPlayer || loadingPerformances) {
     return <h3>Loading...</h3>
   }
 
@@ -139,7 +150,7 @@ export default function SinglePlayer() {
           }
           </HStack>
           <PerformanceTable
-            player={player}
+            performances={performances}
           />
           <PlayerModal
             currentPlayer={player}

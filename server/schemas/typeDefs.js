@@ -16,7 +16,7 @@ const typeDefs = `
     points: Int!
     player: Player!
     date: String!
-    createdBy: ID
+    createdBy: User
   }
 
   input PerformanceInput {
@@ -88,7 +88,9 @@ const typeDefs = `
     players: [Player]
     player(_id: ID!): Player
     performances: [Performance]
+    performancesByPlayer(_id: ID!): [Performance]
     performance(_id: ID!): Performance
+    rankPerformanceByField(field: String!): [Performance]
     me: User
   }
 

@@ -49,6 +49,12 @@ const resolvers = {
         .populate('player')
         .populate('createdBy');
     },
+    performancesByPlayer: async (parent, { _id }) => {
+      return await Performance.find({ player: _id })
+        .populate('player')
+        .populate('createdBy')
+        .sort({ date: -1 });
+    },
     performance: async (parent, { _id }) => {
       const performance = await Performance.findById(_id)
         .populate({
@@ -62,6 +68,15 @@ const resolvers = {
       }
 
       return performance;
+    },
+    rankPerformanceByField: async (parent, { field }) => {
+      return await Performance.find()
+        .populate({
+          path: 'player',
+          populate: { path: 'team' }
+        })
+        .sort({ [field]: -1 })
+        .limit(10);
     },
     me: async (parent, args, context) => {
       if (context.user) {

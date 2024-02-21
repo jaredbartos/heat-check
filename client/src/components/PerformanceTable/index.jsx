@@ -1,6 +1,6 @@
 import { formatDate } from '../../utils/dates';
 import { DELETE_PERFORMANCE } from '../../utils/mutations';
-import { GET_SINGLE_PLAYER } from '../../utils/queries';
+import { GET_PERFORMANCES_BY_PLAYER, GET_SINGLE_PLAYER } from '../../utils/queries';
 import PerformanceModal from '../PerformanceModal';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
@@ -22,17 +22,17 @@ import {
   Text,
   Icon
 } from '@chakra-ui/react';
-import { IoMdAddCircle } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
 import { TiDelete } from "react-icons/ti";
 
-export default function PerformanceTable({ player }) {
+export default function PerformanceTable({ performances }) {
   const [selectedPerformance, setSelectedPerformance] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [deletePerformance] = useMutation(DELETE_PERFORMANCE, {
     refetchQueries: [
-      GET_SINGLE_PLAYER
+      GET_SINGLE_PLAYER,
+      GET_PERFORMANCES_BY_PLAYER
     ]
   });
 
@@ -52,10 +52,8 @@ export default function PerformanceTable({ player }) {
     }
   };
 
-  // Create copy of performance array and sort it by date
-  const performancesCopy = [...player.performances];
-  const sortedPerformances = performancesCopy.sort((a, b) => Number(b.date) - Number(a.date));
-  const performanceList = sortedPerformances.map((performance) => {
+  // Create rows for performances
+  const performanceList = performances.map((performance) => {
     return (
       <Tr key={performance._id}>
         <Td>{formatDate(performance.date)}</Td>
@@ -74,8 +72,8 @@ export default function PerformanceTable({ player }) {
         <Td isNumeric>{performance.points}</Td>
           {
             // Only allow user to edit or delete if they created the entry
-            (Auth.loggedIn() && Auth.getProfile().data._id === player.createdBy._id)
-            &&
+            (Auth.loggedIn() && Auth.getProfile().data._id === performance.createdBy._id)
+            ?
             <Td>
               <ButtonGroup size='xs'>
                 <Button
@@ -102,6 +100,8 @@ export default function PerformanceTable({ player }) {
                 </Button>
               </ButtonGroup>
             </Td>
+            :
+            <Td></Td>
             }
       </Tr>
     );
@@ -110,7 +110,7 @@ export default function PerformanceTable({ player }) {
   return (
     <>
     {
-      player.performances.length
+      performances.length
       ?
       <Box w={1020}>
         <TableContainer borderWidth={2} borderRadius={20} boxShadow='md'>
@@ -131,11 +131,7 @@ export default function PerformanceTable({ player }) {
                 <Th color='white'>BLK</Th>
                 <Th color='white'>TO</Th>
                 <Th color='white'>PTS</Th>
-                {
-                  (Auth.loggedIn() && Auth.getProfile().data._id === player.createdBy._id)
-                  &&
-                  <Th></Th>
-                }                
+                <Th></Th>          
               </Tr>
             </Thead>
             <Tbody>
