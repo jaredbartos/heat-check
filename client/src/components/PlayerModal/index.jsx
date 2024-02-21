@@ -117,6 +117,19 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
     return initialValues;
   };
 
+  const validate = values => {
+    const errors = {};
+
+    if (!values.firstName) {
+      errors.firstName = 'First name is required'
+    }
+    if (!values.position) {
+      errors.position = 'Position is required'
+    }
+
+    return errors;
+  }
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -129,18 +142,22 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
           <Formik
             initialValues={getInitialValues()}
             onSubmit={handleFormSubmit}
+            validate={validate}
           >
             {props =>
               <Form>
                 <FormControl>
                   <Field name='firstName'>
                     {({ field, form }) =>
-                      <FormControl>
+                      <FormControl isRequired isInvalid={form.errors.firstName && form.touched.firstName}>
                         <FormLabel>First Name</FormLabel>
                         <Input
                           type='text'
                           { ...field }
                         />
+                        <FormErrorMessage>
+                          {form.errors.firstName}
+                        </FormErrorMessage>
                       </FormControl>
                     }
                   </Field>
@@ -168,7 +185,7 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
                   </Field>
                   <Field name='position'>
                     {({ field, form }) =>
-                      <FormControl>
+                      <FormControl isRequired isInvalid={form.errors.position && form.touched.position}>
                         <FormLabel>Position</FormLabel>
                         <Select
                           placeholder='Select Position'
@@ -178,6 +195,9 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
                           <option value='Forward'>Forward</option>
                           <option value='Center'>Center</option>
                         </Select>
+                        <FormErrorMessage>
+                          {form.errors.position}
+                        </FormErrorMessage>
                       </FormControl>
                     }
                   </Field>
@@ -204,7 +224,7 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
                       <FormControl>
                         <InputGroup>
                           <Input
-                            w={20}
+                            w={14}
                             type='number'
                             { ...field }
                           />

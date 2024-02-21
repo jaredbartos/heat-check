@@ -157,7 +157,7 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
                 <FormControl isInvalid={addTeamError || updateTeamError}>
                   <Field name='teamName'>
                     {({ field, form }) =>
-                      <FormControl isInvalid={form.errors.teamName && form.touched.teamName}>
+                      <FormControl isRequired isInvalid={form.errors.teamName && form.touched.teamName}>
                         <FormLabel>Team Name</FormLabel>
                         <Input
                           type='text'
@@ -171,7 +171,7 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
                   </Field>
                   <Field name='teamLeague'>
                     {({ field, form }) =>
-                      <FormControl isInvalid={form.errors.teamLeague && form.touched.teamLeague}>
+                      <FormControl isRequired isInvalid={form.errors.teamLeague && form.touched.teamLeague}>
                         <FormLabel mt={3}>League</FormLabel>
                         <Select
                           placeholder='Select League'

@@ -25,6 +25,10 @@ export default function Dashboard() {
     }
   }, [data, setTeams]);
 
+  if (loading) {
+    <h3>Loading...</h3>
+  }
+
   return (
     <>
       <Center h={100} mb={10}>
