@@ -29,9 +29,7 @@ export default function TeamCard({ teamId, players, teamName, league }) {
           </ChakraLink>
         </Td>
         <Td>{player.position}</Td>
-      </Tr>
-      
-      
+      </Tr>     
     );
   });
 
@@ -57,7 +55,7 @@ export default function TeamCard({ teamId, players, teamName, league }) {
         {
           players.length
           ?
-          <TableContainer>
+          <TableContainer borderBottomRadius={20}>
             <Table variant='simple'>
               <Thead bgColor='custom.red'>
                 <Tr>

@@ -131,7 +131,11 @@ export default function PerformanceTable({ player }) {
                 <Th color='white'>BLK</Th>
                 <Th color='white'>TO</Th>
                 <Th color='white'>PTS</Th>
-                <Th></Th>
+                {
+                  (Auth.loggedIn() && Auth.getProfile().data._id === player.createdBy._id)
+                  &&
+                  <Th></Th>
+                }                
               </Tr>
             </Thead>
             <Tbody>

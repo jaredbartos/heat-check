@@ -84,6 +84,7 @@ const typeDefs = `
   type Query {
     teams: [Team]
     team(_id: ID!): Team
+    recentlyUpdatedTeams: [Team]
     players: [Player]
     player(_id: ID!): Player
     performances: [Performance]

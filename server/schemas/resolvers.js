@@ -20,6 +20,13 @@ const resolvers = {
 
       return team;
     },
+    recentlyUpdatedTeams: async () => {
+      return await Team.find()
+        .populate('players')
+        .populate('createdBy')
+        .sort({ updatedAt: -1 })
+        .limit(3);
+    },
     players: async () => {
       return await Player.find()
         .populate('team')

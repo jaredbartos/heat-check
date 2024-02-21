@@ -5,11 +5,9 @@ const { definePartsStyle, defineMultiStyleConfig } =
 createMultiStyleConfigHelpers(tableAnatomy.keys)
 
 const baseStyle = definePartsStyle({
-// define the part you're going to style
-th: {
-  // fontFamily: 'mono', // change the font family
-  // color: '', // change the td text color
-},
+tbody: {
+  bgColor: 'white'
+}
 })
 
 export const tableTheme = defineMultiStyleConfig({ baseStyle })

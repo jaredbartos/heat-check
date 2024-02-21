@@ -18,7 +18,7 @@ export default function TeamsPage() {
   // Declare state variables for holding the teams and form values
   const [teams, setTeams] = useState([]);
 
-  // Use database data to set teams and league states
+  // Use database data to set teams
   useEffect(() => {
     if (data) {
       setTeams(data.teams);
@@ -34,24 +34,26 @@ export default function TeamsPage() {
       <Center h={100}>
         <Heading as='h2' color='custom.blueGreen' size='lg'>Teams</Heading>
       </Center>
-      <Wrap m='auto' w='90%'>
-        {
-          teams.length
-          ?
-          teams.map(team => 
-            <WrapItem key={team._id}>
-              <TeamCard               
-                teamId={team._id}
-                players={team.players}
-                teamName={team.name}
-                league={team.league}
-              />
-            </WrapItem>           
-          )
-          :
-          <Text>No teams have been added yet!</Text>
-        }
-      </Wrap>
+      {
+        teams.length
+        ?
+        <Wrap m='auto' w={[400, null, null, 900, null, 1300]}>
+        {teams.map(team => 
+          <WrapItem w={400} key={team._id}>
+            <TeamCard               
+              teamId={team._id}
+              players={team.players}
+              teamName={team.name}
+              league={team.league}
+            />
+          </WrapItem>
+        )}
+        </Wrap>
+        :
+        <Center>
+          <Text fontSize='lg' my={20}>No teams have been added yet!</Text>
+        </Center>
+      }
       
     </>
   );

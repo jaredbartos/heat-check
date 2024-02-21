@@ -75,7 +75,7 @@ export default function SingleTeam() {
         team
         &&
         <Box m={12}>
-          <Center>
+          <Center mt={20}>
             <VStack>
               <Heading as='h2' color='custom.blueGreen' mb={2} size='lg'>{team.name}</Heading>
               <Text fontSize='xl' mb={2}>League: {team.league}</Text>
