@@ -32,8 +32,7 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
   const [updatePerformance, { error: updatePerformanceError }] = useMutation(UPDATE_PERFORMANCE, {
     refetchQueries: [
       GET_SINGLE_PLAYER,
-      GET_PERFORMANCES_BY_PLAYER,
-      GET_RANKED_PERFORMANCES
+      GET_PERFORMANCES_BY_PLAYER
     ]
   });
 
