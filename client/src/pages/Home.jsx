@@ -45,6 +45,7 @@ export default function Home() {
           Recently Updated Teams
         </Heading>
       </Center>
+      <Box h={[2020, null, 1350, null, 650]}>
       {
         loadingTeams
         &&
@@ -53,7 +54,7 @@ export default function Home() {
       {
         (!loadingTeams && teams.length)
         &&
-        <Wrap m='auto' w={[400, null, null, 900, null, 1300]}>
+        <Wrap m='auto' w={[400, null, 900, null, 1300]}>
         {teams.map(team => 
           <WrapItem w={400} key={team._id}>
             <TeamCard               
@@ -73,6 +74,7 @@ export default function Home() {
           <Text fontSize='lg' my={20}>No teams have been added yet!</Text>
         </Center>
       }
+      </Box>
       <Center h={100}>
         <Heading as='h2' color='custom.blueGreen' size='lg'>
           Highest Scoring Games By Players
@@ -87,7 +89,7 @@ export default function Home() {
         {
           (!loadingPerformances && performances.length)
           &&
-          <Flex justifyContent={['left', null, null, 'center']}>
+          <Flex justifyContent={['left', null, null, null, 'center']}>
             <PerformanceTable
               performances={performances}
               isRanking={true}
