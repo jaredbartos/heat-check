@@ -15,6 +15,7 @@ import {
   Icon
 } from '@chakra-ui/react';
 import { IoMdAddCircle } from "react-icons/io";
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function Dashboard() {
   const { loading, data, error } = useQuery(GET_ME);
@@ -50,10 +51,15 @@ export default function Dashboard() {
             Add Team
           </Button>
         </VStack>
-      </Center>     
+      </Center>
       {
-        teams.length
-        ?
+        loading
+        &&
+        <LoadingSpinner />
+      } 
+      {
+        (!loading && teams.length)
+        &&
         <Wrap m='auto' w={[400, null, null, 900, null, 1300]}>
         {teams.map(team => 
           <WrapItem w={400} key={team._id}>
@@ -66,7 +72,10 @@ export default function Dashboard() {
           </WrapItem>
         )}
         </Wrap>
-        :
+      }
+      {
+        (!loading && !teams.length)
+        &&
         <Center>
           <Text fontSize='lg' my={20}>No teams have been added yet!</Text>
         </Center>
