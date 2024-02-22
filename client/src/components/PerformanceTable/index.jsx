@@ -96,7 +96,7 @@ export default function PerformanceTable({ isRanking, performances }) {
         <Td isNumeric>{performance.points}</Td>
           {
             // Only allow user to edit or delete if they created the entry
-            (Auth.loggedIn() && Auth.getProfile().data._id === performance.createdBy._id)
+            (Auth.loggedIn() && Auth.getProfile().data._id === performance.createdBy._id && !isRanking)
             ?
             <Td>
               <ButtonGroup size='xs'>
