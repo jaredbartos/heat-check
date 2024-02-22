@@ -19,11 +19,13 @@ import {
   Button,
   ButtonGroup,
   useDisclosure,
-  Icon
+  Icon,
+  Flex
 } from '@chakra-ui/react';
 import { IoMdAddCircle } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
 import { TiDelete } from "react-icons/ti";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function SinglePlayer() {
   const { id } = useParams();
@@ -79,92 +81,102 @@ export default function SinglePlayer() {
     }  
   };
 
-  if (loadingPlayer || loadingPerformances) {
-    return <h3>Loading...</h3>
-  }
-
   return (
     <>
       {
+        loadingPlayer
+        &&
+        <LoadingSpinner />
+      }
+      {
         player
         &&
-        <Box w={[1000]} m={12}>
-          <Heading color='custom.blueGreen' as='h2' size='lg' mt={85} mb={2}>{player.firstName} {player.lastName} #{player.number}</Heading>
-          <Text fontSize='xl' mb={2}>
-            Team:{' '}
-            <ChakraLink as={ReactRouterLink} to={`/team/${player.team._id}`}>
-              {player.team.name} ({player.team.league})
-            </ChakraLink>
-          </Text>
-          <Text fontSize='xl' mb={2}>Position: {player.position}</Text>
-          <Text fontSize='xl' mb={2}>Height: {player.height}</Text>
-          <Text fontSize='xl' mb={2}>Weight: {player.weight}</Text>
-          {
-            (Auth.loggedIn() && Auth.getProfile().data._id === player.createdBy._id)
-            &&
-            <ButtonGroup mb={5}>
+        <Flex justify={['left', null, null, null, 'center']}>
+          <Box w={[1000]} m={12}>
+            <Heading color='custom.blueGreen' as='h2' size='lg' mb={2}>{player.firstName} {player.lastName} #{player.number}</Heading>
+            <Text fontSize='xl' mb={2}>
+              Team:{' '}
+              <ChakraLink as={ReactRouterLink} to={`/team/${player.team._id}`}>
+                {player.team.name} ({player.team.league})
+              </ChakraLink>
+            </Text>
+            <Text fontSize='xl' mb={2}>Position: {player.position}</Text>
+            <Text fontSize='xl' mb={2}>Height: {player.height}</Text>
+            <Text fontSize='xl' mb={2}>Weight: {player.weight}</Text>
+            {
+              (Auth.loggedIn() && Auth.getProfile().data._id === player.createdBy._id)
+              &&
+              <ButtonGroup mb={5}>
+                <Button
+                  boxShadow='xl'
+                  colorScheme='blue'
+                  type="button"
+                  onClick={onPlayerOpen}
+                >
+                  <Icon
+                    as={FaEdit}
+                    mr={1}
+                  />
+                  Edit Player
+                </Button>
+                <Button
+                  boxShadow='xl'
+                  colorScheme='red'
+                  type="button"
+                  onClick={handleDelete}
+                >
+                  <Icon
+                    as={TiDelete}
+                    boxSize={6}
+                  />
+                  Delete Player
+                </Button>
+              </ButtonGroup>
+            }
+            <HStack>
+            <Heading as='h3' size='md' color='custom.blueGreen' mt={3} mb={3}>Game Log</Heading>
+            {
+              (Auth.loggedIn() && Auth.getProfile().data._id === player.createdBy._id)
+              &&
               <Button
                 boxShadow='xl'
                 colorScheme='blue'
-                type="button"
-                onClick={onPlayerOpen}
+                size='xs'
+                type='button'
+                onClick={onPerformanceOpen}
               >
                 <Icon
-                  as={FaEdit}
+                  as={IoMdAddCircle}
                   mr={1}
                 />
-                Edit Player
+                Add Game
               </Button>
-              <Button
-                boxShadow='xl'
-                colorScheme='red'
-                type="button"
-                onClick={handleDelete}
-              >
-                <Icon
-                  as={TiDelete}
-                  boxSize={6}
-                />
-                Delete Player
-              </Button>
-            </ButtonGroup>
-          }
-          <HStack>
-          <Heading as='h3' size='md' color='custom.blueGreen' mt={3} mb={3}>Game Log</Heading>
-          {
-            (Auth.loggedIn() && Auth.getProfile().data._id === player.createdBy._id)
-            &&
-            <Button
-              boxShadow='xl'
-              colorScheme='blue'
-              size='xs'
-              type='button'
-              onClick={onPerformanceOpen}
-            >
-              <Icon
-                as={IoMdAddCircle}
-                mr={1}
+            }
+            </HStack>
+            {
+              loadingPerformances
+              ?
+              <LoadingSpinner />
+              :
+              <PerformanceTable
+                performances={performances}
               />
-              Add Game
-            </Button>
-          }
-          </HStack>
-          <PerformanceTable
-            performances={performances}
-          />
-          <PlayerModal
-            currentPlayer={player}
-            action='update'
-            isOpen={isPlayerOpen}
-            onClose={onPlayerClose}
-          />
-          <PerformanceModal
-            currentPlayer={player}
-            action='create'
-            isOpen={isPerformanceOpen}
-            onClose={onPerformanceClose}
-          />
-        </Box>     
+            }
+            
+            <PlayerModal
+              currentPlayer={player}
+              action='update'
+              isOpen={isPlayerOpen}
+              onClose={onPlayerClose}
+            />
+            <PerformanceModal
+              currentPlayer={player}
+              action='create'
+              isOpen={isPerformanceOpen}
+              onClose={onPerformanceClose}
+            />
+          </Box>
+        </Flex>
       }      
     </>
   );

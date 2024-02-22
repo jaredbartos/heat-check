@@ -16,11 +16,13 @@ import {
   Button,
   ButtonGroup,
   useDisclosure,
-  Icon
+  Icon,
+  Flex
 } from '@chakra-ui/react';
 import { IoMdAddCircle } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
 import { TiDelete } from "react-icons/ti";
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function SingleTeam() {
   const { id } = useParams();
@@ -65,92 +67,95 @@ export default function SingleTeam() {
     }
   }
 
-  if (loading) {
-    return <h3>Loading...</h3>
-  }
-
   return (
     <>
       {
+        loading
+        &&
+        <LoadingSpinner />
+      }
+      {
         team
         &&
-        <Box m={12}>
-          <Center mt={20}>
-            <VStack>
-              <Heading as='h2' color='custom.blueGreen' mb={2} size='lg'>{team.name}</Heading>
-              <Text fontSize='xl' mb={2}>League: {team.league}</Text>
-              {
-                (Auth.loggedIn() && Auth.getProfile().data._id === team.createdBy._id)
-                &&
-                <ButtonGroup>
-                  <Button
-                    boxShadow='xl'
-                    colorScheme='blue'
-                    type="button"
-                    onClick={onTeamOpen}
-                  >
-                    <Icon
-                      as={FaEdit}
-                      mr={1}
-                    />
-                    Edit Team
-                  </Button>
-                  <Button
-                    boxShadow='xl'
-                    colorScheme='red'
-                    type="button"
-                    onClick={handleDelete}
-                  >
-                    <Icon
-                      as={TiDelete}
-                      boxSize={6}
-                    />
-                    Delete Team
-                  </Button>
-                </ButtonGroup>
-              }
-            </VStack>
-          </Center>
-          {
-            team.players.length
-            ?
-            <PlayersTable team={team} />
-            :
+        <Flex justify={['left', null, 'center']}>
+          <Box w={[500, 1000]} m={12}>
             <Center>
-              <Text fontSize='lg' my={20}>No players have been added yet!</Text>
+              <VStack>
+                <Heading as='h2' color='custom.blueGreen' mb={2} size='lg'>{team.name}</Heading>
+                <Text fontSize='xl' mb={2}>League: {team.league}</Text>
+                {
+                  (Auth.loggedIn() && Auth.getProfile().data._id === team.createdBy._id)
+                  &&
+                  <ButtonGroup>
+                    <Button
+                      boxShadow='xl'
+                      colorScheme='blue'
+                      type="button"
+                      onClick={onTeamOpen}
+                    >
+                      <Icon
+                        as={FaEdit}
+                        mr={1}
+                      />
+                      Edit Team
+                    </Button>
+                    <Button
+                      boxShadow='xl'
+                      colorScheme='red'
+                      type="button"
+                      onClick={handleDelete}
+                    >
+                      <Icon
+                        as={TiDelete}
+                        boxSize={6}
+                      />
+                      Delete Team
+                    </Button>
+                  </ButtonGroup>
+                }
+              </VStack>
             </Center>
-          }
-          {
-            (Auth.loggedIn() && Auth.getProfile().data._id === team.createdBy._id)
-            &&
-            <Center mt={5}>
-              <Button
-                boxShadow='xl'
-                colorScheme='blue'
-                type="button"
-                onClick={onPlayerOpen}
-              >
-                <Icon
-                  as={IoMdAddCircle}
-                  mr={1}
-                />
-                Add Player
-              </Button>
-            </Center>
-          }
-          <TeamModal
-            action='update'
-            currentTeam={team}
-            isOpen={isTeamOpen}
-            onClose={onTeamClose}
-          />
-          <PlayerModal
-            action='create'
-            currentTeam={team}
-            isOpen={isPlayerOpen}
-            onClose={onPlayerClose}
-          />
-        </Box>    
+            {
+              team.players.length
+              ?
+              <PlayersTable team={team} />
+              :
+              <Center>
+                <Text fontSize='lg' my={20}>No players have been added yet!</Text>
+              </Center>
+            }
+            {
+              (Auth.loggedIn() && Auth.getProfile().data._id === team.createdBy._id)
+              &&
+              <Center mt={5}>
+                <Button
+                  boxShadow='xl'
+                  colorScheme='blue'
+                  type="button"
+                  onClick={onPlayerOpen}
+                >
+                  <Icon
+                    as={IoMdAddCircle}
+                    mr={1}
+                  />
+                  Add Player
+                </Button>
+              </Center>
+            }
+            <TeamModal
+              action='update'
+              currentTeam={team}
+              isOpen={isTeamOpen}
+              onClose={onTeamClose}
+            />
+            <PlayerModal
+              action='create'
+              currentTeam={team}
+              isOpen={isPlayerOpen}
+              onClose={onPlayerClose}
+            />
+          </Box>
+        </Flex>  
       }     
     </>
   );

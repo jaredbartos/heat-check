@@ -78,28 +78,30 @@ export default function Home() {
           Highest Scoring Games By Players
         </Heading>
       </Center>
-      {
-        loadingPerformances
-        &&
-        <LoadingSpinner />
-      }
-      {
-        (!loadingPerformances && performances.length)
-        &&
-        <Flex justifyContent={['left', null, null, 'center']}>
-          <PerformanceTable
-            performances={performances}
-            isRanking={true}
-          />
-        </Flex>
-      }
-      {
-        (!loadingPerformances && !performances.length)
-        &&
-        <Center>
-          <Text fontSize='lg' my={20}>No games have been added yet!</Text>
-        </Center>
-      }
+      <Box h={390}>
+        {
+          loadingPerformances
+          &&
+          <LoadingSpinner />
+        }
+        {
+          (!loadingPerformances && performances.length)
+          &&
+          <Flex justifyContent={['left', null, null, 'center']}>
+            <PerformanceTable
+              performances={performances}
+              isRanking={true}
+            />
+          </Flex>
+        }
+        {
+          (!loadingPerformances && !performances.length)
+          &&
+          <Center>
+            <Text fontSize='lg' my={20}>No games have been added yet!</Text>
+          </Center>
+        }
+      </Box>
     </Box>
   )
 }
