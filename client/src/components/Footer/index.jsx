@@ -6,7 +6,7 @@ import {
 export default function Footer() {
   return (
     <footer>
-      <Flex h={200} justify='center' align='center'>
+      <Flex mt={40} mb={10} justify='center' align='center'>
         <Text>
           &copy; 2024 - Built by Jared Bartos
         </Text>
