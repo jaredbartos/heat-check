@@ -12,6 +12,7 @@ import {
 import TeamCard from '../components/TeamCard';
 import PerformanceTable from '../components/PerformanceTable';
 import { useState, useEffect } from 'react';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function Home() {
   const {
@@ -45,8 +46,13 @@ export default function Home() {
         </Heading>
       </Center>
       {
-        teams.length
-        ?
+        loadingTeams
+        &&
+        <LoadingSpinner />
+      }
+      {
+        (!loadingTeams && teams.length)
+        &&
         <Wrap m='auto' w={[400, null, null, 900, null, 1300]}>
         {teams.map(team => 
           <WrapItem w={400} key={team._id}>
@@ -59,7 +65,10 @@ export default function Home() {
           </WrapItem>
         )}
         </Wrap>
-        :
+      }
+      {
+        (!loadingTeams && !teams.length)
+        &&
         <Center>
           <Text fontSize='lg' my={20}>No teams have been added yet!</Text>
         </Center>
@@ -69,12 +78,28 @@ export default function Home() {
           Highest Scoring Games By Players
         </Heading>
       </Center>
-      <Flex justifyContent={['left', null, null, 'center']}>
-        <PerformanceTable
-          performances={performances}
-          isRanking={true}
-        />
-      </Flex>
+      {
+        loadingPerformances
+        &&
+        <LoadingSpinner />
+      }
+      {
+        (!loadingPerformances && performances.length)
+        &&
+        <Flex justifyContent={['left', null, null, 'center']}>
+          <PerformanceTable
+            performances={performances}
+            isRanking={true}
+          />
+        </Flex>
+      }
+      {
+        (!loadingPerformances && !performances.length)
+        &&
+        <Center>
+          <Text fontSize='lg' my={20}>No games have been added yet!</Text>
+        </Center>
+      }
     </Box>
   )
 }
