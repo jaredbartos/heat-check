@@ -7,8 +7,10 @@ import {
   Center,
   Wrap,
   WrapItem,
-  Text
+  Text,
+  Spinner,
 } from '@chakra-ui/react';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 
 export default function TeamsPage() {
@@ -25,18 +27,19 @@ export default function TeamsPage() {
     }   
   }, [data, setTeams]);
 
-  if (loading) {
-    return <h3>Loading...</h3>
-  }
-
   return (
     <>
       <Center h={100}>
         <Heading as='h2' color='custom.blueGreen' size='lg'>Teams</Heading>
       </Center>
       {
-        teams.length
-        ?
+        loading
+        &&
+        <LoadingSpinner />
+      }
+      {
+        (!loading && teams.length)
+        &&
         <Wrap m='auto' w={[400, null, null, 900, null, 1300]}>
         {teams.map(team => 
           <WrapItem w={400} key={team._id}>
@@ -49,12 +52,14 @@ export default function TeamsPage() {
           </WrapItem>
         )}
         </Wrap>
-        :
+      }
+      {
+        (!loading && !teams.length)
+        &&
         <Center>
           <Text fontSize='lg' my={20}>No teams have been added yet!</Text>
         </Center>
-      }
-      
+      }  
     </>
   );
 }

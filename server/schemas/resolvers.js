@@ -32,6 +32,11 @@ const resolvers = {
         .populate('team')
         .populate('createdBy')
     },
+    playersByTeam: async (parent, { _id }) => {
+      return await Player.find({ team: _id })
+        .populate('team')
+        .sort({ number: 1 });
+    },
     player: async (parent, { _id }) => {
       const player = await Player.findById(_id)
         .populate('team')

@@ -16,7 +16,9 @@ import {
 } from '@chakra-ui/react';
 
 export default function TeamCard({ teamId, players, teamName, league }) {
-  const playerLinks = players.map((player) => {
+  const playersCopy = [...players];
+  const sortedPlayers = playersCopy.sort((a, b) => a.number - b.number);
+  const playerLinks = sortedPlayers.map((player) => {
     return (
       <Tr key={player._id}>
         <Td>{player.number}</Td>

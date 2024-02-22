@@ -86,6 +86,7 @@ const typeDefs = `
     team(_id: ID!): Team
     recentlyUpdatedTeams: [Team]
     players: [Player]
+    playersByTeam(_id: ID!): [Player]
     player(_id: ID!): Player
     performances: [Performance]
     performancesByPlayer(_id: ID!): [Performance]
