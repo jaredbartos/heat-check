@@ -2,9 +2,10 @@ import { formatDate } from '../../utils/dates';
 import { DELETE_PERFORMANCE } from '../../utils/mutations';
 import { GET_PERFORMANCES_BY_PLAYER, GET_SINGLE_PLAYER } from '../../utils/queries';
 import PerformanceModal from '../PerformanceModal';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
+import { Link as ReactRouterLink } from 'react-router-dom';
 import {
   Table,
   Thead,
@@ -20,12 +21,13 @@ import {
   Box,
   useDisclosure,
   Text,
-  Icon
+  Icon,
+  Link as ChakraLink
 } from '@chakra-ui/react';
 import { FaEdit } from "react-icons/fa";
 import { TiDelete } from "react-icons/ti";
 
-export default function PerformanceTable({ performances }) {
+export default function PerformanceTable({ isRanking, performances }) {
   const [selectedPerformance, setSelectedPerformance] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -56,6 +58,28 @@ export default function PerformanceTable({ performances }) {
   const performanceList = performances.map((performance) => {
     return (
       <Tr key={performance._id}>
+        {
+          isRanking
+          &&
+          <>
+            <Td>
+              <ChakraLink
+              as={ReactRouterLink}
+              to={`/player/${performance.player._id}`}
+              >
+                {performance.player.firstName} {performance.player.lastName}
+              </ChakraLink>
+            </Td>
+              <Td>
+                <ChakraLink
+                  as={ReactRouterLink}
+                  to={`/team/${performance.player.team._id}`}
+                >
+                  {performance.player.team.name}
+                </ChakraLink>
+              </Td>           
+          </>
+        }
         <Td>{formatDate(performance.date)}</Td>
         <Td isNumeric>{performance.fgAtt}</Td>
         <Td isNumeric>{performance.fgMade}</Td>
@@ -112,11 +136,19 @@ export default function PerformanceTable({ performances }) {
     {
       performances.length
       ?
-      <Box w={1020}>
+      <Box>
         <TableContainer borderWidth={2} borderRadius={20} boxShadow='md'>
           <Table size='sm'>
             <Thead bgColor='custom.red'>
               <Tr>
+                {
+                  isRanking
+                  &&
+                  <>
+                    <Th color='white'>Name</Th>
+                    <Th color='white'>Team</Th>
+                  </>
+                }
                 <Th color='white'>DATE</Th>
                 <Th color='white'>FGA</Th>
                 <Th color='white'>FGM</Th>

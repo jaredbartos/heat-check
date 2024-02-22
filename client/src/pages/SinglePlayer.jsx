@@ -88,7 +88,7 @@ export default function SinglePlayer() {
       {
         player
         &&
-        <Box m={12}>
+        <Box w={[1000]} m={12}>
           <Heading color='custom.blueGreen' as='h2' size='lg' mt={85} mb={2}>{player.firstName} {player.lastName} #{player.number}</Heading>
           <Text fontSize='xl' mb={2}>
             Team:{' '}

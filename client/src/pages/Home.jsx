@@ -5,7 +5,9 @@ import {
   Center,
   Wrap,
   WrapItem,
-  Text
+  Text,
+  Flex,
+  Box
 } from '@chakra-ui/react';
 import TeamCard from '../components/TeamCard';
 import PerformanceTable from '../components/PerformanceTable';
@@ -36,7 +38,7 @@ export default function Home() {
 
 
   return (
-    <>
+    <Box>
       <Center h={100}>
         <Heading as='h2' color='custom.blueGreen' size='lg'>
           Recently Updated Teams
@@ -62,17 +64,17 @@ export default function Home() {
           <Text fontSize='lg' my={20}>No teams have been added yet!</Text>
         </Center>
       }
-
       <Center h={100}>
         <Heading as='h2' color='custom.blueGreen' size='lg'>
           Highest Scoring Games By Players
         </Heading>
       </Center>
-      <Center>
+      <Flex justifyContent={['left', null, null, 'center']}>
         <PerformanceTable
           performances={performances}
+          isRanking={true}
         />
-      </Center>      
-    </>
+      </Flex>
+    </Box>
   )
 }
