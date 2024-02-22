@@ -208,6 +208,27 @@ export const GET_PERFORMANCES_BY_PLAYER = gql`
   }
 `;
 
+export const GET_AVG_PERFORMANCES_BY_PLAYER = gql`
+  query getAvgPerformancesByPlayer($id: ID!) {
+    avgPerformancesByPlayer(_id: $id) {
+      _id
+      avgFgAtt
+      avgFgMade
+      avgThreePtAtt
+      avgThreePtMade
+      avgFtAtt
+      avgFtMade
+      avgOffReb
+      avgRebounds
+      avgAssists
+      avgSteals
+      avgBlocks
+      avgTurnovers
+      avgPoints
+    }
+  }
+`;
+
 export const GET_PLAYERS_BY_TEAM = gql`
   query getPlayersByTeam($id: ID!) {
     playersByTeam(_id: $id) {

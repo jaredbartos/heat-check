@@ -19,6 +19,23 @@ const typeDefs = `
     createdBy: User
   }
 
+  type Averages {
+    _id: ID
+    avgFgAtt: Float!
+    avgFgMade: Float!
+    avgThreePtAtt: Float!
+    avgThreePtMade: Float!
+    avgFtAtt: Float!
+    avgFtMade: Float!
+    avgOffReb: Float!
+    avgRebounds: Float!
+    avgAssists: Float!
+    avgSteals: Float!
+    avgBlocks: Float!
+    avgTurnovers: Float!
+    avgPoints: Float!
+  }
+
   input PerformanceInput {
     fgAtt: Int
     fgMade: Int
@@ -89,6 +106,7 @@ const typeDefs = `
     playersByTeam(_id: ID!): [Player]
     player(_id: ID!): Player
     performances: [Performance]
+    avgPerformancesByPlayer(_id: ID!): Averages
     performancesByPlayer(_id: ID!): [Performance]
     performance(_id: ID!): Performance
     rankPerformanceByField(field: String!): [Performance]

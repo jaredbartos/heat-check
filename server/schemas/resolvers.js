@@ -1,5 +1,6 @@
 const { Performance, Player, Team, User } = require('../models');
 const { AuthenticationError, signToken } = require('../utils/auth');
+const { ObjectId } = require('mongoose').Types;
 
 const resolvers = {
   Query: {
@@ -53,6 +54,31 @@ const resolvers = {
       return await Performance.find()
         .populate('player')
         .populate('createdBy');
+    },
+    avgPerformancesByPlayer: async (parent, { _id }) => {
+      const aggregate = await Performance.aggregate([
+        { $match: { player: new ObjectId(_id) } },
+        {
+          $group: {
+            _id: '$player',
+            avgFgAtt: { $avg: '$fgAtt' },
+            avgFgMade: { $avg: '$fgMade' },
+            avgThreePtAtt: { $avg: '$threePtAtt' },
+            avgThreePtMade: { $avg: '$threePtMade' },
+            avgFtAtt: { $avg: '$ftAtt' },
+            avgFtMade: { $avg: '$ftMade' },
+            avgOffReb: { $avg: '$offReb' },
+            avgRebounds: { $avg: '$rebounds' },
+            avgAssists: { $avg: '$assists' },
+            avgSteals: { $avg: '$steals' },
+            avgBlocks: { $avg: '$blocks' },
+            avgTurnovers: { $avg: '$turnovers' },
+            avgPoints: { $avg: '$points' }
+          }
+        }
+      ]);
+
+      return aggregate[0];
     },
     performancesByPlayer: async (parent, { _id }) => {
       return await Performance.find({ player: _id })
