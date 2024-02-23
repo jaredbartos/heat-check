@@ -218,7 +218,7 @@ export default function SingleTeam() {
                   </Center>
                 }
                 {
-                  loadingAverages
+                  loadingAverages && !averages
                   &&
                   <LoadingSpinner />
                 }
