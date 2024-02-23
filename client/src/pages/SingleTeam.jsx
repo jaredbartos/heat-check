@@ -118,7 +118,7 @@ export default function SingleTeam() {
     );
   };
 
-  const AverageList = ({ averages }) => {
+  const AveragesTableContent = ({ averages }) => {
     const averagesCopy = [...averages];
     const sortedAverages = averagesCopy.sort((a, b) => b.avgPoints - a.avgPoints);
     return sortedAverages.map((average) => {
@@ -227,7 +227,7 @@ export default function SingleTeam() {
                     averages
                     &&
                     <AveragesTable>
-                      <AverageList averages={averages} />
+                      <AveragesTableContent averages={averages} />
                     </AveragesTable>
                   }
                 </Box>
