@@ -92,7 +92,7 @@ export default function SingleTeam() {
     }
   };
 
-  const AveragesTable = ({ averageList }) => {
+  const AveragesTable = ({ children }) => {
     return (
       <TableContainer
         borderWidth={2}
@@ -111,32 +111,35 @@ export default function SingleTeam() {
             </Tr>
           </Thead>
           <Tbody>
-            {averageList}           
+            {children}           
           </Tbody>
         </Table>
       </TableContainer>
     );
   };
 
-  const averagesCopy = [...averages];
-  const sortedAverages = averagesCopy.sort((a, b) => b.avgPoints - a.avgPoints);
-  const averageList = sortedAverages.map((average) => {
-    return (
-      <Tr key={average._id}>
-        <Td>
-          <ChakraLink
-            as={ReactRouterLink}
-            to={`/player/${average._id}`}
-          >
-            {average.firstName} {average.lastName}
-          </ChakraLink>
-        </Td>
-        <Td isNumeric>{average.avgPoints.toFixed(1)}</Td>
-        <Td isNumeric>{average.avgRebounds.toFixed(1)}</Td>
-        <Td isNumeric>{average.avgAssists.toFixed(1)}</Td>
-      </Tr>
-    );
-  });
+  const AverageList = ({ averages }) => {
+    const averagesCopy = [...averages];
+    const sortedAverages = averagesCopy.sort((a, b) => b.avgPoints - a.avgPoints);
+    return sortedAverages.map((average) => {
+      return (
+        <Tr key={average._id}>
+          <Td>
+            <ChakraLink
+              as={ReactRouterLink}
+              to={`/player/${average._id}`}
+            >
+              {average.firstName} {average.lastName}
+            </ChakraLink>
+          </Td>
+          <Td isNumeric>{average.avgPoints.toFixed(1)}</Td>
+          <Td isNumeric>{average.avgRebounds.toFixed(1)}</Td>
+          <Td isNumeric>{average.avgAssists.toFixed(1)}</Td>
+        </Tr>
+      );
+    });
+  };
+  
 
   return (
     <>
@@ -215,14 +218,16 @@ export default function SingleTeam() {
                   </Center>
                 }
                 {
-                  loadingAverages && !averages
+                  loadingAverages
                   &&
                   <LoadingSpinner />
                 }
                 {
                   averages
                   &&
-                  <AveragesTable averageList={averageList} />
+                  <AveragesTable>
+                    <AverageList averages={averages} />
+                  </AveragesTable>
                 }
               </Flex>
             <TeamModal
