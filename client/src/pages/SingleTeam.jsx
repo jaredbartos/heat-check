@@ -217,18 +217,20 @@ export default function SingleTeam() {
                     <Text fontSize='lg' my={20}>No players have been added yet!</Text>
                   </Center>
                 }
-                {
-                  loadingAverages && !averages
-                  &&
-                  <LoadingSpinner />
-                }
-                {
-                  averages
-                  &&
-                  <AveragesTable>
-                    <AverageList averages={averages} />
-                  </AveragesTable>
-                }
+                <Box w={435}>
+                  {
+                    loadingAverages && !averages
+                    &&
+                    <LoadingSpinner />
+                  }
+                  {
+                    averages
+                    &&
+                    <AveragesTable>
+                      <AverageList averages={averages} />
+                    </AveragesTable>
+                  }
+                </Box>
               </Flex>
             <TeamModal
               action='update'
