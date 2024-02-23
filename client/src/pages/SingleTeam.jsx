@@ -1,5 +1,8 @@
 import { useParams } from 'react-router-dom';
-import { GET_SINGLE_TEAM } from '../utils/queries';
+import {
+  GET_SINGLE_TEAM,
+  GET_AVG_PLAYER_PERFORMANCE_BY_TEAM
+} from '../utils/queries';
 import { DELETE_TEAM } from '../utils/mutations';
 import { useQuery, useMutation } from '@apollo/client';
 import { useState, useEffect } from 'react';
@@ -17,8 +20,21 @@ import {
   ButtonGroup,
   useDisclosure,
   Icon,
-  Flex
+  Flex,
+  TableContainer,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  HStack,
+  Wrap,
+  Link as ChakraLink
 } from '@chakra-ui/react';
+import { Link as ReactRouterLink } from 'react-router-dom';
 import { IoMdAddCircle } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
 import { TiDelete } from "react-icons/ti";
@@ -27,10 +43,16 @@ import LoadingSpinner from '../components/LoadingSpinner';
 export default function SingleTeam() {
   const { id } = useParams();
   const [team, setTeam] = useState();
+  const [averages, setAverages] = useState([]);
   const [deleteTeam] = useMutation(DELETE_TEAM);
-  const { loading, data } = useQuery(GET_SINGLE_TEAM, {
-    variables: { id }
-  });
+  const {
+    loading: loadingTeam,
+    data: teamData
+  } = useQuery(GET_SINGLE_TEAM, { variables: { id } });
+  const {
+    loading: loadingAverages,
+    data: averagesData
+  } = useQuery(GET_AVG_PLAYER_PERFORMANCE_BY_TEAM, { variables: { id } })
   const {
     isOpen: isTeamOpen,
     onOpen: onTeamOpen,
@@ -45,10 +67,13 @@ export default function SingleTeam() {
   // Set useEffect to set team value to prepare
   // for future retrieval from indexedDB for PWA
   useEffect(() => {
-    if (data) {
-      setTeam(data.team);
+    if (teamData) {
+      setTeam(teamData.team);
     }
-  }, [data, setTeam]);
+    if (averagesData) {
+      setAverages(averagesData.avgPlayerPerformanceByTeam);
+    }
+  }, [teamData, averagesData, setAverages, setTeam]);
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -65,12 +90,58 @@ export default function SingleTeam() {
 
       location.replace('/dashboard');
     }
-  }
+  };
+
+  const AveragesTable = ({ averageList }) => {
+    return (
+      <TableContainer
+        borderWidth={2}
+        borderRadius={20}
+        boxShadow='md'
+        mt={5}
+        w={435}
+      >
+        <Table>
+          <Thead bgColor='custom.red'>
+            <Tr>
+              <Th color='white'>Name</Th>
+              <Th color='white'>PPG</Th>
+              <Th color='white'>RPG</Th>
+              <Th color='white'>APG</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {averageList}           
+          </Tbody>
+        </Table>
+      </TableContainer>
+    );
+  };
+
+  const averagesCopy = [...averages];
+  const sortedAverages = averagesCopy.sort((a, b) => b.avgPoints - a.avgPoints);
+  const averageList = sortedAverages.map((average) => {
+    return (
+      <Tr key={average._id}>
+        <Td>
+          <ChakraLink
+            as={ReactRouterLink}
+            to={`/player/${average._id}`}
+          >
+            {average.firstName} {average.lastName}
+          </ChakraLink>
+        </Td>
+        <Td isNumeric>{average.avgPoints.toFixed(1)}</Td>
+        <Td isNumeric>{average.avgRebounds.toFixed(1)}</Td>
+        <Td isNumeric>{average.avgAssists.toFixed(1)}</Td>
+      </Tr>
+    );
+  });
 
   return (
     <>
       {
-        loading
+        loadingTeam
         &&
         <LoadingSpinner />
       }
@@ -78,7 +149,7 @@ export default function SingleTeam() {
         team
         &&
         <Flex justify={['left', null, 'center']}>
-          <Box w={[500, 1000]} m={12}>
+          <Box w={[500, 1050]} m={12}>
             <Center>
               <VStack>
                 <Heading as='h2' color='custom.blueGreen' mb={2} size='lg'>{team.name}</Heading>
@@ -113,35 +184,47 @@ export default function SingleTeam() {
                     </Button>
                   </ButtonGroup>
                 }
+                {
+                  (Auth.loggedIn() && Auth.getProfile().data._id === team.createdBy._id)
+                  &&
+                  <Center mt={5}>
+                    <Button
+                      boxShadow='xl'
+                      colorScheme='blue'
+                      type="button"
+                      onClick={onPlayerOpen}
+                    >
+                      <Icon
+                        as={IoMdAddCircle}
+                        mr={1}
+                      />
+                      Add Player
+                    </Button>
+                  </Center>
+                }
               </VStack>
             </Center>
-            {
-              team.players.length
-              ?
-              <PlayersTable team={team} />
-              :
-              <Center>
-                <Text fontSize='lg' my={20}>No players have been added yet!</Text>
-              </Center>
-            }
-            {
-              (Auth.loggedIn() && Auth.getProfile().data._id === team.createdBy._id)
-              &&
-              <Center mt={5}>
-                <Button
-                  boxShadow='xl'
-                  colorScheme='blue'
-                  type="button"
-                  onClick={onPlayerOpen}
-                >
-                  <Icon
-                    as={IoMdAddCircle}
-                    mr={1}
-                  />
-                  Add Player
-                </Button>
-              </Center>
-            }
+              <Flex justify='space-between' flexWrap='wrap'>
+                {
+                  team.players.length
+                  ?
+                  <PlayersTable team={team} />
+                  :
+                  <Center>
+                    <Text fontSize='lg' my={20}>No players have been added yet!</Text>
+                  </Center>
+                }
+                {
+                  loadingAverages
+                  &&
+                  <LoadingSpinner />
+                }
+                {
+                  averages
+                  &&
+                  <AveragesTable averageList={averageList} />
+                }
+              </Flex>
             <TeamModal
               action='update'
               currentTeam={team}

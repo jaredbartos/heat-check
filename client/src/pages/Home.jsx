@@ -42,10 +42,39 @@ export default function Home() {
     <Box>
       <Center h={100}>
         <Heading as='h2' color='custom.blueGreen' size='lg'>
+          Highest Scoring Games By Players
+        </Heading>
+      </Center>
+      <Box h={390}>
+        {
+          loadingPerformances
+          &&
+          <LoadingSpinner />
+        }
+        {
+          (!loadingPerformances && performances.length)
+          &&
+          <Flex justifyContent={['left', null, null, null, 'center']}>
+            <PerformanceTable
+              performances={performances}
+              isRanking={true}
+            />
+          </Flex>
+        }
+        {
+          (!loadingPerformances && !performances.length)
+          &&
+          <Center>
+            <Text fontSize='lg' my={20}>No games have been added yet!</Text>
+          </Center>
+        }
+      </Box>
+      <Center h={100}>
+        <Heading as='h2' color='custom.blueGreen' size='lg'>
           Recently Updated Teams
         </Heading>
       </Center>
-      <Box h={[2020, null, 1350, null, 650]}>
+      <Box>
       {
         loadingTeams
         &&
@@ -75,35 +104,7 @@ export default function Home() {
         </Center>
       }
       </Box>
-      <Center h={100}>
-        <Heading as='h2' color='custom.blueGreen' size='lg'>
-          Highest Scoring Games By Players
-        </Heading>
-      </Center>
-      <Box h={390}>
-        {
-          loadingPerformances
-          &&
-          <LoadingSpinner />
-        }
-        {
-          (!loadingPerformances && performances.length)
-          &&
-          <Flex justifyContent={['left', null, null, null, 'center']}>
-            <PerformanceTable
-              performances={performances}
-              isRanking={true}
-            />
-          </Flex>
-        }
-        {
-          (!loadingPerformances && !performances.length)
-          &&
-          <Center>
-            <Text fontSize='lg' my={20}>No games have been added yet!</Text>
-          </Center>
-        }
-      </Box>
+      
     </Box>
   )
 }

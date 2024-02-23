@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ADD_PLAYER, UPDATE_PLAYER } from '../../utils/mutations';
-import { GET_SINGLE_TEAM, GET_SINGLE_PLAYER } from '../../utils/queries';
+import { GET_SINGLE_TEAM, GET_SINGLE_PLAYER, GET_AVG_PLAYER_PERFORMANCE_BY_TEAM } from '../../utils/queries';
 import { useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
 import {
@@ -27,7 +27,8 @@ import { Formik, Form, Field } from 'formik';
 export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen, onClose }) {
   const [addPlayer] = useMutation(ADD_PLAYER, {
     refetchQueries: [
-      GET_SINGLE_TEAM
+      GET_SINGLE_TEAM,
+      GET_AVG_PLAYER_PERFORMANCE_BY_TEAM
     ]
   });
   const [updatePlayer] = useMutation(UPDATE_PLAYER, {

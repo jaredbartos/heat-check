@@ -126,13 +126,13 @@ export default function SinglePlayer() {
           <Tbody>
             <Tr>
               <Td>
-                {props.avgPoints}
+                {props.avgPoints.toFixed(1)}
               </Td>
               <Td>
-                {props.avgRebounds}
+                {props.avgRebounds.toFixed(1)}
               </Td>
               <Td>
-                {props.avgAssists}
+                {props.avgAssists.toFixed(1)}
               </Td>
               <Td>
                 {((props.avgFgMade / props.avgFgAtt) * 100).toFixed(1)}

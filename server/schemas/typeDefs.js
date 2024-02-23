@@ -21,19 +21,21 @@ const typeDefs = `
 
   type Averages {
     _id: ID
-    avgFgAtt: Float!
-    avgFgMade: Float!
-    avgThreePtAtt: Float!
-    avgThreePtMade: Float!
-    avgFtAtt: Float!
-    avgFtMade: Float!
-    avgOffReb: Float!
-    avgRebounds: Float!
-    avgAssists: Float!
-    avgSteals: Float!
-    avgBlocks: Float!
-    avgTurnovers: Float!
-    avgPoints: Float!
+    firstName: String
+    lastName: String
+    avgFgAtt: Float
+    avgFgMade: Float
+    avgThreePtAtt: Float
+    avgThreePtMade: Float
+    avgFtAtt: Float
+    avgFtMade: Float
+    avgOffReb: Float
+    avgRebounds: Float
+    avgAssists: Float
+    avgSteals: Float
+    avgBlocks: Float
+    avgTurnovers: Float
+    avgPoints: Float
   }
 
   input PerformanceInput {
@@ -107,6 +109,7 @@ const typeDefs = `
     player(_id: ID!): Player
     performances: [Performance]
     avgPerformanceByPlayer(_id: ID!): Averages
+    avgPlayerPerformanceByTeam(_id: ID!): [Averages]
     performancesByPlayer(_id: ID!): [Performance]
     performance(_id: ID!): Performance
     rankPerformanceByField(field: String!): [Performance]

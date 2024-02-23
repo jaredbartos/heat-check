@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Auth from '../../utils/auth';
-import { GET_SINGLE_PLAYER, GET_PERFORMANCES_BY_PLAYER, GET_RANKED_PERFORMANCES } from '../../utils/queries';
+import { GET_SINGLE_PLAYER, GET_PERFORMANCES_BY_PLAYER, GET_AVG_PERFORMANCE_BY_PLAYER } from '../../utils/queries';
 import { ADD_PERFORMANCE, UPDATE_PERFORMANCE } from '../../utils/mutations';
 import { useMutation } from '@apollo/client';
 import { formatEditDate } from '../../utils/dates';
@@ -26,13 +26,15 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
   const [addPerformance, { error: addPerformanceError }] = useMutation(ADD_PERFORMANCE, {
     refetchQueries: [
       GET_SINGLE_PLAYER,
-      GET_PERFORMANCES_BY_PLAYER
+      GET_PERFORMANCES_BY_PLAYER,
+      GET_AVG_PERFORMANCE_BY_PLAYER
     ]
   });
   const [updatePerformance, { error: updatePerformanceError }] = useMutation(UPDATE_PERFORMANCE, {
     refetchQueries: [
       GET_SINGLE_PLAYER,
-      GET_PERFORMANCES_BY_PLAYER
+      GET_PERFORMANCES_BY_PLAYER,
+      GET_AVG_PERFORMANCE_BY_PLAYER
     ]
   });
 

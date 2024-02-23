@@ -229,6 +229,19 @@ export const GET_AVG_PERFORMANCE_BY_PLAYER = gql`
   }
 `;
 
+export const GET_AVG_PLAYER_PERFORMANCE_BY_TEAM = gql`
+  query getAvgPlayerPerformanceByTeam($id: ID!) {
+    avgPlayerPerformanceByTeam(_id: $id) {
+      _id
+      firstName
+      lastName
+      avgRebounds
+      avgAssists
+      avgPoints
+    }
+  }
+`;
+
 export const GET_PLAYERS_BY_TEAM = gql`
   query getPlayersByTeam($id: ID!) {
     playersByTeam(_id: $id) {
