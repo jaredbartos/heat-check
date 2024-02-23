@@ -135,13 +135,31 @@ export default function SinglePlayer() {
                 {props.avgAssists.toFixed(1)}
               </Td>
               <Td>
-                {((props.avgFgMade / props.avgFgAtt) * 100).toFixed(1)}
+                {
+                  (props.avgFgAtt === 0)
+                  ?
+                  '0.0'
+                  :
+                  ((props.avgFgMade / props.avgFgAtt) * 100).toFixed(1)
+                }
               </Td>
               <Td>
-                {((props.avgThreePtMade / props.avgThreePtAtt) * 100).toFixed(1)}
+                {
+                  (props.avgThreePtAtt === 0)
+                  ?
+                  '0.0'
+                  :
+                  ((props.avgThreePtMade / props.avgThreePtAtt) * 100).toFixed(1)
+                }
               </Td>
               <Td>
-                {((props.avgFtMade / props.avgFtAtt) * 100).toFixed(1)}
+                {
+                  (props.avgFtAtt === 0)
+                  ?
+                  '0.0'
+                  :
+                  ((props.avgFtMade / props.avgFtAtt) * 100).toFixed(1)
+                }
               </Td>
             </Tr>
           </Tbody>
