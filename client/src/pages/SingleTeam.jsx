@@ -214,6 +214,7 @@ export default function SingleTeam() {
                     <Text fontSize='lg' my={20}>No players have been added yet!</Text>
                   </Center>
                 }
+                <Box>
                 {
                   loadingAverages
                   &&
@@ -224,6 +225,7 @@ export default function SingleTeam() {
                   &&
                   <AveragesTable averageList={averageList} />
                 }
+                </Box>
               </Flex>
             <TeamModal
               action='update'
