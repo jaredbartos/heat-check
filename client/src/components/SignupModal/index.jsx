@@ -112,20 +112,20 @@ export default function SignupModal({ isOpen, onClose }) {
                   </Field>
                   <ModalFooter pr={1}>
                     <Button
+                      boxShadow='md'
+                      type='button'
+                      mr={3}
+                      onClick={onClose}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
                       colorScheme='blue'
                       boxShadow='xl'
                       type='submit'
                       isLoading={props.isSubmitting}
                     >
                       Sign Up
-                    </Button>
-                    <Button
-                      boxShadow='md'
-                      type='button'
-                      ml={3}
-                      onClick={onClose}
-                    >
-                      Cancel
                     </Button>
                   </ModalFooter>
                 </FormControl>

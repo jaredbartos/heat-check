@@ -73,20 +73,20 @@ export default function LoginModal({ isOpen, onClose }) {
                   <FormErrorMessage>Incorrect email or password</FormErrorMessage>
                   <ModalFooter pr={1}>
                     <Button
+                      boxShadow='md'
+                      type="button"
+                      mr={3}
+                      onClick={onClose}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
                       boxShadow='xl'
                       colorScheme='blue'
                       type='submit'
                       isLoading={props.isSubmitting}
                     >
                       Log in
-                    </Button>
-                    <Button
-                      boxShadow='md'
-                      type="button"
-                      ml={3}
-                      onClick={onClose}
-                    >
-                      Cancel
                     </Button>
                   </ModalFooter>
                 </FormControl>

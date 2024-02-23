@@ -258,20 +258,20 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
                   </FormErrorMessage>
                   <ModalFooter pr={1}>
                     <Button
+                      boxShadow='md'
+                      type='button'
+                      mr={3}
+                      onClick={onClose}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
                       colorScheme='blue'
                       boxShadow='xl'
                       type='submit'
                       isLoading={props.isSubmitting}
                     >
                       {(action === 'create') ? 'Add Game' : 'Update Game'}
-                    </Button>
-                    <Button
-                      boxShadow='md'
-                      type='button'
-                      ml={3}
-                      onClick={onClose}
-                    >
-                      Cancel
                     </Button>
                   </ModalFooter>
                 </FormControl>

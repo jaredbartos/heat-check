@@ -208,20 +208,20 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
                   <FormErrorMessage>Something went wrong. Please try again.</FormErrorMessage>
                   <ModalFooter pr={1}>
                     <Button
+                      boxShadow='md'
+                      type='button'
+                      mr={3}
+                      onClick={onClose}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
                       colorScheme='blue'
                       boxShadow='xl'
                       type='submit'
                       isLoading={props.isSubmitting}
                     >
                       {(action === 'create') ? 'Add Team' : 'Update Team'}
-                    </Button>
-                    <Button
-                      boxShadow='md'
-                      type='button'
-                      ml={3}
-                      onClick={onClose}
-                    >
-                      Cancel
                     </Button>
                   </ModalFooter>
                 </FormControl>

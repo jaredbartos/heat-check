@@ -250,20 +250,20 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
                   </Field>
                   <ModalFooter pr={1}>
                     <Button
+                      boxShadow='md'
+                      type='button'
+                      mr={3}
+                      onClick={onClose}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
                       colorScheme='blue'
                       boxShadow='xl'
                       type='submit'
                       isLoading={props.isSubmitting}
                     >
                       {(action === 'create') ? 'Add Player' : 'Update Player'}
-                    </Button>
-                    <Button
-                      boxShadow='md'
-                      type='button'
-                      ml={3}
-                      onClick={onClose}
-                    >
-                      Cancel
                     </Button>
                   </ModalFooter>
                 </FormControl>

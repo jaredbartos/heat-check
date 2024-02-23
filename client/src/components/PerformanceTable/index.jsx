@@ -26,7 +26,16 @@ import {
   useDisclosure,
   Text,
   Icon,
-  Link as ChakraLink
+  Link as ChakraLink,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
 } from '@chakra-ui/react';
 import { FaEdit } from "react-icons/fa";
 import { TiDelete } from "react-icons/ti";
@@ -46,16 +55,14 @@ export default function PerformanceTable({ isRanking, performances }) {
   const handleDelete = async (e, id) => {
     e.preventDefault();
 
-    if (confirm('Are you sure you want to delete this game?')) {
-      try {
-        await deletePerformance({
-          variables: {
-            _id: id
-          }
-        });
-      } catch (err) {
-        console.log(err);
-      }
+    try {
+      await deletePerformance({
+        variables: {
+          _id: id
+        }
+      });
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -118,15 +125,59 @@ export default function PerformanceTable({ isRanking, performances }) {
                 >
                   <Icon as={FaEdit} />
                 </Button>
-                <Button
-                  boxShadow='xl'
-                  colorScheme='red'
-                  type="button"
-                  className="deletePerformanceBtn"
-                  onClick={(e) => handleDelete(e, performance._id)}
-                >
-                  <Icon as={TiDelete} boxSize={4} />
-                </Button>
+                <Popover placement='top'>
+                  {({ isOpen, onClose }) => (
+                    <>
+                      <PopoverTrigger>
+                        <Button
+                          boxShadow='xl'
+                          colorScheme='red'
+                          type="button"
+                          className="deletePerformanceBtn"
+                        >
+                          <Icon as={TiDelete} boxSize={4} />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <PopoverHeader color='custom.blueGreen'>
+                          Confirmation
+                        </PopoverHeader>
+                        <PopoverArrow />
+                        <PopoverBody>
+                          Are you sure you want to delete this game?
+                        </PopoverBody>
+                        <PopoverFooter
+                          border='0'
+                          display='flex'
+                          alignItems='center'
+                          justifyContent='flex-end'
+                        >
+                          <ButtonGroup>
+                            <Button
+                              size='sm'
+                              boxShadow='md'
+                              mr={2}
+                              onClick={onClose}
+                            >
+                              Cancel
+                            </Button>
+                            <Button
+                              colorScheme='red'
+                              size='sm'
+                              boxShadow='xl'
+                              mr={1}
+                              onClick={(e) => handleDelete(e, performance._id)}
+                            >
+                              Delete
+                            </Button>
+                          </ButtonGroup>
+                        </PopoverFooter>
+                      </PopoverContent> 
+                    </>
+                  )}
+                                   
+                </Popover>
+                
               </ButtonGroup>
             </Td>
             :

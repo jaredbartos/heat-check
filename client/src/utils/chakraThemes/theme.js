@@ -5,7 +5,7 @@ export const theme = extendTheme({
   styles: {
     global: {
       body: {
-        bgColor: '#F3E8E2'
+        bgColor: '#f3e8e2'
       }
     }
   },
@@ -13,7 +13,8 @@ export const theme = extendTheme({
     custom: {
       red: '#b3001b',
       blueGreen: '#114b5f',
-      blue: '#2f809D'
+      blue: '#2f809D',
+      lightBg: '#f3e8e2'
     }
   },
   components: {
