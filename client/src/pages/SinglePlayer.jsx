@@ -1,6 +1,10 @@
 import { useQuery, useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
-import { GET_SINGLE_PLAYER, GET_PERFORMANCES_BY_PLAYER } from "../utils/queries";
+import {
+  GET_SINGLE_PLAYER,
+  GET_PERFORMANCES_BY_PLAYER,
+  GET_AVG_PERFORMANCE_BY_PLAYER
+} from "../utils/queries";
 import { DELETE_PLAYER } from "../utils/mutations";
 import PerformanceTable from "../components/PerformanceTable";
 import PerformanceModal from "../components/PerformanceModal";
@@ -20,7 +24,16 @@ import {
   ButtonGroup,
   useDisclosure,
   Icon,
-  Flex
+  Flex,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
 } from '@chakra-ui/react';
 import { IoMdAddCircle } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
@@ -39,9 +52,15 @@ export default function SinglePlayer() {
     data: performancesData,
   } = useQuery(GET_PERFORMANCES_BY_PLAYER, { variables: { id } });
 
+  const {
+    loading: loadingAverages,
+    data: averagesData
+  } = useQuery(GET_AVG_PERFORMANCE_BY_PLAYER, { variables: { id } });
+
   const [deletePlayer] = useMutation(DELETE_PLAYER);
   const [player, setPlayer] = useState();
   const [performances, setPerformances] = useState([]);
+  const [averages, setAverages] = useState();
   const {
     isOpen: isPlayerOpen,
     onOpen: onPlayerOpen,
@@ -62,7 +81,10 @@ export default function SinglePlayer() {
     if (performancesData) {
       setPerformances(performancesData.performancesByPlayer)
     }
-  }, [playerData, performancesData, setPlayer, setPerformances]);
+    if (averagesData) {
+      setAverages(averagesData.avgPerformanceByPlayer);
+    }
+  }, [playerData, performancesData, averagesData, setAverages, setPlayer, setPerformances]);
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -80,6 +102,53 @@ export default function SinglePlayer() {
       location.replace(`/team/${player.team._id}`);
     }  
   };
+
+  const AveragesTable = (props) => {
+    return (
+      <TableContainer
+        borderWidth={2}
+        borderRadius={20}
+        boxShadow='md'
+        mt={5}
+        mb={10}
+      >
+        <Table>
+          <Thead bgColor='custom.red'>
+            <Tr>
+              <Th color='white'>PPG</Th>
+              <Th color='white'>RPG</Th>
+              <Th color='white'>APG</Th>
+              <Th color='white'>FG%</Th>
+              <Th color='white'>3P%</Th>
+              <Th color='white'>FT%</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            <Tr>
+              <Td>
+                {props.avgPoints}
+              </Td>
+              <Td>
+                {props.avgRebounds}
+              </Td>
+              <Td>
+                {props.avgAssists}
+              </Td>
+              <Td>
+                {((props.avgFgMade / props.avgFgAtt) * 100).toFixed(1)}
+              </Td>
+              <Td>
+                {((props.avgThreePtMade / props.avgThreePtAtt) * 100).toFixed(1)}
+              </Td>
+              <Td>
+                {((props.avgFtMade / props.avgFtAtt) * 100).toFixed(1)}
+              </Td>
+            </Tr>
+          </Tbody>
+        </Table>
+      </TableContainer>
+    );
+  }
 
   return (
     <>
@@ -133,25 +202,45 @@ export default function SinglePlayer() {
                 </Button>
               </ButtonGroup>
             }
-            <HStack>
-            <Heading as='h3' size='md' color='custom.blueGreen' mt={3} mb={3}>Game Log</Heading>
             {
-              (Auth.loggedIn() && Auth.getProfile().data._id === player.createdBy._id)
+              loadingAverages
               &&
-              <Button
-                boxShadow='xl'
-                colorScheme='blue'
-                size='xs'
-                type='button'
-                onClick={onPerformanceOpen}
-              >
-                <Icon
-                  as={IoMdAddCircle}
-                  mr={1}
-                />
-                Add Game
-              </Button>
+              <LoadingSpinner />
             }
+            {
+              averages
+              &&
+              <AveragesTable
+                avgPoints={averages.avgPoints}
+                avgRebounds={averages.avgRebounds}
+                avgAssists={averages.avgAssists}
+                avgFgMade={averages.avgFgMade}
+                avgFgAtt={averages.avgFgAtt}
+                avgThreePtMade={averages.avgThreePtMade}
+                avgThreePtAtt={averages.avgThreePtAtt}
+                avgFtMade={averages.avgFtMade}
+                avgFtAtt={averages.avgFtAtt}
+              />
+            }         
+            <HStack>
+              <Heading as='h3' size='md' color='custom.blueGreen' mt={3} mb={3}>Game Log</Heading>
+              {
+                (Auth.loggedIn() && Auth.getProfile().data._id === player.createdBy._id)
+                &&
+                <Button
+                  boxShadow='xl'
+                  colorScheme='blue'
+                  size='xs'
+                  type='button'
+                  onClick={onPerformanceOpen}
+                >
+                  <Icon
+                    as={IoMdAddCircle}
+                    mr={1}
+                  />
+                  Add Game
+                </Button>
+              }
             </HStack>
             {
               loadingPerformances

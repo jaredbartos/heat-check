@@ -1,6 +1,10 @@
 import { formatDate } from '../../utils/dates';
 import { DELETE_PERFORMANCE } from '../../utils/mutations';
-import { GET_PERFORMANCES_BY_PLAYER, GET_SINGLE_PLAYER } from '../../utils/queries';
+import {
+  GET_AVG_PERFORMANCE_BY_PLAYER,
+  GET_PERFORMANCES_BY_PLAYER,
+  GET_SINGLE_PLAYER
+} from '../../utils/queries';
 import PerformanceModal from '../PerformanceModal';
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
@@ -34,7 +38,8 @@ export default function PerformanceTable({ isRanking, performances }) {
   const [deletePerformance] = useMutation(DELETE_PERFORMANCE, {
     refetchQueries: [
       GET_SINGLE_PLAYER,
-      GET_PERFORMANCES_BY_PLAYER
+      GET_PERFORMANCES_BY_PLAYER,
+      GET_AVG_PERFORMANCE_BY_PLAYER
     ]
   });
 

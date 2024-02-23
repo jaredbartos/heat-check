@@ -55,7 +55,7 @@ const resolvers = {
         .populate('player')
         .populate('createdBy');
     },
-    avgPerformancesByPlayer: async (parent, { _id }) => {
+    avgPerformanceByPlayer: async (parent, { _id }) => {
       const aggregate = await Performance.aggregate([
         { $match: { player: new ObjectId(_id) } },
         {

@@ -208,9 +208,9 @@ export const GET_PERFORMANCES_BY_PLAYER = gql`
   }
 `;
 
-export const GET_AVG_PERFORMANCES_BY_PLAYER = gql`
-  query getAvgPerformancesByPlayer($id: ID!) {
-    avgPerformancesByPlayer(_id: $id) {
+export const GET_AVG_PERFORMANCE_BY_PLAYER = gql`
+  query getAvgPerformanceByPlayer($id: ID!) {
+    avgPerformanceByPlayer(_id: $id) {
       _id
       avgFgAtt
       avgFgMade
