@@ -11,11 +11,13 @@ import Dashboard from './pages/Dashboard.jsx';
 import SinglePlayer from './pages/SinglePlayer.jsx';
 import TeamsPage from './pages/TeamsPage.jsx';
 import SingleTeam from './pages/SingleTeam.jsx';
+import ErrorPage from './pages/ErrorPage.jsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
