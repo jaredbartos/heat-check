@@ -184,8 +184,8 @@ export default function SinglePlayer() {
       {
         player
         &&
-        <Flex justify={['left', null, null, null, 'center']}>
-          <Box w={[1000]} m={12}>
+        <Flex justify='center'>
+          <Box w={['95%', null, null, null, 1200]} m={12}>
             <Heading color='custom.blueGreen' as='h2' size='lg' mb={2}>{player.firstName} {player.lastName} #{player.number}</Heading>
             <Text fontSize='xl' mb={2}>
               Team:{' '}
