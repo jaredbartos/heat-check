@@ -145,6 +145,12 @@ export default function PerformanceTable({ isRanking, performances }) {
                         <PopoverArrow />
                         <PopoverBody>
                           Are you sure you want to delete this game?
+                          <Text
+                            mt={3}
+                            color='red'
+                          >
+                            This action cannot be undone.
+                          </Text> 
                         </PopoverBody>
                         <PopoverFooter
                           border='0'
