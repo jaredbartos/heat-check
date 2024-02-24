@@ -41,7 +41,9 @@ export default function TeamsPage() {
         {
           loading
           &&
-          <LoadingSpinner />
+          <Box h={600}>
+            <LoadingSpinner />
+          </Box>
         }
         {
           (!loading && teams.length)

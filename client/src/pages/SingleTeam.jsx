@@ -167,7 +167,9 @@ export default function SingleTeam() {
       {
         loadingTeam
         &&
-        <LoadingSpinner />
+        <Box h={600}>
+          <LoadingSpinner />
+        </Box>       
       }
       {
         team

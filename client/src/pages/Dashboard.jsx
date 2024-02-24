@@ -12,7 +12,9 @@ import {
   Button,
   VStack,
   useDisclosure,
-  Icon
+  Icon,
+  Flex,
+  Box
 } from '@chakra-ui/react';
 import { IoMdAddCircle } from "react-icons/io";
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -52,34 +54,40 @@ export default function Dashboard() {
           </Button>
         </VStack>
       </Center>
-      {
-        loading
-        &&
-        <LoadingSpinner />
-      } 
-      {
-        (!loading && teams.length)
-        &&
-        <Wrap m='auto' w={[400, null, null, 900, null, 1300]}>
-        {teams.map(team => 
-          <WrapItem w={400} key={team._id}>
-            <TeamCard               
-              teamId={team._id}
-              players={team.players}
-              teamName={team.name}
-              league={team.league}
-            />
-          </WrapItem>
-        )}
-        </Wrap>
-      }
-      {
-        (!loading && !teams.length)
-        &&
-        <Center>
-          <Text fontSize='lg' my={20}>No teams have been added yet!</Text>
-        </Center>
-      }
+      <Box m='auto' w='95%'>
+        {
+          loading
+          &&
+          <Box h={600}>
+            <LoadingSpinner />
+          </Box>
+        }
+        {
+          (!loading && teams.length)
+          &&
+          <Flex
+            flexWrap='wrap'
+            justify='center'
+          >
+          {teams.map(team => 
+              <TeamCard
+                key={team._id}          
+                teamId={team._id}
+                players={team.players}
+                teamName={team.name}
+                league={team.league}
+              />
+          )}
+          </Flex>
+        }
+        {
+          (!loading && !teams.length)
+          &&
+          <Center>
+            <Text fontSize='lg' my={20}>No teams have been added yet!</Text>
+          </Center>
+        }
+      </Box>
       <TeamModal
         action='create'
         isOpen={isOpen}
