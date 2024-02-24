@@ -285,9 +285,11 @@ export default function SingleTeam() {
                 ?
                 <PlayersTable team={team} />
                 :
-                <Center>
-                  <Text fontSize='lg' my={20}>No players have been added yet!</Text>
-                </Center>
+                <Box w='100%'>
+                  <Center>
+                    <Text fontSize='lg' my={20}>No players have been added yet!</Text>
+                  </Center>
+                </Box>
               }
               {
                 loadingAverages && averages.length === 0

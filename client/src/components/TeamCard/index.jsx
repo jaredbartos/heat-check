@@ -44,6 +44,7 @@ export default function TeamCard({ teamId, players, teamName, league }) {
         borderRadius={20}
         boxShadow='xl'
         w={['100%', 400]}
+        bgColor='white'
       >
         <ChakraLink
           color='white'
@@ -75,7 +76,9 @@ export default function TeamCard({ teamId, players, teamName, league }) {
           <Text
             bgColor='white'
             borderBottomRadius={20}
+            my={30}
             p={3}
+            textAlign='center'
           >
             No players have been added to this team yet!
           </Text>
