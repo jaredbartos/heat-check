@@ -8,7 +8,7 @@ export const theme = extendTheme({
         bgColor: '#f3e8e2'
       },
       '.navLink': {
-        mx: 4,
+        mx: 1,
         my: [2, 0]
       }
     }

@@ -41,9 +41,9 @@ export default function TeamCard({ teamId, players, teamName, league }) {
         m={5}
         p={0}
         borderWidth={2}
-        w={432}
         borderRadius={20}
         boxShadow='xl'
+        w={['100%', 400]}
       >
         <ChakraLink
           color='white'

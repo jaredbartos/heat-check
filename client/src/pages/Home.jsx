@@ -42,7 +42,7 @@ export default function Home() {
     <Box>
       <Center h={100}>
         <Heading as='h2' color='custom.blueGreen' size='lg'>
-          Highest Scoring Games By Players
+          Highest Scorers
         </Heading>
       </Center>
       <Box h={390}>
@@ -54,7 +54,9 @@ export default function Home() {
         {
           (!loadingPerformances && performances.length)
           &&
-          <Flex justifyContent={['left', null, null, null, 'center']}>
+          <Flex
+            justify='center'
+          >
             <PerformanceTable
               performances={performances}
               isRanking={true}
@@ -74,7 +76,7 @@ export default function Home() {
           Recently Updated Teams
         </Heading>
       </Center>
-      <Box>
+      <Box w={['95%']}>
       {
         loadingTeams
         &&
@@ -83,18 +85,17 @@ export default function Home() {
       {
         (!loadingTeams && teams.length)
         &&
-        <Wrap m='auto' w={[400, null, 900, null, 1300]}>
+        <Flex flexWrap='wrap' justify='center'  >
         {teams.map(team => 
-          <WrapItem w={400} key={team._id}>
-            <TeamCard               
+            <TeamCard
+              key={team._id}          
               teamId={team._id}
               players={team.players}
               teamName={team.name}
               league={team.league}
             />
-          </WrapItem>
         )}
-        </Wrap>
+        </Flex>
       }
       {
         (!loadingTeams && !teams.length)
