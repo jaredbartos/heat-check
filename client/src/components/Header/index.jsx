@@ -12,9 +12,9 @@ import { GiBasketballBall } from "react-icons/gi";
 export default function Header() {
   return (
     <header>
-      <Flex w="95%" ml={2} mb={10} alignItems="flex-end"  h={50}>
+      <Flex w="95%" ml={2} mb={[20, 10]} flexWrap='wrap' alignItems="flex-end"  h={50}>
         <ChakraLink color='custom.red' as={ReactRouterLink} to="/">        
-          <Heading as='h1'>
+          <Heading as='h1' size='xl' mb={[4, null, 0]}>
             <Icon
               position='relative'
               top='5px'

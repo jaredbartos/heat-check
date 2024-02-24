@@ -7,6 +7,10 @@ export const theme = extendTheme({
       body: {
         bgColor: '#f3e8e2'
       },
+      '.navLink': {
+        mx: 4,
+        my: [2, 0]
+      }
     }
   },
   colors: {

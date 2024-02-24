@@ -3,7 +3,8 @@ import {
   Link as ChakraLink,
   HStack,
   useDisclosure,
-  Icon
+  Icon,
+  Flex
 } from '@chakra-ui/react';
 import Auth from '../../utils/auth';
 import LoginModal from '../LoginModal';
@@ -31,8 +32,16 @@ export default function Nav() {
   return (
     <>
       <nav>
-        <HStack color='custom.blueGreen' spacing={12}>
-          <ChakraLink as={ReactRouterLink} to="/">
+        <Flex
+          justify='space-between'
+          flexWrap='wrap'
+          color='custom.blueGreen'
+          w={[250, 400]}
+        >
+          <ChakraLink
+            className='navLink'
+            as={ReactRouterLink}
+            to="/">
             <Icon
               as={FaHome}
               position='relative'
@@ -42,7 +51,11 @@ export default function Nav() {
             />
             Home
           </ChakraLink>
-          <ChakraLink as={ReactRouterLink} to="/teams">
+          <ChakraLink
+            className='navLink'
+            as={ReactRouterLink}
+            to="/teams"
+          >
             <Icon
               as={HiUserGroup}
               position='relative'
@@ -55,7 +68,11 @@ export default function Nav() {
           {
             Auth.loggedIn()
             ?
-            <ChakraLink as={ReactRouterLink} to="/dashboard">
+            <ChakraLink
+              className='navLink'
+              as={ReactRouterLink}
+              to="/dashboard"
+            >
               <Icon
                 as={AiFillDashboard}
                 position='relative'
@@ -66,7 +83,10 @@ export default function Nav() {
               Your Dashboard
             </ChakraLink>
             :
-            <ChakraLink onClick={onLoginOpen}>
+            <ChakraLink
+              className='navLink'
+              onClick={onLoginOpen}
+            >
               <Icon
                 as={MdLogin}
                 position='relative'
@@ -80,7 +100,12 @@ export default function Nav() {
           {
             Auth.loggedIn()
             ?
-            <ChakraLink href="/" id="logout" onClick={() => Auth.logout()}>
+            <ChakraLink
+              className='navLink'
+              href="/"
+              id="logout"
+              onClick={() => Auth.logout()}
+            >
               <Icon
                 as={MdLogout}
                 position='relative'
@@ -91,7 +116,10 @@ export default function Nav() {
               Logout
             </ChakraLink>
             :
-            <ChakraLink onClick={onSignupOpen}>
+            <ChakraLink
+              className='navLink'
+              onClick={onSignupOpen}
+            >
               <Icon
                 as={FaUserPlus}
                 position='relative'
@@ -102,7 +130,7 @@ export default function Nav() {
               Sign Up
             </ChakraLink>
           }
-        </HStack>       
+        </Flex>       
       </nav>
       <LoginModal
         isOpen={isLoginOpen}
