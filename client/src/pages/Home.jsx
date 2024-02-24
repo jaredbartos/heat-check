@@ -85,7 +85,7 @@ export default function Home() {
       {
         (!loadingTeams && teams.length)
         &&
-        <Flex flexWrap='wrap' justify='center'  >
+        <Flex flexWrap='wrap' justify='center'>
         {teams.map(team => 
             <TeamCard
               key={team._id}          
