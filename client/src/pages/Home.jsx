@@ -41,7 +41,7 @@ export default function Home() {
   return (
     <Box>
       <Center h={100}>
-        <Heading as='h2' color='custom.blueGreen' size='lg'>
+        <Heading as='h2' color='custom.blue' size='lg'>
           Highest Scorers
         </Heading>
       </Center>
@@ -72,7 +72,7 @@ export default function Home() {
         }
       </Box>
       <Center h={100}>
-        <Heading as='h2' color='custom.blueGreen' size='lg'>
+        <Heading as='h2' color='custom.blue' size='lg'>
           Recently Updated Teams
         </Heading>
       </Center>

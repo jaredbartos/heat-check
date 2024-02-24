@@ -178,7 +178,7 @@ export default function SingleTeam() {
           <Box w={['95%', null, 1050]} m={12}>
             <Center>
               <VStack>
-                <Heading as='h2' color='custom.blueGreen' mb={2} size='lg'>{team.name}</Heading>
+                <Heading as='h2' color='custom.blue' mb={2} size='xl'>{team.name}</Heading>
                 <Text fontSize='xl' mb={2}>League: {team.league}</Text>
                 {
                   (Auth.loggedIn() && Auth.getProfile().data._id === team.createdBy._id)

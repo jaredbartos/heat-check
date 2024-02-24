@@ -1,5 +1,6 @@
 import { extendTheme } from '@chakra-ui/react';
 import { tableTheme } from './table';
+import { linkTheme } from './link';
 
 export const theme = extendTheme({
   styles: {
@@ -9,7 +10,14 @@ export const theme = extendTheme({
       },
       '.navLink': {
         mx: 1,
-        my: [2, 0]
+        my: [2, 0],
+        px: 2,
+        borderRadius: 5,
+        fontSize: 'lg',
+        _hover: {
+          bgColor: 'custom.red',
+          color: 'white'
+        }
       }
     }
   },
@@ -17,11 +25,12 @@ export const theme = extendTheme({
     custom: {
       red: '#b3001b',
       blueGreen: '#114b5f',
-      blue: '#2f809D',
+      blue: '#153243',
       lightBg: '#f3e8e2'
     }
   },
   components: {
-    Table: tableTheme
+    Table: tableTheme,
+    Link: linkTheme,
   }
 });

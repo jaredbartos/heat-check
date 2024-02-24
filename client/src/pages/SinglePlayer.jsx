@@ -188,7 +188,7 @@ export default function SinglePlayer() {
         &&
         <Flex justify='center'>
           <Box w={['95%', null, null, null, 1200]} m={12}>
-            <Heading color='custom.blueGreen' as='h2' size='lg' mb={2}>{player.firstName} {player.lastName} #{player.number}</Heading>
+            <Heading color='custom.blue' as='h2' size='lg' mb={2}>{player.firstName} {player.lastName} #{player.number}</Heading>
             <Text fontSize='xl' mb={2}>
               Team:{' '}
               <ChakraLink as={ReactRouterLink} to={`/team/${player.team._id}`}>
@@ -297,7 +297,7 @@ export default function SinglePlayer() {
               />
             }         
             <HStack>
-              <Heading as='h3' size='md' color='custom.blueGreen' mt={3} mb={3}>Game Log</Heading>
+              <Heading as='h3' size='md' color='custom.blue' mt={3} mb={3}>Game Log</Heading>
               {
                 (Auth.loggedIn() && Auth.getProfile().data._id === player.createdBy._id)
                 &&
