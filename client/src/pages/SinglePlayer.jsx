@@ -179,7 +179,9 @@ export default function SinglePlayer() {
       {
         loadingPlayer
         &&
-        <LoadingSpinner />
+        <Box h={500}>
+          <LoadingSpinner />
+        </Box>        
       }
       {
         player
