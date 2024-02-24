@@ -175,7 +175,7 @@ export default function SingleTeam() {
         team
         &&
         <Flex justify='center'>
-          <Box w={['95%', null, 1050]} m={12}>
+          <Box w={['95%', null, 1050]} m={8}>
             <Center>
               <VStack>
                 <Heading as='h2' color='custom.blue' mb={2} size='xl'>{team.name}</Heading>
