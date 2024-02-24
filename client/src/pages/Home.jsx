@@ -76,7 +76,7 @@ export default function Home() {
           Recently Updated Teams
         </Heading>
       </Center>
-      <Box w={['95%']}>
+      <Box m='auto' w={['95%']}>
       {
         loadingTeams
         &&

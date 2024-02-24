@@ -106,9 +106,8 @@ export default function SingleTeam() {
         borderRadius={20}
         boxShadow='md'
         mt={5}
-        w={435}
       >
-        <Table>
+        <Table variant='simple'>
           <Thead bgColor='custom.red'>
             <Tr>
               <Th color='white'>Name</Th>
@@ -173,8 +172,8 @@ export default function SingleTeam() {
       {
         team
         &&
-        <Flex justify={['left', null, 'center']}>
-          <Box w={[500, 1050]} m={12}>
+        <Flex justify='center'>
+          <Box w={['95%', null, 1050]} m={12}>
             <Center>
               <VStack>
                 <Heading as='h2' color='custom.blueGreen' mb={2} size='lg'>{team.name}</Heading>
@@ -278,33 +277,31 @@ export default function SingleTeam() {
                 }
               </VStack>
             </Center>
-              <Flex justify='center' flexWrap='wrap'>
-                {
-                  team.players.length
-                  ?
-                  <PlayersTable team={team} />
-                  :
-                  <Center>
-                    <Text fontSize='lg' my={20}>No players have been added yet!</Text>
-                  </Center>
-                }
-                {
-                  loadingAverages && averages.length === 0
-                  &&
-                  <Box w={435} ml={5}>
-                    <LoadingSpinner />
-                  </Box>
-                }
-                {
-                  averages.length !== 0
-                  &&
-                  <Box w={435} ml={5}>
-                    <AveragesTable>
-                      <AveragesTableContent averages={averages} />
-                    </AveragesTable>
-                  </Box>
-                }
-              </Flex>
+            <Flex justify={['center', null, null, 'space-between']} flexWrap='wrap'>
+              {
+                team.players.length
+                ?
+                <PlayersTable team={team} />
+                :
+                <Center>
+                  <Text fontSize='lg' my={20}>No players have been added yet!</Text>
+                </Center>
+              }
+              {
+                loadingAverages && averages.length === 0
+                &&
+                <Box w={400} h={450}>
+                  <LoadingSpinner />
+                </Box>
+              }
+              {
+                averages.length !== 0
+                &&
+                <AveragesTable>
+                  <AveragesTableContent averages={averages} />
+                </AveragesTable>
+              }
+            </Flex>
             <TeamModal
               action='update'
               currentTeam={team}
