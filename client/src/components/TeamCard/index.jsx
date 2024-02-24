@@ -72,7 +72,13 @@ export default function TeamCard({ teamId, players, teamName, league }) {
             </Table>
           </TableContainer>
           :
-          <Text>No players have been added to this team yet!</Text>
+          <Text
+            bgColor='white'
+            borderBottomRadius={20}
+            p={3}
+          >
+            No players have been added to this team yet!
+          </Text>
         }
       </Box>
     </>

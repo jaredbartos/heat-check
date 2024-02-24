@@ -273,6 +273,10 @@ const resolvers = {
           throw new Error('No player found with that ID!');
         }
 
+        await Performance.deleteMany({
+          player: _id
+        });
+
         return player;
       }
 
@@ -298,6 +302,17 @@ const resolvers = {
         if (!team) {
           throw new Error('No team found with that ID!');
         }
+
+        const players = await Player.find({ team: _id });
+        const playerIds = players.map((player) => player._id);
+
+        await Performance.deleteMany({
+          player: { $in: playerIds }
+        });
+
+        await Player.deleteMany({
+          team: _id
+        });
 
         return team;
       }

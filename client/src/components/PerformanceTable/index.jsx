@@ -125,7 +125,7 @@ export default function PerformanceTable({ isRanking, performances }) {
                 >
                   <Icon as={FaEdit} />
                 </Button>
-                <Popover placement='top'>
+                <Popover>
                   {({ isOpen, onClose }) => (
                     <>
                       <PopoverTrigger>
@@ -174,10 +174,8 @@ export default function PerformanceTable({ isRanking, performances }) {
                         </PopoverFooter>
                       </PopoverContent> 
                     </>
-                  )}
-                                   
-                </Popover>
-                
+                  )}                                  
+                </Popover>                
               </ButtonGroup>
             </Td>
             :

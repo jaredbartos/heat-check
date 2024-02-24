@@ -30,7 +30,7 @@ export default function ErrorPage() {
             </ChakraLink>
           </Text>
           <Text as='i'>
-            {error.status}: {error.statusText || error.message}
+            {error.status && `${error.status}: `}{error.statusText || error.message}
           </Text>
         </VStack>
       </Flex>

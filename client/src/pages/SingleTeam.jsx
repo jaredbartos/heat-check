@@ -32,6 +32,15 @@ import {
   TableCaption,
   HStack,
   Wrap,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
   Link as ChakraLink
 } from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom';
@@ -77,19 +86,17 @@ export default function SingleTeam() {
 
   const handleDelete = async (e) => {
     e.preventDefault();
-    if (confirm(`Are you sure you want to delete the ${team.name}?`)) {
-      try {
-        await deleteTeam({
-          variables: {
-            _id: team._id
-          }
-        });
-      } catch (err) {
-        console.log(err);
-      }
-
-      location.replace('/dashboard');
+    try {
+      await deleteTeam({
+        variables: {
+          _id: team._id
+        }
+      });
+    } catch (err) {
+      console.log(err);
     }
+
+    location.replace('/dashboard');
   };
 
   const AveragesTable = ({ children }) => {
@@ -105,9 +112,24 @@ export default function SingleTeam() {
           <Thead bgColor='custom.red'>
             <Tr>
               <Th color='white'>Name</Th>
-              <Th color='white'>PPG</Th>
-              <Th color='white'>RPG</Th>
-              <Th color='white'>APG</Th>
+              <Th
+                color='white'
+                textAlign='right'
+              >
+                PPG
+              </Th>
+              <Th
+                color='white'
+                textAlign='right'
+              >
+                RPG
+              </Th>
+              <Th
+                color='white'
+                textAlign='right'
+              >
+                APG
+              </Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -173,18 +195,67 @@ export default function SingleTeam() {
                       />
                       Edit Team
                     </Button>
-                    <Button
-                      boxShadow='xl'
-                      colorScheme='red'
-                      type="button"
-                      onClick={handleDelete}
-                    >
-                      <Icon
-                        as={TiDelete}
-                        boxSize={6}
-                      />
-                      Delete Team
-                    </Button>
+                    <Popover>
+                      {({ isOpen, onClose }) => (
+                        <>
+                          <PopoverTrigger>
+                            <Button
+                              boxShadow='xl'
+                              colorScheme='red'
+                              type="button"
+                            >
+                              <Icon
+                                as={TiDelete}
+                                boxSize={6}
+                              />
+                              Delete Team
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent>
+                            <PopoverHeader color='custom.blueGreen'>
+                              Confirmation
+                            </PopoverHeader>
+                            <PopoverArrow />
+                            <PopoverBody>
+                              Are you sure you want to delete the {team.name} ({team.league})?
+                              <Text
+                                mt={1}
+                                color='red'
+                              >
+                                This will also delete all of this team's players
+                                and their individual games. This action cannot be undone.
+                              </Text> 
+                            </PopoverBody>
+                            <PopoverFooter
+                              border='0'
+                              display='flex'
+                              alignItems='center'
+                              justifyContent='flex-end'
+                            >
+                              <ButtonGroup>
+                                <Button
+                                  size='sm'
+                                  boxShadow='md'
+                                  mr={2}
+                                  onClick={onClose}
+                                >
+                                  Cancel
+                                </Button>
+                                <Button
+                                  colorScheme='red'
+                                  size='sm'
+                                  boxShadow='xl'
+                                  mr={1}
+                                  onClick={handleDelete}
+                                >
+                                  Delete
+                                </Button>
+                              </ButtonGroup>
+                            </PopoverFooter>
+                          </PopoverContent> 
+                        </>
+                      )}                                  
+                    </Popover>
                   </ButtonGroup>
                 }
                 {
@@ -207,7 +278,7 @@ export default function SingleTeam() {
                 }
               </VStack>
             </Center>
-              <Flex justify='space-between' flexWrap='wrap'>
+              <Flex justify='center' flexWrap='wrap'>
                 {
                   team.players.length
                   ?
@@ -217,20 +288,22 @@ export default function SingleTeam() {
                     <Text fontSize='lg' my={20}>No players have been added yet!</Text>
                   </Center>
                 }
-                <Box w={435}>
-                  {
-                    loadingAverages && !averages
-                    &&
+                {
+                  loadingAverages && averages.length === 0
+                  &&
+                  <Box w={435} ml={5}>
                     <LoadingSpinner />
-                  }
-                  {
-                    averages
-                    &&
+                  </Box>
+                }
+                {
+                  averages.length !== 0
+                  &&
+                  <Box w={435} ml={5}>
                     <AveragesTable>
                       <AveragesTableContent averages={averages} />
                     </AveragesTable>
-                  }
-                </Box>
+                  </Box>
+                }
               </Flex>
             <TeamModal
               action='update'

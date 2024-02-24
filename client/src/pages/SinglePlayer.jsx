@@ -34,6 +34,15 @@ import {
   Td,
   TableCaption,
   TableContainer,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
 } from '@chakra-ui/react';
 import { IoMdAddCircle } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
@@ -88,19 +97,16 @@ export default function SinglePlayer() {
 
   const handleDelete = async (e) => {
     e.preventDefault();
-
-    if (confirm(`Are you sure you want to delete ${player.firstName} ${player.lastName}?`)) {
-      try {
-        await deletePlayer({
-          variables: {
-            _id: player._id
-          }
-        });
-      } catch (err) {
-        console.log(err);
-      }
-      location.replace(`/team/${player.team._id}`);
-    }  
+    try {
+      await deletePlayer({
+        variables: {
+          _id: player._id
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    location.replace(`/team/${player.team._id}`);
   };
 
   const AveragesTable = (props) => {
@@ -206,18 +212,66 @@ export default function SinglePlayer() {
                   />
                   Edit Player
                 </Button>
-                <Button
-                  boxShadow='xl'
-                  colorScheme='red'
-                  type="button"
-                  onClick={handleDelete}
-                >
-                  <Icon
-                    as={TiDelete}
-                    boxSize={6}
-                  />
-                  Delete Player
-                </Button>
+                <Popover>
+                  {({ isOpen, onClose }) => (
+                    <>
+                      <PopoverTrigger>
+                        <Button
+                          boxShadow='xl'
+                          colorScheme='red'
+                          type="button"
+                        >
+                          <Icon
+                            as={TiDelete}
+                            boxSize={6}
+                          />
+                          Delete Player
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <PopoverHeader color='custom.blueGreen'>
+                          Confirmation
+                        </PopoverHeader>
+                        <PopoverArrow />
+                        <PopoverBody>
+                          Are you sure you want to delete {player.firstName} {player.lastName}?
+                          <Text
+                            mt={1}
+                            color='red'
+                          >
+                            This action will also delete all of this individual's games and cannot be undone.
+                          </Text>                        
+                        </PopoverBody>
+                        <PopoverFooter
+                          border='0'
+                          display='flex'
+                          alignItems='center'
+                          justifyContent='flex-end'
+                        >
+                          <ButtonGroup>
+                            <Button
+                              size='sm'
+                              boxShadow='md'
+                              mr={2}
+                              onClick={onClose}
+                            >
+                              Cancel
+                            </Button>
+                            <Button
+                              colorScheme='red'
+                              size='sm'
+                              boxShadow='xl'
+                              mr={1}
+                              onClick={handleDelete}
+                            >
+                              Delete
+                            </Button>
+                          </ButtonGroup>
+                        </PopoverFooter>
+                      </PopoverContent> 
+                    </>
+                  )}                                  
+                </Popover>
               </ButtonGroup>
             }
             {
