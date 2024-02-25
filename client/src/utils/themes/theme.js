@@ -1,6 +1,17 @@
-import { extendTheme } from '@chakra-ui/react';
+import { extendTheme, keyframes } from '@chakra-ui/react';
 import { tableTheme } from './table';
 import { linkTheme } from './link';
+
+const revealFromLeft = keyframes`
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`;
 
 export const theme = extendTheme({
   styles: {
@@ -25,6 +36,13 @@ export const theme = extendTheme({
           bgColor: 'gray',
           color: 'white'
         }
+      },
+      '.from-left': {
+        opacity: 0,
+        animation: `${revealFromLeft} 500ms ease-in-out 0.3s forwards`
+      },
+      '.highlight': {
+        bgColor: 'yellow'
       }
     }
   },

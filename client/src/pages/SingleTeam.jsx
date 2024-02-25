@@ -48,8 +48,11 @@ import { IoMdAddCircle } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
 import { TiDelete } from "react-icons/ti";
 import LoadingSpinner from '../components/LoadingSpinner';
+import { useSelector } from 'react-redux';
+import { selectRecentChanges } from '../utils/globalState/slices/recentChangesSlice';
 
 export default function SingleTeam() {
+  const recentChanges = useSelector(selectRecentChanges);
   const navigate = useNavigate();
   const { id } = useParams();
   const [team, setTeam] = useState();
@@ -147,16 +150,17 @@ export default function SingleTeam() {
       return (
         <Tr
           key={average._id}
-          className='player-row'
+          className={
+            recentChanges.includes(average._id)
+            ?
+            'player-row from-left highlight'
+            :
+            'player-row'
+          }
           onClick={() => navigate(`/player/${average._id}`)}
         >
           <Td>
-            <ChakraLink
-              as={ReactRouterLink}
-              to={`/player/${average._id}`}
-            >
-              {average.firstName} {average.lastName}
-            </ChakraLink>
+            {average.firstName} {average.lastName}
           </Td>
           <Td isNumeric>{average.avgPoints.toFixed(1)}</Td>
           <Td isNumeric>{average.avgRebounds.toFixed(1)}</Td>

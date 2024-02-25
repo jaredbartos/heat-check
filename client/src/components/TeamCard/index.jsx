@@ -16,6 +16,7 @@ import {
   LinkBox,
   LinkOverlay
 } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 
 export default function TeamCard({ teamId, players, teamName, league }) {
   const navigate = useNavigate();

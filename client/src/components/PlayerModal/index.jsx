@@ -1,6 +1,9 @@
-import { useState, useEffect } from 'react';
 import { ADD_PLAYER, UPDATE_PLAYER } from '../../utils/mutations';
-import { GET_SINGLE_TEAM, GET_SINGLE_PLAYER, GET_AVG_PLAYER_PERFORMANCE_BY_TEAM } from '../../utils/queries';
+import {
+  GET_SINGLE_TEAM,
+  GET_SINGLE_PLAYER,
+  GET_AVG_PLAYER_PERFORMANCE_BY_TEAM
+} from '../../utils/queries';
 import { useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
 import {
@@ -23,6 +26,7 @@ import {
   HStack
 } from '@chakra-ui/react';
 import { Formik, Form, Field } from 'formik';
+import { useManageChanges } from '../../utils/hooks';
 
 export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen, onClose }) {
   const [addPlayer] = useMutation(ADD_PLAYER, {
@@ -36,6 +40,7 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
       GET_SINGLE_PLAYER
     ]
   });
+  const manageChanges = useManageChanges();
 
   // Submit handler function for form
   const handleFormSubmit = async (values, { setSubmitting }) => {
@@ -53,12 +58,13 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
         team: currentTeam._id
       };
       try {
-        await addPlayer({
+        const { data } = await addPlayer({
           variables: {
               input,
               createdBy: Auth.getProfile().data._id
             }
         });
+        manageChanges(data.addPlayer._id);
         setSubmitting(false);
         onClose();
       } catch (error) {
@@ -74,12 +80,13 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
         height
       };
       try {
-        await updatePlayer({
+        const { data } = await updatePlayer({
           variables: {
             _id: currentPlayer._id,
             input
           }
         });
+        manageChanges(data.updatePlayer._id);
         setSubmitting(false);
         onClose();
       } catch (err) {

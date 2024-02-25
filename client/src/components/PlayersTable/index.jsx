@@ -13,8 +13,11 @@ import {
   TableContainer,
   Box
 } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
+import { selectRecentChanges } from '../../utils/globalState/slices/recentChangesSlice';
 
 export default function PlayersTable({ team }) {
+  const recentChanges = useSelector(selectRecentChanges);
   const navigate = useNavigate();
   const playersCopy = [...team.players];
   const sortedPlayers = playersCopy.sort((a, b) => a.number - b.number);
@@ -22,7 +25,13 @@ export default function PlayersTable({ team }) {
     return (
       <Tr
         key={player._id}
-        className='player-row'
+        className={
+          recentChanges.includes(player._id)
+          ?
+          'player-row from-left highlight'
+          :
+          'player-row'
+        }
         onClick={() => navigate(`/player/${player._id}`)}
       >
         <Td>{player.number}</Td>
