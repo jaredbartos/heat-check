@@ -41,11 +41,15 @@ export default function Home() {
   return (
     <Box>
       <Center h={100}>
-        <Heading as='h2' color='custom.blue' size='lg'>
+        <Heading
+          as='h2'
+          color='custom.blue'
+          size='lg'
+        >
           Highest Scorers
         </Heading>
       </Center>
-      <Box h={390}>
+      <Box h={390} className='delay-4'>
         {
           loadingPerformances
           &&
@@ -72,7 +76,11 @@ export default function Home() {
         }
       </Box>
       <Center h={100}>
-        <Heading as='h2' color='custom.blue' size='lg'>
+        <Heading
+          as='h2'
+          color='custom.blue'
+          size='lg'
+        >
           Recently Updated Teams
         </Heading>
       </Center>

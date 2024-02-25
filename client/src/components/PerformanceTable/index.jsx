@@ -69,7 +69,13 @@ export default function PerformanceTable({ isRanking, performances }) {
   // Create rows for performances
   const performanceList = performances.map((performance) => {
     return (
-      <Tr key={performance._id}>
+      <Tr
+        key={performance._id}
+        _hover={{
+          bgColor: 'gray',
+          color: 'white'
+        }}
+      >
         {
           isRanking
           &&

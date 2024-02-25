@@ -1,4 +1,4 @@
-import { Link as ReactRouterLink} from 'react-router-dom';
+import { Link as ReactRouterLink, useNavigate} from 'react-router-dom';
 import {
   Link as ChakraLink,
   Heading,
@@ -12,23 +12,25 @@ import {
   TableCaption,
   TableContainer,
   Box,
-  Text
+  Text,
+  LinkBox,
+  LinkOverlay
 } from '@chakra-ui/react';
 
 export default function TeamCard({ teamId, players, teamName, league }) {
+  const navigate = useNavigate();
   const playersCopy = [...players];
   const sortedPlayers = playersCopy.sort((a, b) => a.number - b.number);
   const playerLinks = sortedPlayers.map((player) => {
     return (
-      <Tr key={player._id}>
+      <Tr
+        key={player._id}
+        onClick={() => navigate(`/player/${player._id}`)}
+        className='player-row'
+      >
         <Td>{player.number}</Td>
         <Td>
-          <ChakraLink
-            as={ReactRouterLink}
-            to={`/player/${player._id}`}
-          >
-            {player.firstName} {player.lastName}
-          </ChakraLink>
+          {player.firstName} {player.lastName}
         </Td>
         <Td>{player.position}</Td>
       </Tr>     
@@ -60,7 +62,11 @@ export default function TeamCard({ teamId, players, teamName, league }) {
           ?
           <TableContainer borderBottomRadius={20}>
             <Table variant='simple'>
-              <Thead bgColor='custom.red'>
+              <Thead
+                bgColor='custom.red'
+                onClick={() => navigate(`/team/${teamId}`)}
+                _hover={{ cursor: 'pointer' }}
+              >
                 <Tr>
                   <Th color='white'>Number</Th>
                   <Th color='white'>Name</Th>

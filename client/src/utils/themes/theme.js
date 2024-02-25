@@ -18,6 +18,13 @@ export const theme = extendTheme({
           bgColor: 'custom.red',
           color: 'white'
         }
+      },
+      '.player-row': {
+        _hover: {
+          cursor: 'pointer',
+          bgColor: 'gray',
+          color: 'white'
+        }
       }
     }
   },

@@ -1,4 +1,4 @@
-import { Link as ReactRouterLink} from 'react-router-dom';
+import { Link as ReactRouterLink, useNavigate} from 'react-router-dom';
 import {
   Link as ChakraLink,
   Heading,
@@ -15,19 +15,19 @@ import {
 } from '@chakra-ui/react';
 
 export default function PlayersTable({ team }) {
+  const navigate = useNavigate();
   const playersCopy = [...team.players];
   const sortedPlayers = playersCopy.sort((a, b) => a.number - b.number);
   const playerList = sortedPlayers.map((player) => {
     return (
-      <Tr key={player._id}>
+      <Tr
+        key={player._id}
+        className='player-row'
+        onClick={() => navigate(`/player/${player._id}`)}
+      >
         <Td>{player.number}</Td>
         <Td>
-          <ChakraLink
-              as={ReactRouterLink}
-              to={`/player/${player._id}`}
-            >
-              {player.firstName} {player.lastName}
-            </ChakraLink>
+          {player.firstName} {player.lastName}
         </Td>
         <Td>{player.position}</Td>
         <Td>{player.height}</Td>

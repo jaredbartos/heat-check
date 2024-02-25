@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   GET_SINGLE_TEAM,
   GET_AVG_PLAYER_PERFORMANCE_BY_TEAM
@@ -50,6 +50,7 @@ import { TiDelete } from "react-icons/ti";
 import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function SingleTeam() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [team, setTeam] = useState();
   const [averages, setAverages] = useState([]);
@@ -144,7 +145,11 @@ export default function SingleTeam() {
     const sortedAverages = averagesCopy.sort((a, b) => b.avgPoints - a.avgPoints);
     return sortedAverages.map((average) => {
       return (
-        <Tr key={average._id}>
+        <Tr
+          key={average._id}
+          className='player-row'
+          onClick={() => navigate(`/player/${average._id}`)}
+        >
           <Td>
             <ChakraLink
               as={ReactRouterLink}
