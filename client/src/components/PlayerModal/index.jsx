@@ -80,13 +80,12 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
         height
       };
       try {
-        const { data } = await updatePlayer({
+        await updatePlayer({
           variables: {
             _id: currentPlayer._id,
             input
           }
         });
-        manageChanges(data.updatePlayer._id);
         setSubmitting(false);
         onClose();
       } catch (err) {

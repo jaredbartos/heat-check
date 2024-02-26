@@ -21,8 +21,10 @@ import {
   HStack
 } from '@chakra-ui/react';
 import { Formik, Form, Field } from 'formik';
+import { useManageChanges } from '../../utils/hooks';
 
 export default function PerformanceModal({ action, currentPlayer, currentPerformance, isOpen, onClose }) {
+  const manageChanges = useManageChanges();
   const [addPerformance, { error: addPerformanceError }] = useMutation(ADD_PERFORMANCE, {
     refetchQueries: [
       GET_SINGLE_PLAYER,
@@ -43,7 +45,7 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
 
     if (action === 'create') {
       try {
-        await addPerformance({
+        const { data } = await addPerformance({
           variables: {
             input: {
               ...values,
@@ -53,6 +55,7 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
             createdBy: Auth.getProfile().data._id
           }
         });
+        manageChanges(data.addPerformance._id);
         setSubmitting(false);
         onClose();
       } catch (error) {

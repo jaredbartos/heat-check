@@ -42,7 +42,7 @@ export const theme = extendTheme({
         animation: `${revealFromLeft} 500ms ease-in-out 0.3s forwards`
       },
       '.highlight': {
-        bgColor: 'yellow'
+        bgColor: '#f8ffb4'
       }
     }
   },

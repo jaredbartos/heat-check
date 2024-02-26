@@ -6,7 +6,7 @@ import {
   GET_SINGLE_PLAYER
 } from '../../utils/queries';
 import PerformanceModal from '../PerformanceModal';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
 import { Link as ReactRouterLink } from 'react-router-dom';
@@ -39,8 +39,11 @@ import {
 } from '@chakra-ui/react';
 import { FaEdit } from "react-icons/fa";
 import { TiDelete } from "react-icons/ti";
+import { useSelector } from 'react-redux';
+import { selectRecentChanges } from '../../utils/globalState/slices/recentChangesSlice';
 
 export default function PerformanceTable({ isRanking, performances }) {
+  const recentChanges = useSelector(selectRecentChanges);
   const [selectedPerformance, setSelectedPerformance] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -75,6 +78,11 @@ export default function PerformanceTable({ isRanking, performances }) {
           bgColor: 'gray',
           color: 'white'
         }}
+        className={
+          recentChanges.includes(performance._id)
+          &&
+          'from-left highlight'
+        }
       >
         {
           isRanking
