@@ -17,12 +17,14 @@ import { FaUserPlus } from "react-icons/fa6";
 
 
 export default function Nav() {
+  // Declare modal variables for login
   const {
     isOpen: isLoginOpen,
     onOpen: onLoginOpen,
     onClose: onLoginClose
   } = useDisclosure();
 
+  // Declare modal variables for signup
   const {
     isOpen: isSignupOpen,
     onOpen: onSignupOpen,
@@ -64,6 +66,7 @@ export default function Nav() {
           Teams
         </ChakraLink>
         {
+          // If logged in, show dashboard link
           Auth.loggedIn()
           ?
           <ChakraLink
@@ -80,6 +83,7 @@ export default function Nav() {
             Your Dashboard
           </ChakraLink>
           :
+          // If not logged in, show login link for modal
           <ChakraLink
             className='navLink'
             onClick={onLoginOpen}
@@ -94,6 +98,7 @@ export default function Nav() {
           </ChakraLink>
         }
         {
+          // If logged in, show logout link
           Auth.loggedIn()
           ?
           <ChakraLink
@@ -111,6 +116,7 @@ export default function Nav() {
             Logout
           </ChakraLink>
           :
+          // If not logged in, show signup link for modal
           <ChakraLink
             className='navLink'
             onClick={onSignupOpen}

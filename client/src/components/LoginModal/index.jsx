@@ -18,10 +18,13 @@ import { useMutation } from '@apollo/client';
 import { LOGIN } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
+// LoginModal component
 export default function LoginModal({ isOpen, onClose }) {
+  // Prepare login mutation
   const [login, { error: loginError }] = useMutation(LOGIN);
 
   return (
+    // Set up modal for login
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent p={4}>
@@ -29,6 +32,7 @@ export default function LoginModal({ isOpen, onClose }) {
         <ModalCloseButton />
         <ModalBody> 
           <Formik
+          // Set initial values and onSubmit behavior for Formik form
             initialValues={{ email: '', password: '' }}
             onSubmit={async ({ email, password }, { setSubmitting }) => {
               const { data } = await login({

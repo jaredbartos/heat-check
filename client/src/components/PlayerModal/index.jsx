@@ -28,18 +28,22 @@ import {
 import { Formik, Form, Field } from 'formik';
 import { useManageChanges } from '../../utils/hooks';
 
+// PlayerModal component
 export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen, onClose }) {
+  // Prepare add player mutation
   const [addPlayer] = useMutation(ADD_PLAYER, {
     refetchQueries: [
       GET_SINGLE_TEAM,
       GET_AVG_PLAYER_PERFORMANCE_BY_TEAM
     ]
   });
+  // Prepare update player mutation
   const [updatePlayer] = useMutation(UPDATE_PLAYER, {
     refetchQueries: [
       GET_SINGLE_PLAYER
     ]
   });
+  // Use custom hook for managing recent changes Redux
   const manageChanges = useManageChanges();
 
   // Submit handler function for form
@@ -47,6 +51,8 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
     // Format height to string for database entry
     const height = `${values.feet}'${values.inches}"`;
 
+    // Depending on whether passed action prop equals 'create' or 'update',
+    // add or update player
     if (action === 'create') {
       const input = {
         firstName: values.firstName,
@@ -64,6 +70,7 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
               createdBy: Auth.getProfile().data._id
             }
         });
+        // Add new player to recent changes for highlighting in UI
         manageChanges(data.addPlayer._id);
         setSubmitting(false);
         onClose();
@@ -94,8 +101,11 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
     }
   };
 
+  // Get initial values for form
   const getInitialValues = () => {
     let initialValues;
+    // If currentPlayer prop was not passed through,
+    // start fresh with empty strings
     if (!currentPlayer) {
       initialValues = {
         firstName: '',
@@ -107,9 +117,11 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
         weight: ''
       };
     } else {
+      // Separate values for feet and inches from height
       const heightArr = currentPlayer.height.split("'");
       const feet = heightArr[0];
       const inches = heightArr[1].split('"')[0];
+      // Set initial values with currentPlayer values
       initialValues = {
         firstName: currentPlayer.firstName,
         lastName: currentPlayer.lastName,

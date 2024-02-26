@@ -19,7 +19,9 @@ import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
+// SignupModal component
 export default function SignupModal({ isOpen, onClose }) {
+  // Prepare addUser mutation
   const [addUser] = useMutation(ADD_USER);
 
   const validate = values => {

@@ -16,22 +16,32 @@ import {
 import { useSelector } from 'react-redux';
 import { selectRecentChanges } from '../../utils/globalState/slices/recentChangesSlice';
 
+// PlayersTable component
 export default function PlayersTable({ team }) {
+  // Get recentChanges state from Redux
   const recentChanges = useSelector(selectRecentChanges);
+  // Use navigate for redirecting links
   const navigate = useNavigate();
+
+  // Copy players array
   const playersCopy = [...team.players];
+  // Sort players by number
   const sortedPlayers = playersCopy.sort((a, b) => a.number - b.number);
+  // Use sorted players array to create rows of players
   const playerList = sortedPlayers.map((player) => {
     return (
       <Tr
         key={player._id}
         className={
+          // If player is in recentChanges,
+          // animate and highlight row
           recentChanges.includes(player._id)
           ?
           'player-row from-left highlight'
           :
           'player-row'
         }
+        // Set entire row to navigate to the player page
         onClick={() => navigate(`/player/${player._id}`)}
       >
         <Td>{player.number}</Td>

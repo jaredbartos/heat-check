@@ -42,11 +42,15 @@ import { TiDelete } from "react-icons/ti";
 import { useSelector } from 'react-redux';
 import { selectRecentChanges } from '../../utils/globalState/slices/recentChangesSlice';
 
+// PerformanceTable component
 export default function PerformanceTable({ isRanking, performances }) {
+  // Get recentChanges state from Redux
   const recentChanges = useSelector(selectRecentChanges);
   const [selectedPerformance, setSelectedPerformance] = useState();
+  // Disclosure for modal
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  // Prepare delete performance mutation
   const [deletePerformance] = useMutation(DELETE_PERFORMANCE, {
     refetchQueries: [
       GET_SINGLE_PLAYER,
@@ -55,6 +59,7 @@ export default function PerformanceTable({ isRanking, performances }) {
     ]
   });
 
+  // Handler for delete button for each performance
   const handleDelete = async (e, id) => {
     e.preventDefault();
 
@@ -79,12 +84,16 @@ export default function PerformanceTable({ isRanking, performances }) {
           color: 'white'
         }}
         className={
+          // Animate and highlight row if performance is new
           recentChanges.includes(performance._id)
           &&
           'from-left highlight'
         }
       >
         {
+          // If isRanking prop returns true,
+          // add names and teams to performances
+          // because the table will be used outside player page
           isRanking
           &&
           <>
@@ -121,7 +130,7 @@ export default function PerformanceTable({ isRanking, performances }) {
         <Td isNumeric>{performance.turnovers}</Td>
         <Td isNumeric>{performance.points}</Td>
           {
-            // Only allow user to edit or delete if they created the entry
+            // Only allow user to edit or delete if they created the entry and the table is on the player page
             (Auth.loggedIn() && Auth.getProfile().data._id === performance.createdBy._id && !isRanking)
             ?
             <Td>
@@ -132,6 +141,7 @@ export default function PerformanceTable({ isRanking, performances }) {
                   type="button"
                   className="editPerformanceBtn"
                   onClick={() => {
+                      // Set performance to be passed through and open modal
                       setSelectedPerformance(performance);
                       onOpen();
                     }
@@ -157,7 +167,7 @@ export default function PerformanceTable({ isRanking, performances }) {
                           Confirmation
                         </PopoverHeader>
                         <PopoverArrow />
-                        <PopoverBody>
+                        <PopoverBody color='black'>
                           Are you sure you want to delete this game?
                           <Text
                             mt={3}

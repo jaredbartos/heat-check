@@ -23,8 +23,11 @@ import {
 import { Formik, Form, Field } from 'formik';
 import { useManageChanges } from '../../utils/hooks';
 
+// PerformanceModal component
 export default function PerformanceModal({ action, currentPlayer, currentPerformance, isOpen, onClose }) {
+  // Use custom hook for managing recent changes Redux
   const manageChanges = useManageChanges();
+  // Prepare addPerformance mutation
   const [addPerformance, { error: addPerformanceError }] = useMutation(ADD_PERFORMANCE, {
     refetchQueries: [
       GET_SINGLE_PLAYER,
@@ -32,6 +35,7 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
       GET_AVG_PERFORMANCE_BY_PLAYER
     ]
   });
+  // Prepare updatePerformance mutation
   const [updatePerformance, { error: updatePerformanceError }] = useMutation(UPDATE_PERFORMANCE, {
     refetchQueries: [
       GET_SINGLE_PLAYER,
@@ -40,9 +44,13 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
     ]
   });
 
+  // Submit handler for Formik form
   const handleFormSubmit = async (values, { setSubmitting }) => {
+    // Create new date object with input date
     const date = new Date(values.date);
 
+    // Depending on whether passed action prop equals 'create' or 'update',
+    // Add or update performance
     if (action === 'create') {
       try {
         const { data } = await addPerformance({
@@ -55,6 +63,7 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
             createdBy: Auth.getProfile().data._id
           }
         });
+        // Add new performance to recent changes for highlighting in UI
         manageChanges(data.addPerformance._id);
         setSubmitting(false);
         onClose();
@@ -80,8 +89,11 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
     }  
   }
 
+  // Get initial values for form
   const getInitialValues = () => {
     let initalValues;
+    // If a currentPerformance prop was not passed through,
+    // Start fresh with zeroes
     if (!currentPerformance) {
       initalValues = {
         date: '',
@@ -100,6 +112,7 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
         points: 0
       }
     } else {
+      // Destructure currentPerformance prop
       const {
         date,
         fgAtt,
@@ -116,7 +129,9 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
         turnovers,
         points
       } = currentPerformance;
+      // Set initial values for edit
       initalValues = {
+        // Use helper to format date to display correctly on edit form
         date: formatEditDate(date),
         fgAtt,
         fgMade,
@@ -137,6 +152,7 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
     return initalValues;
   };
 
+  // PerformanceField component to reduce repeating code in form
   const PerformanceField = ({ fieldName, labelName }) => {
     return (
       <Field name={fieldName}>
