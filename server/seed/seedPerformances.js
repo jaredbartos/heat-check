@@ -12,7 +12,8 @@ const randomizePerformances = () => {
     fgAtt += threePtAtt;
     fgMade += threePtMade;
     const ftAtt = Math.floor(Math.random() * 11);
-    const ftMade = Math.floor(ftAtt * Math.random());
+    const ftMadeFloor = Math.floor(ftAtt * 0.7);
+    const ftMade = (Math.floor((ftAtt - ftMadeFloor) * Math.random())) + ftMadeFloor;
     const offReb = Math.floor(Math.random() * 7);
     let rebounds = Math.floor(Math.random() * 11);
     rebounds += offReb;
@@ -20,7 +21,7 @@ const randomizePerformances = () => {
     const steals = Math.floor(Math.random() * 6);
     const blocks = Math.floor(Math.random() * 6);
     const turnovers = Math.floor(Math.random() * 7);
-    const points = (threePtMade * 3) + ((fgMade - threePtMade) * 2) + ftMade;
+    const points = (fgMade * 2) + threePtMade + ftMade;
     // Create random date in between now and 11/1/2023
     const date = (Math.floor(Math.random() * (Date.now() - 1698840699000))) + 1698840699000;
   

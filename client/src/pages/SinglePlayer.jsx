@@ -131,6 +131,9 @@ export default function SinglePlayer() {
               <Th color='white'>PPG</Th>
               <Th color='white'>RPG</Th>
               <Th color='white'>APG</Th>
+              <Th color='white'>SPG</Th>
+              <Th color='white'>BPG</Th>
+              <Th color='white'>TPG</Th>
               <Th color='white'>FG%</Th>
               <Th color='white'>3P%</Th>
               <Th color='white'>FT%</Th>
@@ -146,6 +149,15 @@ export default function SinglePlayer() {
               </Td>
               <Td>
                 {props.avgAssists.toFixed(1)}
+              </Td>
+              <Td>
+                {props.avgSteals.toFixed(1)}
+              </Td>
+              <Td>
+                {props.avgBlocks.toFixed(1)}
+              </Td>
+              <Td>
+                {props.avgTurnovers.toFixed(1)}
               </Td>
               <Td>
                 {
@@ -307,6 +319,9 @@ export default function SinglePlayer() {
                 avgThreePtAtt={averages.avgThreePtAtt}
                 avgFtMade={averages.avgFtMade}
                 avgFtAtt={averages.avgFtAtt}
+                avgSteals={averages.avgSteals}
+                avgBlocks={averages.avgBlocks}
+                avgTurnovers={averages.avgTurnovers}
               />
             }         
             <HStack>
