@@ -240,19 +240,19 @@ export default function PerformanceTable({ isRanking, performances }) {
                   </>
                 }
                 <Th color='white'>DATE</Th>
-                <Th color='white'>FGA</Th>
-                <Th color='white'>FGM</Th>
-                <Th color='white'>3PA</Th>
-                <Th color='white'>3PM</Th>
-                <Th color='white'>FTA</Th>
-                <Th color='white'>FTM</Th>
-                <Th color='white'>OREB</Th>
-                <Th color='white'>TREB</Th>
-                <Th color='white'>AST</Th>
-                <Th color='white'>STL</Th>
-                <Th color='white'>BLK</Th>
-                <Th color='white'>TO</Th>
-                <Th color='white'>PTS</Th>
+                <Th color='white' textAlign='right'>FGA</Th>
+                <Th color='white' textAlign='right'>FGM</Th>
+                <Th color='white' textAlign='right'>3PA</Th>
+                <Th color='white' textAlign='right'>3PM</Th>
+                <Th color='white' textAlign='right'>FTA</Th>
+                <Th color='white' textAlign='right'>FTM</Th>
+                <Th color='white' textAlign='right'>OREB</Th>
+                <Th color='white' textAlign='right'>TREB</Th>
+                <Th color='white' textAlign='right'>AST</Th>
+                <Th color='white' textAlign='right'>STL</Th>
+                <Th color='white' textAlign='right'>BLK</Th>
+                <Th color='white' textAlign='right'>TO</Th>
+                <Th color='white' textAlign='right'>PTS</Th>
                 <Th></Th>          
               </Tr>
             </Thead>
