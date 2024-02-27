@@ -49,8 +49,12 @@ export default function PlayersTable({ team }) {
           {player.firstName} {player.lastName}
         </Td>
         <Td>{player.position}</Td>
-        <Td>{player.height}</Td>
-        <Td>{player.weight}</Td>
+        <Td>
+          {player.height || 'N/A'}
+        </Td>
+        <Td>
+          {player.weight || 'N/A'}
+        </Td>
       </Tr>
     );
   })

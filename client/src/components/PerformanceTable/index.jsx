@@ -101,6 +101,9 @@ export default function PerformanceTable({ isRanking, performances }) {
               <ChakraLink
               as={ReactRouterLink}
               to={`/player/${performance.player._id}`}
+              _hover={{
+                textDecoration: 'underline'
+              }}
               >
                 {performance.player.firstName} {performance.player.lastName}
               </ChakraLink>
@@ -109,6 +112,9 @@ export default function PerformanceTable({ isRanking, performances }) {
                 <ChakraLink
                   as={ReactRouterLink}
                   to={`/team/${performance.player.team._id}`}
+                  _hover={{
+                    textDecoration: 'underline'
+                  }}
                 >
                   {performance.player.team.name}
                 </ChakraLink>

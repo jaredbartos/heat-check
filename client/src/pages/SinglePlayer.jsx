@@ -198,13 +198,19 @@ export default function SinglePlayer() {
             <Heading color='custom.blue' as='h2' size='lg' mb={2}>{player.firstName} {player.lastName} #{player.number}</Heading>
             <Text fontSize='xl' mb={2}>
               Team:{' '}
-              <ChakraLink as={ReactRouterLink} to={`/team/${player.team._id}`}>
+              <ChakraLink
+                as={ReactRouterLink}
+                to={`/team/${player.team._id}`}
+                _hover={{
+                  textDecoration: 'underline'
+                }}
+              >
                 {player.team.name} ({player.team.league})
               </ChakraLink>
             </Text>
             <Text fontSize='xl' mb={2}>Position: {player.position}</Text>
-            <Text fontSize='xl' mb={2}>Height: {player.height}</Text>
-            <Text fontSize='xl' mb={2}>Weight: {player.weight}</Text>
+            <Text fontSize='xl' mb={2}>Height: {player.height || 'N/A'}</Text>
+            <Text fontSize='xl' mb={2}>Weight: {player.weight || 'N/A'}</Text>
             {
               (Auth.loggedIn() && Auth.getProfile().data._id === player.createdBy._id)
               &&

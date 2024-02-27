@@ -49,8 +49,11 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
   // Submit handler function for form
   const handleFormSubmit = async (values, { setSubmitting }) => {
     // Format height to string for database entry
-    const height = `${values.feet}'${values.inches}"`;
-
+    let height;
+    if (values.feet) {
+      height = `${values.feet}'${values.inches}"`;
+    }
+    
     // Depending on whether passed action prop equals 'create' or 'update',
     // add or update player
     if (action === 'create') {
@@ -118,9 +121,16 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
       };
     } else {
       // Separate values for feet and inches from height
-      const heightArr = currentPlayer.height.split("'");
-      const feet = heightArr[0];
-      const inches = heightArr[1].split('"')[0];
+      let feet;
+      let inches;
+      if (currentPlayer.height) {
+        const heightArr = currentPlayer.height.split("'");
+        feet = heightArr[0];
+        inches = heightArr[1].split('"')[0];
+      } else {
+        feet = '';
+        inches = '';
+      }
       // Set initial values with currentPlayer values
       initialValues = {
         firstName: currentPlayer.firstName,
@@ -129,7 +139,7 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
         position: currentPlayer.position,
         feet,
         inches,
-        weight: currentPlayer.weight
+        weight: (currentPlayer.weight || '')
       };
     }
 
@@ -144,6 +154,9 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
     }
     if (!values.position) {
       errors.position = 'Position is required'
+    }
+    if (!values.number) {
+      errors.number = 'Number is required'
     }
 
     return errors;
@@ -193,12 +206,15 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
                   </Field>
                   <Field name='number'>
                     {({ field, form }) =>
-                      <FormControl>
+                      <FormControl isRequired isInvalid={form.errors.number && form.touched.number}>
                         <FormLabel>Number</FormLabel>
                         <Input
                           type='number'
                           { ...field }
                         />
+                        <FormErrorMessage>
+                          {form.errors.number}
+                        </FormErrorMessage>
                       </FormControl>
                     }
                   </Field>

@@ -62,7 +62,7 @@ export default function Dashboard() {
           </Box>
         }
         {
-          (!loading && teams.length)
+          (!loading && teams.length !== 0)
           &&
           <Flex
             flexWrap='wrap'
@@ -80,7 +80,7 @@ export default function Dashboard() {
           </Flex>
         }
         {
-          (!loading && !teams.length)
+          (!loading && teams.length === 0)
           &&
           <Center>
             <Text fontSize='lg' my={20}>No teams have been added yet!</Text>
