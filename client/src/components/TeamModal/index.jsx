@@ -32,15 +32,13 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
   const [addTeam, { error: addTeamError }] = useMutation(ADD_TEAM, {
     refetchQueries: [
       GET_ME,
-      GET_TEAMS,
-      GET_RECENTLY_UPDATED_TEAMS
+      GET_TEAMS
     ]
   });
   // Prepare update team mutation
   const [updateTeam, { error: updateTeamError }] = useMutation(UPDATE_TEAM, {
     refetchQueries: [
-      GET_SINGLE_TEAM,
-      GET_RECENTLY_UPDATED_TEAMS
+      GET_SINGLE_TEAM
     ]
   });
   // Get all of the teams from the database to extract leagues from

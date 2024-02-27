@@ -82,7 +82,7 @@ export default function Home() {
             >
               The World Leader (sort of) in Amateur Basketball Stat Management
             </Heading>
-            <Text w={['95%', null, null, 800]} my={10}>
+            <Text w={['95%', null, null, 900]} my={10}>
               {
                 !Auth.loggedIn()
                 ?
@@ -100,8 +100,8 @@ export default function Home() {
                   >
                     sign up{' '}
                   </ChakraLink>
-                  for a new account to begin recording and tracking your own team(s) stats!
-                  Before adding your own numbers, feel free to dive in to what the community has already begun tracking
+                  for a new account to begin recording and tracking stats for your own team(s)!
+                  Before adding your own numbers, feel free to dive into what the community has already begun tracking
                   themselves!
                 </>
                 :

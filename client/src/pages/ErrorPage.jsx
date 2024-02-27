@@ -25,6 +25,7 @@ export default function ErrorPage() {
             <ChakraLink
               as={ReactRouterLink}
               to='/'
+              color='blue'
             >
               homepage!
             </ChakraLink>

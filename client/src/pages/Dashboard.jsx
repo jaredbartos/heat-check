@@ -18,6 +18,7 @@ import {
 } from '@chakra-ui/react';
 import { IoMdAddCircle } from "react-icons/io";
 import LoadingSpinner from '../components/LoadingSpinner';
+import Auth from '../utils/auth';
 
 export default function Dashboard() {
   // Query the currently signed in user
@@ -35,63 +36,79 @@ export default function Dashboard() {
 
   return (
     <>
-      <Center h={150} mb={10}>
-        <VStack>
+      {
+        !Auth.loggedIn()
+        ?
+        <Center h={200} mb={10}>
+          <VStack>
           <Heading as='h2' color='custom.blue' size='xl'm={2}>Your Dashboard</Heading>
-          <Button
-            boxShadow='xl'
-            colorScheme='blue'
-            mt={2}
-            type="button"
-            onClick={onOpen}
-          >
-            <Icon
-              as={IoMdAddCircle}
-              mr={1}
-            />
-            Add Team
-          </Button>
-        </VStack>
-      </Center>
-      <Box m='auto' w='95%'>
-        {
-          loading
-          &&
-          <Box h={600}>
-            <LoadingSpinner />
-          </Box>
-        }
-        {
-          (!loading && teams.length !== 0)
-          &&
-          <Flex
-            flexWrap='wrap'
-            justify='center'
-          >
-          {teams.map(team => 
-              <TeamCard
-                key={team._id}          
-                teamId={team._id}
-                players={team.players}
-                teamName={team.name}
-                league={team.league}
+          <Text fontSize='lg' my={25}>
+            You must be logged in to see your teams or add new teams!
+          </Text>
+          </VStack>
+        </Center>        
+        :
+        <>
+        <Center h={150} mb={10}>       
+          <VStack>
+            <Heading as='h2' color='custom.blue' size='xl'm={2}>Your Dashboard</Heading>
+            <Button
+              boxShadow='xl'
+              colorScheme='blue'
+              mt={2}
+              type="button"
+              onClick={onOpen}
+            >
+              <Icon
+                as={IoMdAddCircle}
+                mr={1}
               />
-          )}
-          </Flex>
-        }
-        {
-          (!loading && teams.length === 0)
-          &&
-          <Center>
-            <Text fontSize='lg' my={20}>No teams have been added yet!</Text>
-          </Center>
-        }
-      </Box>
-      <TeamModal
-        action='create'
-        isOpen={isOpen}
-        onClose={onClose}
-      />
+              Add Team
+            </Button>
+          </VStack>
+        </Center>
+        <Box m='auto' w='95%'>
+          {
+            loading
+            &&
+            <Box h={600}>
+              <LoadingSpinner />
+            </Box>
+          }
+          {
+            (!loading && teams.length !== 0)
+            &&
+            <Flex
+              flexWrap='wrap'
+              justify='center'
+            >
+            {teams.map(team => 
+                <TeamCard
+                  key={team._id}          
+                  teamId={team._id}
+                  players={team.players}
+                  teamName={team.name}
+                  league={team.league}
+                />
+            )}
+            </Flex>
+          }
+          {
+            (!loading && teams.length === 0)
+            &&
+            <Center>
+              <Text fontSize='lg' my={20}>No teams have been added yet!</Text>
+            </Center>
+          }
+        </Box>
+        <TeamModal
+          action='create'
+          isOpen={isOpen}
+          onClose={onClose}
+        />
+        </>
+      }
+      
     </>
   );
 }
