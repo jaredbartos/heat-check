@@ -13,6 +13,7 @@ const revealFromLeft = keyframes`
   }
 `;
 
+// Export theme for Chakra UI
 export const theme = extendTheme({
   styles: {
     global: {

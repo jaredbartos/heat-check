@@ -87,19 +87,23 @@ const resolvers = {
           populate: { path: 'performances' }
         });
 
+      // Declare empty averages array to push to later
       let averages = [];
       
+      // Loop through players
       for (let i = 0; i < team.players.length; i++) {
         let points = 0;
         let rebounds = 0;
         let assists = 0;
 
+        // Go through each performance and add relevant data together
         team.players[i].performances.forEach((performance) => {
           points += performance.points;
           rebounds += performance.rebounds;
           assists += performance.assists;
         });
 
+        // Push data to averages array
         averages.push({
           _id: team.players[i]._id,
           firstName: team.players[i].firstName,

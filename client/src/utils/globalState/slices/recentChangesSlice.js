@@ -16,8 +16,9 @@ const recentChangesSlice = createSlice({
   }
 });
 
+// Recent changes selector for useSelector
 export const selectRecentChanges = state => state.recentChanges;
 
 export const { addRecentChange, removeRecentChange } = recentChangesSlice.actions;
 
-export default recentChangesSlice.reducer
+export default recentChangesSlice.reducer;
