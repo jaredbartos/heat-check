@@ -17,7 +17,12 @@ export default function Header() {
           as={ReactRouterLink}
           to="/"
         >        
-          <Heading as='h1' size='2xl' mb={[4, null, null, 0]}>
+          <Heading
+            as='h1'
+            size='2xl'
+            mb={[4, null, null, 0]}
+            className='title-font'
+          >
             <Icon
               position='relative'
               top='5px'

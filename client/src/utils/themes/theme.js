@@ -18,7 +18,10 @@ export const theme = extendTheme({
   styles: {
     global: {
       body: {
-        bgColor: '#f3e8e2'
+        bgColor: '#f3e8e2',
+        fontFamily: '"Open Sans", sans-serif',
+        fontWeight: 400,
+        fontStyle: 'normal'
       },
       '.navLink': {
         mx: 1,
@@ -44,7 +47,13 @@ export const theme = extendTheme({
       },
       '.highlight': {
         bgColor: '#f8ffb4'
+      },
+      '.title-font': {
+        fontFamily: '"Playfair Display", serif',
+        fontWeight: 400,
+        fontStyle: 'normal'
       }
+      
     }
   },
   colors: {
