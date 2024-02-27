@@ -4,7 +4,6 @@ import {
   GET_SINGLE_PLAYER,
   GET_PERFORMANCES_BY_PLAYER,
   GET_AVG_PERFORMANCE_BY_PLAYER,
-  GET_RANKED_PERFORMANCES
 } from '../../utils/queries';
 import { ADD_PERFORMANCE, UPDATE_PERFORMANCE } from '../../utils/mutations';
 import { useMutation } from '@apollo/client';
@@ -37,8 +36,7 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
     refetchQueries: [
       GET_SINGLE_PLAYER,
       GET_PERFORMANCES_BY_PLAYER,
-      GET_AVG_PERFORMANCE_BY_PLAYER,
-      GET_RANKED_PERFORMANCES
+      GET_AVG_PERFORMANCE_BY_PLAYER
     ]
   });
   // Prepare updatePerformance mutation
@@ -46,8 +44,7 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
     refetchQueries: [
       GET_SINGLE_PLAYER,
       GET_PERFORMANCES_BY_PLAYER,
-      GET_AVG_PERFORMANCE_BY_PLAYER,
-      GET_RANKED_PERFORMANCES
+      GET_AVG_PERFORMANCE_BY_PLAYER
     ]
   });
 
@@ -116,7 +113,7 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
         steals: 0,
         blocks: 0,
         turnovers: 0,
-        points: 0
+        points: ''
       }
     } else {
       // Destructure currentPerformance prop
@@ -274,10 +271,21 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
                     />
                   </HStack>
                   <HStack mt={2}>
-                    <PerformanceField
-                      fieldName='points'
-                      labelName='PTS'
-                    />
+                    <Field name='points'>
+                      {({ field, form }) =>
+                        <FormControl isRequired>
+                          <FormLabel>PTS</FormLabel>
+                          <Input
+                            w={14}
+                            placeholder={
+                              (props.values.fgMade * 2) + props.values.threePtMade + props.values.ftMade
+                            }
+                            type='number'
+                            { ...field }
+                          />
+                        </FormControl>
+                      }
+                    </Field>
                   </HStack>
                   <FormErrorMessage>
                     Make sure all required fields are filled

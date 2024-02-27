@@ -209,6 +209,8 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
                       <FormControl isRequired isInvalid={form.errors.number && form.touched.number}>
                         <FormLabel>Number</FormLabel>
                         <Input
+                          min='0'
+                          max='99'
                           type='number'
                           { ...field }
                         />
@@ -244,6 +246,8 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
                         <InputGroup>
                           <Input
                             w={12}
+                            min='3'
+                            max='8'
                             type='number'
                             { ...field }
                           />
@@ -260,6 +264,8 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
                         <InputGroup>
                           <Input
                             w={14}
+                            min='0'
+                            max='12'
                             type='number'
                             { ...field }
                           />
