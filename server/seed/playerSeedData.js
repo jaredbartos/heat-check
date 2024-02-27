@@ -14,7 +14,27 @@ const firstNames = [
   'Blake',
   'Vince',
   'Otis',
-  'Tom'
+  'Tom',
+  'Larry',
+  'Dale',
+  'Derek',
+  'Eddie',
+  'Charles',
+  'Danielle',
+  'Sue',
+  'Alana',
+  'Tonya',
+  'Rebecca',
+  'Lauren',
+  'Shannon',
+  'Jessica',
+  'Tina',
+  'Ariel',
+  'Crystal',
+  'Maya',
+  'Yolanda',
+  'Monique',
+  'Shawn'
 ];
 
 const lastNames = [
@@ -29,7 +49,18 @@ const lastNames = [
   'Jackson',
   'Knightley',
   'Quail',
-  'Goodman'
+  'Goodman',
+  'Edwards',
+  'Lucas',
+  'Jones',
+  'Robinson',
+  'Russell',
+  'Braxton',
+  'Edwards',
+  'Fowles',
+  'Stewart',
+  'Thomas',
+  'Williams'
 ];
 
 const positions = [
