@@ -200,6 +200,15 @@ export default function SingleTeam() {
               <VStack>
                 <Heading as='h2' color='custom.blue' mb={2} size='xl'>{team.name}</Heading>
                 <Text fontSize='xl' mb={2}>League: {team.league}</Text>
+                <Text fontSize='lg' mb={2}>Submitted by:{' '}
+                  {
+                    (Auth.loggedIn() && Auth.getProfile().data._id === team.createdBy._id)
+                    ?
+                    'You'
+                    :
+                    team.createdBy.username
+                  }
+                </Text>
                 {
                   (Auth.loggedIn() && Auth.getProfile().data._id === team.createdBy._id)
                   &&
