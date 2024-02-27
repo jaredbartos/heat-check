@@ -22,18 +22,22 @@ import {
 import { Formik, Form, Field } from 'formik';
 
 export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
+  // Declare state for future storage of leagues
   const [leagues, setLeagues] = useState([]);
+  // Prepare add team mutation
   const [addTeam, { error: addTeamError }] = useMutation(ADD_TEAM, {
     refetchQueries: [
       GET_ME,
       GET_TEAMS,
     ]
   });
+  // Prepare update team mutation
   const [updateTeam, { error: updateTeamError }] = useMutation(UPDATE_TEAM, {
     refetchQueries: [
       GET_SINGLE_TEAM
     ]
   });
+  // Get all of the teams from the database to extract leagues from
   const { data } = useQuery(GET_TEAMS);
 
   // Use database data to set league states
@@ -62,6 +66,8 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
       :
       values.customTeamLeague;
 
+    // Depending on whether passed action prop equals 'create' or 'update',
+    // add or update performance
     if (action === 'create') {
       try {
         await addTeam({
@@ -93,8 +99,11 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
     }   
   };
 
+  // Get initial values for form
   const getInitialValues = () => {
     let initialValues;
+    // If a currentTeam prop was not passed through,
+    // start fresh with empty strings
     if (!currentTeam) {
       initialValues = {
         teamName: '',
@@ -102,6 +111,7 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
         customTeamLeague: ''
       };
     } else {
+      // Set initial values as current team values for editing
       initialValues = {
         teamName: currentTeam.name,
         teamLeague: currentTeam.league,
@@ -134,6 +144,7 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
     return errors;
   }
 
+  // Set options for select element with populated leagues
   const leagueOptions = leagues.map((league, index) => 
     <option key={index} value={league}>{league}</option>
   );

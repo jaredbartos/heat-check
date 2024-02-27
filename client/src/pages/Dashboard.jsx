@@ -20,19 +20,18 @@ import { IoMdAddCircle } from "react-icons/io";
 import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function Dashboard() {
+  // Query the currently signed in user
   const { loading, data, error } = useQuery(GET_ME);
   const [teams, setTeams] = useState([]);
+  // Set modal disclosure variables
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  // Set current user teams data
   useEffect(() => {
     if (data) {
       setTeams(data.me.teams);
     }
   }, [data, setTeams]);
-
-  if (loading) {
-    <h3>Loading...</h3>
-  }
 
   return (
     <>

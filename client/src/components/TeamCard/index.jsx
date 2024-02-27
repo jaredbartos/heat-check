@@ -18,10 +18,15 @@ import {
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
+// Team Card component
 export default function TeamCard({ teamId, players, teamName, league }) {
+  // Use navigate for redirecting links
   const navigate = useNavigate();
+  // Copy players array
   const playersCopy = [...players];
+  // Sort players by number
   const sortedPlayers = playersCopy.sort((a, b) => a.number - b.number);
+  // Create player rows from sorted players array
   const playerLinks = sortedPlayers.map((player) => {
     return (
       <Tr

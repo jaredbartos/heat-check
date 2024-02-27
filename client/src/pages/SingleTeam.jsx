@@ -52,25 +52,31 @@ import { useSelector } from 'react-redux';
 import { selectRecentChanges } from '../utils/globalState/slices/recentChangesSlice';
 
 export default function SingleTeam() {
+  // Get recentChanges state from Redux
   const recentChanges = useSelector(selectRecentChanges);
+  // Use navigate to redirect links
   const navigate = useNavigate();
   const { id } = useParams();
   const [team, setTeam] = useState();
   const [averages, setAverages] = useState([]);
   const [deleteTeam] = useMutation(DELETE_TEAM);
+  // Query the team using id param
   const {
     loading: loadingTeam,
     data: teamData
   } = useQuery(GET_SINGLE_TEAM, { variables: { id } });
+  // Query averages of team players
   const {
     loading: loadingAverages,
     data: averagesData
-  } = useQuery(GET_AVG_PLAYER_PERFORMANCE_BY_TEAM, { variables: { id } })
+  } = useQuery(GET_AVG_PLAYER_PERFORMANCE_BY_TEAM, { variables: { id } });
+
   const {
     isOpen: isTeamOpen,
     onOpen: onTeamOpen,
     onClose: onTeamClose
   } = useDisclosure();
+
   const {
     isOpen: isPlayerOpen,
     onOpen: onPlayerOpen,
@@ -103,6 +109,7 @@ export default function SingleTeam() {
     location.replace('/dashboard');
   };
 
+  // AveragesTable component
   const AveragesTable = ({ children }) => {
     return (
       <TableContainer
@@ -143,9 +150,13 @@ export default function SingleTeam() {
     );
   };
 
+  // Component to be used as child of AveragesTable
   const AveragesTableContent = ({ averages }) => {
+    // Copy averages array
     const averagesCopy = [...averages];
+    // Sort averages by points
     const sortedAverages = averagesCopy.sort((a, b) => b.avgPoints - a.avgPoints);
+    // Create rows using sorted averages
     return sortedAverages.map((average) => {
       return (
         <Tr

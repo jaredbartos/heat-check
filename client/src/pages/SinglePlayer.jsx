@@ -50,17 +50,22 @@ import { TiDelete } from "react-icons/ti";
 import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function SinglePlayer() {
+  // Destructure id param
   const { id } = useParams();
+
+  // Query player using id param
   const {
     loading: loadingPlayer,
     data: playerData,
   } = useQuery(GET_SINGLE_PLAYER, { variables: { id } });
 
+  // Query player performances
   const {
     loading: loadingPerformances,
     data: performancesData,
   } = useQuery(GET_PERFORMANCES_BY_PLAYER, { variables: { id } });
 
+  // Query the player's averages
   const {
     loading: loadingAverages,
     data: averagesData
@@ -95,6 +100,7 @@ export default function SinglePlayer() {
     }
   }, [playerData, performancesData, averagesData, setAverages, setPlayer, setPerformances]);
 
+  // Handler for delete player button
   const handleDelete = async (e) => {
     e.preventDefault();
     try {
@@ -109,6 +115,7 @@ export default function SinglePlayer() {
     location.replace(`/team/${player.team._id}`);
   };
 
+  // AveragesTable component
   const AveragesTable = (props) => {
     return (
       <TableContainer

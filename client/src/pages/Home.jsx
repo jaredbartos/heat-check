@@ -35,6 +35,8 @@ export default function Home() {
     onOpen: onSignupOpen,
     onClose: onSignupClose
   } = useDisclosure();
+
+  // Query recently updated teams for display
   const {
     loading: loadingTeams,
     data: teamData,
@@ -43,11 +45,13 @@ export default function Home() {
   const [teams, setTeams] = useState([]);
   const [performances, setPerformances] = useState([]);
 
+  // Query ranked performances to be put into a table
   const {
     loading: loadingPerformances,
     data: performancesData
-  } = useQuery(GET_RANKED_PERFORMANCES, { variables: { field: 'points' } })
+  } = useQuery(GET_RANKED_PERFORMANCES, { variables: { field: 'points' } });
 
+  // Set teams and performances with query data
   useEffect(() => {
     if (teamData) {
       setTeams(teamData.recentlyUpdatedTeams);
