@@ -12,7 +12,11 @@ import {
   Input,
   Button,
   Center,
-  FormHelperText
+  FormHelperText,
+  Flex,
+  HStack,
+  Text,
+  VStack
 } from '@chakra-ui/react';
 import { Formik, Form, Field } from 'formik';
 import { useMutation } from '@apollo/client';
@@ -108,7 +112,18 @@ export default function SignupModal({ isOpen, onClose }) {
                           { ...field }
                         />
                         <FormErrorMessage>{form.errors.password}</FormErrorMessage>
-                        <FormHelperText>Password must contain an uppercase letter, a lowercase letter, a number, a special character, and have a length of 8 characters or more.</FormHelperText>
+                        <FormHelperText>
+                          <Flex justify='space-around' align='flex-start'>
+                              <Text>Password must contain:</Text>
+                              <VStack align='left'>
+                                <Text>at least 8 characters</Text>
+                                <Text>at least one uppercase letter</Text>
+                                <Text>at least one lowercase letter</Text>
+                                <Text>at least one number</Text>
+                                <Text>at least one special character</Text>
+                              </VStack>
+                          </Flex>
+                        </FormHelperText>
                       </FormControl>
                     }
                   </Field>
