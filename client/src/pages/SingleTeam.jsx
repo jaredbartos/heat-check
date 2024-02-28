@@ -50,6 +50,7 @@ import { TiDelete } from "react-icons/ti";
 import LoadingSpinner from '../components/LoadingSpinner';
 import { useSelector } from 'react-redux';
 import { selectRecentChanges } from '../utils/globalState/slices/recentChangesSlice';
+import NotFound from '../components/NotFound';
 
 export default function SingleTeam() {
   // Get recentChanges state from Redux
@@ -193,7 +194,7 @@ export default function SingleTeam() {
       }
       {
         team
-        &&
+        ?
         <Flex justify='center'>
           <Box w={['95%', null, 1050]} m={8}>
             <Center>
@@ -348,7 +349,9 @@ export default function SingleTeam() {
               onClose={onPlayerClose}
             />
           </Box>
-        </Flex>  
+        </Flex> 
+        :
+        <NotFound variation='Team' /> 
       }     
     </>
   );

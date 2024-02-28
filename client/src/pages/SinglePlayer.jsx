@@ -48,6 +48,7 @@ import { IoMdAddCircle } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
 import { TiDelete } from "react-icons/ti";
 import LoadingSpinner from "../components/LoadingSpinner";
+import NotFound from "../components/NotFound";
 
 export default function SinglePlayer() {
   // Destructure id param
@@ -204,7 +205,7 @@ export default function SinglePlayer() {
       }
       {
         player
-        &&
+        ?
         <Flex justify='center'>
           <Box w={['95%', null, null, null, 1200]} m={12}>
             <Heading color='custom.blue' as='h2' size='lg' mb={2}>{player.firstName} {player.lastName} #{player.number}</Heading>
@@ -368,6 +369,8 @@ export default function SinglePlayer() {
             />
           </Box>
         </Flex>
+        :
+        <NotFound variation='Player' />
       }      
     </>
   );
