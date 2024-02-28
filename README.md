@@ -30,7 +30,16 @@ No installation needed.
 
 ## Usage
 
+HeatCheck was designed to be easy to navigate and quick to use. There aren't any hoops (no pun intended) you have to jump through to start your statistical management journey. When you first visit the link,
+you are taken to the homepage where you can browse the recent achievements of other users who have entered their team and player info. There is also a section dedicated to the most recent updates that have been
+made to teams by users.
 
+Get started contributing and tracking your own stats by first signing up, or logging in, using the links on the homepage or in the navigation. Once logged in,
+you can start by adding a new team on your Dashboard page. By adding your team's name and the league it belongs to, you are now able to add players to that team
+and game logs to those players by going to the corresponding pages after you create the entries! You can add as many teams as you need to. There is no limit.
+
+Worried about other users mucking up your stats and ruining your records? Don't be! The only one allowed to edit a team, or its players (game logs included), 
+is the user who created it. Everyone else can only gaze at your teams' stats and be jealous!
 
 ## License
 
