@@ -157,7 +157,7 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent p={4}>
-        <ModalHeader color='custom.blueGreen'>
+        <ModalHeader color='custom.blue'>
           {(action === 'create') ? 'Add New Team' : `Edit ${currentTeam.name} (${currentTeam.league})`}
         </ModalHeader>
         <ModalCloseButton />

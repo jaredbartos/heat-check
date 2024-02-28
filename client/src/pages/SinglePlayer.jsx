@@ -208,7 +208,14 @@ export default function SinglePlayer() {
         &&
         <Flex justify='center'>
           <Box w={['95%', null, null, null, 1200]} m={12}>
-            <Heading color='custom.blue' as='h2' size='lg' mb={2}>{player.firstName} {player.lastName} #{player.number}</Heading>
+            <Heading
+              color='custom.blue'
+              as='h2'
+              size='lg'
+              mb={2}
+            >
+              {player.firstName} {player.lastName} #{player.number}
+            </Heading>
             <Text fontSize='xl' mb={2}>
               Team:{' '}
               <ChakraLink
@@ -257,7 +264,7 @@ export default function SinglePlayer() {
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent>
-                        <PopoverHeader color='custom.blueGreen'>
+                        <PopoverHeader color='custom.blue'>
                           Confirmation
                         </PopoverHeader>
                         <PopoverArrow />

@@ -28,7 +28,7 @@ export default function LoginModal({ isOpen, onClose }) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent p={4}>
-        <ModalHeader color='custom.blueGreen'>Login</ModalHeader>
+        <ModalHeader color='custom.blue'>Login</ModalHeader>
         <ModalCloseButton />
         <ModalBody> 
           <Formik

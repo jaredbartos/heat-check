@@ -32,7 +32,13 @@ export default function TeamsPage() {
   return (
     <>
       <Center h={100}>
-        <Heading as='h2' color='custom.blue' size='xl'>Teams</Heading>
+        <Heading
+          as='h2'
+          color='custom.blue'
+          size='xl'
+        >
+          Teams
+        </Heading>
       </Center>
       <Box
         m='auto'

@@ -54,7 +54,7 @@ export default function SignupModal({ isOpen, onClose }) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent p={4}>
-        <ModalHeader color='custom.blueGreen'>Sign Up</ModalHeader>
+        <ModalHeader color='custom.blue'>Sign Up</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Formik

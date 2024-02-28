@@ -188,7 +188,7 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent p={4}>
-        <ModalHeader color='custom.blueGreen'>
+        <ModalHeader color='custom.blue'>
           {(action === 'create') ? 'Add Game' : 'Edit Game'}
         </ModalHeader>
         <ModalCloseButton />

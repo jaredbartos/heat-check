@@ -169,7 +169,7 @@ export default function PerformanceTable({ isRanking, performances }) {
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent>
-                        <PopoverHeader color='custom.blueGreen'>
+                        <PopoverHeader color='custom.blue'>
                           Confirmation
                         </PopoverHeader>
                         <PopoverArrow />

@@ -199,7 +199,14 @@ export default function SingleTeam() {
           <Box w={['95%', null, 1050]} m={8}>
             <Center>
               <VStack>
-                <Heading as='h2' color='custom.blue' mb={2} size='xl'>{team.name}</Heading>
+                <Heading
+                  as='h2'
+                  color='custom.blue'
+                  mb={2}
+                  size='xl'
+                >
+                  {team.name}
+                </Heading>
                 <Text fontSize='xl' mb={2}>League: {team.league}</Text>
                 <Text fontSize='lg' mb={2}>Submitted by:{' '}
                   {
@@ -243,7 +250,7 @@ export default function SingleTeam() {
                             </Button>
                           </PopoverTrigger>
                           <PopoverContent>
-                            <PopoverHeader color='custom.blueGreen'>
+                            <PopoverHeader color='custom.blue'>
                               Confirmation
                             </PopoverHeader>
                             <PopoverArrow />

@@ -166,7 +166,7 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent p={4}>
-        <ModalHeader color='custom.blueGreen'>
+        <ModalHeader color='custom.blue'>
           {(action === 'create') ? 'Add New Player' : `Edit ${currentPlayer.firstName} ${currentPlayer.lastName}`}
         </ModalHeader>
         <ModalCloseButton />
