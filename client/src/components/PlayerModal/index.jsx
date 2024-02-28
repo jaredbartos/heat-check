@@ -197,7 +197,7 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
                   <Field name='lastName'>
                     {({ field, form }) =>
                       <FormControl>
-                        <FormLabel>Last Name</FormLabel>
+                        <FormLabel mt={3}>Last Name</FormLabel>
                         <Input
                           placeholder='Enter last name'
                           type='text'
@@ -209,7 +209,7 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
                   <Field name='number'>
                     {({ field, form }) =>
                       <FormControl isRequired isInvalid={form.errors.number && form.touched.number}>
-                        <FormLabel>Number</FormLabel>
+                        <FormLabel mt={3}>Number</FormLabel>
                         <Input
                           placeholder='Enter number'
                           min='0'
@@ -226,7 +226,7 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
                   <Field name='position'>
                     {({ field, form }) =>
                       <FormControl isRequired isInvalid={form.errors.position && form.touched.position}>
-                        <FormLabel>Position</FormLabel>
+                        <FormLabel mt={3}>Position</FormLabel>
                         <Select
                           placeholder='Select Position'
                           { ...field }
@@ -241,7 +241,7 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
                       </FormControl>
                     }
                   </Field>
-                  <FormLabel>Height</FormLabel>
+                  <FormLabel mt={3}>Height</FormLabel>
                   <HStack>
                   <Field name='feet'>
                     {({ field, form }) =>
@@ -283,7 +283,7 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
                   <Field name='weight'>
                     {({ field, form }) =>
                       <FormControl>
-                        <FormLabel>Weight</FormLabel>
+                        <FormLabel mt={3}>Weight</FormLabel>
                         <Input
                           placeholder='Enter weight'
                           type='number'

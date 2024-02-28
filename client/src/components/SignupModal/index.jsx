@@ -95,7 +95,7 @@ export default function SignupModal({ isOpen, onClose }) {
                   <Field name='email'>
                     {({ field, form }) =>
                       <FormControl isRequired isInvalid={form.errors.email && form.touched.email}>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel mt={3}>Email</FormLabel>
                         <Input
                           placeholder='Enter email address'
                           type='email'
@@ -108,14 +108,14 @@ export default function SignupModal({ isOpen, onClose }) {
                   <Field name='password'>
                     {({ field, form }) =>
                       <FormControl isRequired isInvalid={form.errors.password && form.touched.password}>
-                        <FormLabel>Password</FormLabel>
+                        <FormLabel mt={3}>Password</FormLabel>
                         <Input
                           placeholder='Enter password'
                           type='password'
                           { ...field }
                         />
                         <FormErrorMessage>{form.errors.password}</FormErrorMessage>
-                        <FormHelperText>
+                        <FormHelperText mt={3}>
                           <Flex justify='space-around' align='flex-start'>
                               <Text>Password must contain:</Text>
                               <VStack align='left'>

@@ -216,7 +216,7 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
                       </FormControl>
                     }
                   </Field>
-                  <HStack mt={2}>
+                  <HStack mt={3}>
                     <PerformanceField
                       fieldName='fgAtt'
                       labelName='FGA'
@@ -234,7 +234,7 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
                       labelName='3PM'
                     />
                   </HStack>
-                  <HStack mt={2}>
+                  <HStack mt={3}>
                     <PerformanceField
                       fieldName='ftAtt'
                       labelName='FTA'
@@ -252,7 +252,7 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
                       labelName='TREB'
                     />
                   </HStack>
-                  <HStack mt={2}>
+                  <HStack mt={3}>
                     <PerformanceField
                       fieldName='assists'
                       labelName='AST'
@@ -270,7 +270,7 @@ export default function PerformanceModal({ action, currentPlayer, currentPerform
                       labelName='TO'
                     />
                   </HStack>
-                  <HStack mt={2}>
+                  <HStack mt={3}>
                     <Field name='points'>
                       {({ field, form }) =>
                         <FormControl isRequired>
