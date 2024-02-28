@@ -184,6 +184,7 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
                       <FormControl isRequired isInvalid={form.errors.firstName && form.touched.firstName}>
                         <FormLabel>First Name</FormLabel>
                         <Input
+                          placeholder='Enter first name'
                           type='text'
                           { ...field }
                         />
@@ -198,6 +199,7 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
                       <FormControl>
                         <FormLabel>Last Name</FormLabel>
                         <Input
+                          placeholder='Enter last name'
                           type='text'
                           { ...field }
                         />
@@ -209,6 +211,7 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
                       <FormControl isRequired isInvalid={form.errors.number && form.touched.number}>
                         <FormLabel>Number</FormLabel>
                         <Input
+                          placeholder='Enter number'
                           min='0'
                           max='99'
                           type='number'
@@ -282,6 +285,7 @@ export default function PlayerModal({ action, currentPlayer, currentTeam, isOpen
                       <FormControl>
                         <FormLabel>Weight</FormLabel>
                         <Input
+                          placeholder='Enter weight'
                           type='number'
                           { ...field }
                         />

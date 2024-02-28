@@ -84,6 +84,7 @@ export default function SignupModal({ isOpen, onClose }) {
                       <FormControl isRequired isInvalid={form.errors.username && form.touched.username}>
                         <FormLabel>Username</FormLabel>
                         <Input
+                          placeholder='Enter username'
                           type='text'
                           { ...field }
                         />
@@ -96,6 +97,7 @@ export default function SignupModal({ isOpen, onClose }) {
                       <FormControl isRequired isInvalid={form.errors.email && form.touched.email}>
                         <FormLabel>Email</FormLabel>
                         <Input
+                          placeholder='Enter email address'
                           type='email'
                           { ...field }
                         />
@@ -108,6 +110,7 @@ export default function SignupModal({ isOpen, onClose }) {
                       <FormControl isRequired isInvalid={form.errors.password && form.touched.password}>
                         <FormLabel>Password</FormLabel>
                         <Input
+                          placeholder='Enter password'
                           type='password'
                           { ...field }
                         />

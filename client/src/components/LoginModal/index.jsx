@@ -55,6 +55,7 @@ export default function LoginModal({ isOpen, onClose }) {
                           Email
                         </FormLabel>
                         <Input
+                          placeholder='Enter your email'
                           type='email'
                           { ...field }
                         />
@@ -64,10 +65,11 @@ export default function LoginModal({ isOpen, onClose }) {
                   <Field name='password'>
                     {({ field }) =>
                       <FormControl>
-                        <FormLabel>
+                        <FormLabel mt={3}>
                           Password
                         </FormLabel>
                         <Input
+                          placeholder='Enter your password'
                           type='password'
                           { ...field }
                         />

@@ -175,6 +175,7 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
                       <FormControl isRequired isInvalid={form.errors.teamName && form.touched.teamName}>
                         <FormLabel>Team Name</FormLabel>
                         <Input
+                          placeholder='Enter new team name'
                           type='text'
                           { ...field }
                         />
