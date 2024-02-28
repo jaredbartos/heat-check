@@ -50,7 +50,7 @@ export const theme = extendTheme({
       },
       '.title-font': {
         fontFamily: '"Playfair Display", serif',
-        fontWeight: 400,
+        fontWeight: 600,
         fontStyle: 'normal'
       }
       
