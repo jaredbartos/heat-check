@@ -194,7 +194,7 @@ export default function SingleTeam() {
       }
       {
         team
-        ?
+        &&
         <Flex justify='center'>
           <Box w={['95%', null, 1050]} m={8}>
             <Center>
@@ -350,9 +350,12 @@ export default function SingleTeam() {
             />
           </Box>
         </Flex> 
-        :
-        <NotFound variation='Team' /> 
-      }     
+      }
+      {
+        (!loadingTeam && !team)
+        &&
+        <NotFound variation='Team' />
+      }
     </>
   );
 }
