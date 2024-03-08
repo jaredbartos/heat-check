@@ -155,7 +155,7 @@ export default function PerformanceTable({ isRanking, performances }) {
                 >
                   <Icon as={FaEdit} />
                 </Button>
-                <Popover boundary='scrollParent'>
+                <Popover>
                   {({ isOpen, onClose }) => (
                     <>
                       <PopoverTrigger>
@@ -168,7 +168,7 @@ export default function PerformanceTable({ isRanking, performances }) {
                           <Icon as={TiDelete} boxSize={4} />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent>
+                      <PopoverContent position='relative' zIndex='1'>
                         <PopoverHeader color='custom.blue'>
                           Confirmation
                         </PopoverHeader>
