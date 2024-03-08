@@ -13,12 +13,23 @@ HeatCheck is a basketball team stat management app intended to be used by recrea
 by allowing users to view what others have submitted for their own teams, but also a focus on secure record-keeping by only allowing the creators of the teams to edit the existing data and add new players. Head on over to [HeatCheck](https://heatcheck.onrender.com/) to start keeping track of your teams' stats with ease!
 
 ## Table of Contents
+- [Technologies](#technologies)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
 - [License](#license)
 - [Questions](#questions)
 - [Screenshots](#screenshots)
+
+## Technologies
+- Node.js
+- React.js
+- Express.js
+- GraphQL
+- MongoDB
+- JWT
+- Apollo
+- Redux
 
 ## Requirements
 
