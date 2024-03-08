@@ -155,7 +155,7 @@ export default function PerformanceTable({ isRanking, performances }) {
                 >
                   <Icon as={FaEdit} />
                 </Button>
-                <Popover>
+                <Popover boundary='scrollParent'>
                   {({ isOpen, onClose }) => (
                     <>
                       <PopoverTrigger>
