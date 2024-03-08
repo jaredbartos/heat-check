@@ -168,7 +168,7 @@ export default function PerformanceTable({ isRanking, performances }) {
                           <Icon as={TiDelete} boxSize={4} />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent position='relative' zIndex='25'>
+                      <PopoverContent>
                         <PopoverHeader color='custom.blue'>
                           Confirmation
                         </PopoverHeader>
