@@ -173,7 +173,7 @@ export default function PerformanceTable({ isRanking, performances }) {
                           Confirmation
                         </PopoverHeader>
                         <PopoverArrow />
-                        <PopoverBody color='black'>
+                        <PopoverBody textOverflow color='black'>
                           Are you sure you want to delete this game?
                           <Text
                             mt={3}
@@ -231,9 +231,9 @@ export default function PerformanceTable({ isRanking, performances }) {
           borderWidth={2}
           borderRadius={20}
           boxShadow='md'
-          overflowY='visible'
+          whiteSpace='normal'
         >
-          <Table size='sm'>
+          <Table variant='simple'>
             <Thead bgColor='custom.red'>
               <Tr>
                 {
