@@ -227,7 +227,12 @@ export default function PerformanceTable({ isRanking, performances }) {
       performances.length
       ?
       <Box w={['95%', null, null, null, null, '1200px']}>
-        <TableContainer borderWidth={2} borderRadius={20} boxShadow='md'>
+        <TableContainer
+          borderWidth={2}
+          borderRadius={20}
+          boxShadow='md'
+          overflowY='visible'
+        >
           <Table size='sm'>
             <Thead bgColor='custom.red'>
               <Tr>
