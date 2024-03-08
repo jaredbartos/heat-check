@@ -72,6 +72,7 @@ export default function Home() {
               size='xl'
               color='custom.blue'
               mt={8}
+              textAlign='center'
             >
               Welcome to HeatCheck!
             </Heading>
@@ -79,6 +80,7 @@ export default function Home() {
               as='h3'
               size='md'
               color='custom.blue'
+              textAlign='center'
             >
               The World Leader (sort of) in Amateur Basketball Stat Management
             </Heading>
