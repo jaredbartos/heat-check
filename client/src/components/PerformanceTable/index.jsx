@@ -6,6 +6,7 @@ import {
   GET_SINGLE_PLAYER
 } from '../../utils/queries';
 import PerformanceModal from '../PerformanceModal';
+import DeletePerformanceModal from '../DeletePerformanceModal';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
@@ -47,8 +48,23 @@ export default function PerformanceTable({ isRanking, performances }) {
   // Get recentChanges state from Redux
   const recentChanges = useSelector(selectRecentChanges);
   const [selectedPerformance, setSelectedPerformance] = useState();
-  // Disclosure for modal
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  // Get viewport width
+  const width = window.innerWidth 
+    || document.documentElement.clientWidth
+    || document.body.clientWidth;
+  // Disclosure for update performance modal
+  const {
+    isOpen: isUpdateOpen,
+    onOpen: onUpdateOpen,
+    onClose: onUpdateClose
+  } = useDisclosure();
+
+  // Disclosure for delete performance modal used for mobile viewports
+  const {
+    isOpen: isDeleteOpen,
+    onOpen: onDeleteOpen,
+    onClose: onDeleteClose
+  } = useDisclosure();
 
   // Prepare delete performance mutation
   const [deletePerformance] = useMutation(DELETE_PERFORMANCE, {
@@ -149,69 +165,84 @@ export default function PerformanceTable({ isRanking, performances }) {
                   onClick={() => {
                       // Set performance to be passed through and open modal
                       setSelectedPerformance(performance);
-                      onOpen();
+                      onUpdateOpen();
                     }
                   }
                 >
                   <Icon as={FaEdit} />
                 </Button>
-                <Popover>
-                  {({ isOpen, onClose }) => (
-                    <>
-                      <PopoverTrigger>
-                        <Button
-                          boxShadow='xl'
-                          colorScheme='red'
-                          type="button"
-                          className="deletePerformanceBtn"
-                        >
-                          <Icon as={TiDelete} boxSize={4} />
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent>
-                        <PopoverHeader color='custom.blue'>
-                          Confirmation
-                        </PopoverHeader>
-                        <PopoverArrow />
-                        <PopoverBody color='black'>
-                          Are you sure you want to delete this game?
-                          <Text
-                            mt={3}
-                            color='red'
+                {width < 1100 ? (
+                  <Button
+                    boxShadow='xl'
+                    colorScheme='red'
+                    type='button'
+                    className='deletePerformanceBtn'
+                    onClick={() => {
+                      setSelectedPerformance(performance);
+                      onDeleteOpen();
+                    }}
+                  >
+                    <Icon as={TiDelete} boxSize={4} />
+                  </Button>
+                ) : (
+                  <Popover>
+                    {({ isOpen, onClose }) => (
+                      <>
+                        <PopoverTrigger>
+                          <Button
+                            boxShadow='xl'
+                            colorScheme='red'
+                            type="button"
+                            className="deletePerformanceBtn"
                           >
-                            This action cannot be undone.
-                          </Text> 
-                        </PopoverBody>
-                        <PopoverFooter
-                          border='0'
-                          display='flex'
-                          alignItems='center'
-                          justifyContent='flex-end'
-                        >
-                          <ButtonGroup>
-                            <Button
-                              size='sm'
-                              boxShadow='md'
-                              mr={2}
-                              onClick={onClose}
+                            <Icon as={TiDelete} boxSize={4} />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                          <PopoverHeader color='custom.blue'>
+                            Confirmation
+                          </PopoverHeader>
+                          <PopoverArrow />
+                          <PopoverBody color='black'>
+                            Are you sure you want to delete this game?
+                            <Text
+                              mt={3}
+                              color='red'
                             >
-                              Cancel
-                            </Button>
-                            <Button
-                              colorScheme='red'
-                              size='sm'
-                              boxShadow='xl'
-                              mr={1}
-                              onClick={(e) => handleDelete(e, performance._id)}
-                            >
-                              Delete
-                            </Button>
-                          </ButtonGroup>
-                        </PopoverFooter>
-                      </PopoverContent> 
-                    </>
-                  )}                                  
-                </Popover>                
+                              This action cannot be undone.
+                            </Text> 
+                          </PopoverBody>
+                          <PopoverFooter
+                            border='0'
+                            display='flex'
+                            alignItems='center'
+                            justifyContent='flex-end'
+                          >
+                            <ButtonGroup>
+                              <Button
+                                size='sm'
+                                boxShadow='md'
+                                mr={2}
+                                onClick={onClose}
+                              >
+                                Cancel
+                              </Button>
+                              <Button
+                                colorScheme='red'
+                                size='sm'
+                                boxShadow='xl'
+                                mr={1}
+                                onClick={(e) => handleDelete(e, performance._id)}
+                              >
+                                Delete
+                              </Button>
+                            </ButtonGroup>
+                          </PopoverFooter>
+                        </PopoverContent> 
+                      </>
+                    )}                                  
+                  </Popover>
+                )}
               </ButtonGroup>
             </Td>
             :
@@ -268,8 +299,14 @@ export default function PerformanceTable({ isRanking, performances }) {
         <PerformanceModal
           currentPerformance={selectedPerformance}
           action='update'
-          isOpen={isOpen}
-          onClose={onClose}
+          isOpen={isUpdateOpen}
+          onClose={onUpdateClose}
+        />
+        <DeletePerformanceModal
+          performanceId={selectedPerformance?._id}
+          handleDelete={handleDelete}
+          isOpen={isDeleteOpen}
+          onClose={onDeleteClose}
         />
       </Box>
       :
