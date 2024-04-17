@@ -135,9 +135,6 @@ export default function SinglePlayer() {
               <Th color='white'>SPG</Th>
               <Th color='white'>BPG</Th>
               <Th color='white'>TPG</Th>
-              <Th color='white'>FG%</Th>
-              <Th color='white'>3P%</Th>
-              <Th color='white'>FT%</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -160,6 +157,33 @@ export default function SinglePlayer() {
               <Td>
                 {props.avgTurnovers.toFixed(1)}
               </Td>
+            </Tr>
+          </Tbody>
+        </Table>
+      </TableContainer>
+    );
+  };
+
+  const PercentagesTable = (props) => {
+    return (
+      <Box w={['100%', 350]}>
+      <TableContainer
+        borderWidth={2}
+        borderRadius={20}
+        boxShadow='md'
+        mt={5}
+        mb={10}
+      >
+        <Table>
+          <Thead bgColor='custom.red'>
+            <Tr>
+              <Th color='white'>FG%</Th>
+              <Th color='white'>3P%</Th>
+              <Th color='white'>FT%</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            <Tr>
               <Td>
                 {
                   (props.avgFgAtt === 0)
@@ -191,8 +215,9 @@ export default function SinglePlayer() {
           </Tbody>
         </Table>
       </TableContainer>
+      </Box>
     );
-  }
+  };
 
   return (
     <>
@@ -317,20 +342,30 @@ export default function SinglePlayer() {
             {
               averages
               &&
-              <AveragesTable
-                avgPoints={averages.avgPoints}
-                avgRebounds={averages.avgRebounds}
-                avgAssists={averages.avgAssists}
-                avgFgMade={averages.avgFgMade}
-                avgFgAtt={averages.avgFgAtt}
-                avgThreePtMade={averages.avgThreePtMade}
-                avgThreePtAtt={averages.avgThreePtAtt}
-                avgFtMade={averages.avgFtMade}
-                avgFtAtt={averages.avgFtAtt}
-                avgSteals={averages.avgSteals}
-                avgBlocks={averages.avgBlocks}
-                avgTurnovers={averages.avgTurnovers}
-              />
+              <>
+                <AveragesTable
+                  avgPoints={averages.avgPoints}
+                  avgRebounds={averages.avgRebounds}
+                  avgAssists={averages.avgAssists}
+                  avgFgMade={averages.avgFgMade}
+                  avgFgAtt={averages.avgFgAtt}
+                  avgThreePtMade={averages.avgThreePtMade}
+                  avgThreePtAtt={averages.avgThreePtAtt}
+                  avgFtMade={averages.avgFtMade}
+                  avgFtAtt={averages.avgFtAtt}
+                  avgSteals={averages.avgSteals}
+                  avgBlocks={averages.avgBlocks}
+                  avgTurnovers={averages.avgTurnovers}
+                />
+                <PercentagesTable
+                  avgFgMade={averages.avgFgMade}
+                  avgFgAtt={averages.avgFgAtt}
+                  avgThreePtMade={averages.avgThreePtMade}
+                  avgThreePtAtt={averages.avgThreePtAtt}
+                  avgFtMade={averages.avgFtMade}
+                  avgFtAtt={averages.avgFtAtt}
+                />
+              </>
             }         
             <HStack>
               <Heading as='h3' size='md' color='custom.blue' mt={3} mb={3}>Game Log</Heading>
