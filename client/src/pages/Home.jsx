@@ -1,8 +1,6 @@
 import { useQuery } from '@apollo/client';
-import {
-  GET_RECENTLY_UPDATED_TEAMS,
-  GET_RANKED_PERFORMANCES
-} from '../utils/queries';
+import { GET_RANKED_PERFORMANCES } from '../utils/queries/performance';
+import { GET_RECENTLY_UPDATED_TEAMS } from '../utils/queries/team';
 import {
   Heading,
   Center,

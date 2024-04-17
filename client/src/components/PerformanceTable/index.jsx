@@ -2,9 +2,9 @@ import { formatDate } from '../../utils/dates';
 import { DELETE_PERFORMANCE } from '../../utils/mutations';
 import {
   GET_AVG_PERFORMANCE_BY_PLAYER,
-  GET_PERFORMANCES_BY_PLAYER,
-  GET_SINGLE_PLAYER
-} from '../../utils/queries';
+  GET_PERFORMANCES_BY_PLAYER
+} from '../../utils/queries/performance';
+import { GET_SINGLE_PLAYER } from '../../utils/queries/player';
 import PerformanceModal from '../PerformanceModal';
 import DeletePerformanceModal from '../DeletePerformanceModal';
 import { useState } from 'react';

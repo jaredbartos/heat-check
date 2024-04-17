@@ -1,4 +1,4 @@
-import { GET_TEAMS } from '../utils/queries';
+import { GET_TEAMS } from '../utils/queries/team';
 import { useQuery } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import TeamCard from '../components/TeamCard';

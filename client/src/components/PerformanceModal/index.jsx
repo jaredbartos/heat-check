@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import Auth from '../../utils/auth';
 import {
-  GET_SINGLE_PLAYER,
   GET_PERFORMANCES_BY_PLAYER,
   GET_AVG_PERFORMANCE_BY_PLAYER
-} from '../../utils/queries';
+} from '../../utils/queries/performance';
+import { GET_SINGLE_PLAYER } from '../../utils/queries/player';
 import { ADD_PERFORMANCE, UPDATE_PERFORMANCE } from '../../utils/mutations';
 import { useMutation } from '@apollo/client';
 import { formatEditDate } from '../../utils/dates';

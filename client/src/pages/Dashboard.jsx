@@ -1,4 +1,4 @@
-import { GET_ME } from '../utils/queries';
+import { GET_ME } from '../utils/queries/user';
 import { useQuery } from '@apollo/client';
 import TeamCard from '../components/TeamCard';
 import TeamModal from '../components/TeamModal';

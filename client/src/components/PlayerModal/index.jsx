@@ -1,9 +1,7 @@
 import { ADD_PLAYER, UPDATE_PLAYER } from '../../utils/mutations';
-import {
-  GET_SINGLE_TEAM,
-  GET_SINGLE_PLAYER,
-  GET_AVG_PLAYER_PERFORMANCE_BY_TEAM
-} from '../../utils/queries';
+import { GET_SINGLE_PLAYER } from '../../utils/queries/player';
+import { GET_SINGLE_TEAM } from '../../utils/queries/team';
+import { GET_AVG_PLAYER_PERFORMANCE_BY_TEAM } from '../../utils/queries/performance';
 import { useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
 import {

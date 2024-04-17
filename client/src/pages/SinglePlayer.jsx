@@ -1,10 +1,10 @@
 import { useQuery, useMutation } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import {
-  GET_SINGLE_PLAYER,
   GET_PERFORMANCES_BY_PLAYER,
   GET_AVG_PERFORMANCE_BY_PLAYER
-} from '../utils/queries';
+} from '../utils/queries/performance';
+import { GET_SINGLE_PLAYER } from '../utils/queries/player';
 import { DELETE_PLAYER } from '../utils/mutations';
 import PerformanceTable from '../components/PerformanceTable';
 import PerformanceModal from '../components/PerformanceModal';

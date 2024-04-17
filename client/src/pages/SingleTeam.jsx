@@ -1,8 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import {
-  GET_SINGLE_TEAM,
-  GET_AVG_PLAYER_PERFORMANCE_BY_TEAM
-} from '../utils/queries';
+import { GET_AVG_PLAYER_PERFORMANCE_BY_TEAM } from '../utils/queries/performance';
+import { GET_SINGLE_TEAM } from '../utils/queries/team';
 import { DELETE_TEAM } from '../utils/mutations';
 import { useQuery, useMutation } from '@apollo/client';
 import { useState, useEffect } from 'react';

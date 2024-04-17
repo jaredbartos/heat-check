@@ -1,9 +1,6 @@
-import {
-  GET_TEAMS,
-  GET_ME,
-  GET_RECENTLY_UPDATED_TEAMS,
-  GET_SINGLE_TEAM
-} from '../../utils/queries';
+import { GET_ME } from '../../utils/queries/user';
+import { GET_TEAMS } from '../../utils/queries/team';
+import { GET_SINGLE_TEAM } from '../../utils/queries/team';
 import { useQuery, useMutation } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import { ADD_TEAM, UPDATE_TEAM } from '../../utils/mutations';
