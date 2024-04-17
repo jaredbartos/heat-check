@@ -24,6 +24,7 @@ import {
   Select
 } from '@chakra-ui/react';
 import { Formik, Form, Field } from 'formik';
+import { getLeagues } from '../../utils/leagues';
 
 export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
   // Declare state for future storage of leagues
@@ -48,17 +49,10 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
   useEffect(() => {
     if (data) {
       // Extract leagues from the team data
-      let teamLeagues = [];
-      for (let i = 0; i < data.teams.length; i++) {
-        const currentTeamLeague = data.teams[i].league;
-        if (!teamLeagues.includes(currentTeamLeague) && currentTeamLeague !== 'Independent') {
-          teamLeagues.push(currentTeamLeague);
-        }
-      }
+      const teamLeagues = getLeagues(data.teams);
       // Set leagues
       setLeagues(teamLeagues);
-    }
-    
+    }   
   }, [data, setLeagues]);
 
   const handleFormSubmit = async (values, { setSubmitting }) => {

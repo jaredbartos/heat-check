@@ -13,21 +13,25 @@ import {
   Box
 } from '@chakra-ui/react';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { getLeagues } from '../utils/leagues';
 
 
 export default function TeamsPage() {
   // Query all teams from database
   const { loading, data, error } = useQuery(GET_TEAMS);
 
-  // Declare state variables for holding the teams and form values
+  // Declare state variables for holding the teams and league values
   const [teams, setTeams] = useState([]);
+  const [leagues, setLeagues] = useState([]);
 
-  // Use database data to set teams
+  // Use database data to set teams and set leagues
   useEffect(() => {
     if (data) {
       setTeams(data.teams);
-    }   
-  }, [data, setTeams]);
+      const teamLeagues = getLeagues(data.teams);
+      setLeagues(teamLeagues);
+    }
+  }, [data, setTeams, setLeagues]);
 
   return (
     <>
