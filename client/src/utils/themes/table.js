@@ -1,13 +1,13 @@
-import { tableAnatomy } from '@chakra-ui/anatomy'
-import { createMultiStyleConfigHelpers } from '@chakra-ui/react'
+import { tableAnatomy } from '@chakra-ui/anatomy';
+import { createMultiStyleConfigHelpers } from '@chakra-ui/react';
 
 const { definePartsStyle, defineMultiStyleConfig } =
-createMultiStyleConfigHelpers(tableAnatomy.keys)
+	createMultiStyleConfigHelpers(tableAnatomy.keys);
 
 const baseStyle = definePartsStyle({
-tbody: {
-  bgColor: 'white'
-}
-})
+	tbody: {
+		bgColor: 'white'
+	}
+});
 
-export const tableTheme = defineMultiStyleConfig({ baseStyle })
+export const tableTheme = defineMultiStyleConfig({ baseStyle });
