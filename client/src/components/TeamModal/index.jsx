@@ -1,252 +1,252 @@
 import {
-	GET_TEAMS,
-	GET_ME,
-	GET_RECENTLY_UPDATED_TEAMS,
-	GET_SINGLE_TEAM
+  GET_TEAMS,
+  GET_ME,
+  GET_RECENTLY_UPDATED_TEAMS,
+  GET_SINGLE_TEAM
 } from '../../utils/queries';
 import { useQuery, useMutation } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import { ADD_TEAM, UPDATE_TEAM } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 import {
-	Modal,
-	ModalOverlay,
-	ModalContent,
-	ModalHeader,
-	ModalFooter,
-	ModalBody,
-	ModalCloseButton,
-	FormControl,
-	FormLabel,
-	FormErrorMessage,
-	Input,
-	Button,
-	Select
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  Input,
+  Button,
+  Select
 } from '@chakra-ui/react';
 import { Formik, Form, Field } from 'formik';
 import { getLeagues } from '../../utils/leagues';
 
 export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
-	// Declare state for future storage of leagues
-	const [leagues, setLeagues] = useState([]);
-	// Prepare add team mutation
-	const [addTeam, { error: addTeamError }] = useMutation(ADD_TEAM, {
-		refetchQueries: [GET_ME, GET_TEAMS]
-	});
-	// Prepare update team mutation
-	const [updateTeam, { error: updateTeamError }] = useMutation(UPDATE_TEAM, {
-		refetchQueries: [GET_SINGLE_TEAM]
-	});
-	// Get all of the teams from the database to extract leagues from
-	const { data } = useQuery(GET_TEAMS);
+  // Declare state for future storage of leagues
+  const [leagues, setLeagues] = useState([]);
+  // Prepare add team mutation
+  const [addTeam, { error: addTeamError }] = useMutation(ADD_TEAM, {
+    refetchQueries: [GET_ME, GET_TEAMS]
+  });
+  // Prepare update team mutation
+  const [updateTeam, { error: updateTeamError }] = useMutation(UPDATE_TEAM, {
+    refetchQueries: [GET_SINGLE_TEAM]
+  });
+  // Get all of the teams from the database to extract leagues from
+  const { data } = useQuery(GET_TEAMS);
 
-	// Use database data to set league states
-	useEffect(() => {
-		if (data) {
-			// Extract leagues from the team data
-			const teamLeagues = getLeagues(data.teams);
-			// Set leagues
-			setLeagues(teamLeagues);
-		}
-	}, [data, setLeagues]);
+  // Use database data to set league states
+  useEffect(() => {
+    if (data) {
+      // Extract leagues from the team data
+      const teamLeagues = getLeagues(data.teams);
+      // Set leagues
+      setLeagues(teamLeagues);
+    }
+  }, [data, setLeagues]);
 
-	const handleFormSubmit = async (values, { setSubmitting }) => {
-		const name = values.teamName;
-		// Set league as teamLeague value unless user chose to add custom name
-		const league =
-			values.teamLeague !== 'Enter New League Name'
-				? values.teamLeague
-				: values.customTeamLeague;
+  const handleFormSubmit = async (values, { setSubmitting }) => {
+    const name = values.teamName;
+    // Set league as teamLeague value unless user chose to add custom name
+    const league =
+      values.teamLeague !== 'Enter New League Name'
+        ? values.teamLeague
+        : values.customTeamLeague;
 
-		// Depending on whether passed action prop equals 'create' or 'update',
-		// add or update performance
-		if (action === 'create') {
-			try {
-				await addTeam({
-					variables: {
-						name,
-						league,
-						createdBy: Auth.getProfile().data._id
-					}
-				});
-				setSubmitting(false);
-				onClose();
-			} catch (err) {
-				console.log(err);
-			}
-		} else {
-			try {
-				await updateTeam({
-					variables: {
-						_id: currentTeam._id,
-						name,
-						league
-					}
-				});
-				setSubmitting(false);
-				onClose();
-			} catch (err) {
-				console.log(err);
-			}
-		}
-	};
+    // Depending on whether passed action prop equals 'create' or 'update',
+    // add or update performance
+    if (action === 'create') {
+      try {
+        await addTeam({
+          variables: {
+            name,
+            league,
+            createdBy: Auth.getProfile().data._id
+          }
+        });
+        setSubmitting(false);
+        onClose();
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      try {
+        await updateTeam({
+          variables: {
+            _id: currentTeam._id,
+            name,
+            league
+          }
+        });
+        setSubmitting(false);
+        onClose();
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
 
-	// Get initial values for form
-	const getInitialValues = () => {
-		let initialValues;
-		// If a currentTeam prop was not passed through,
-		// start fresh with empty strings
-		if (!currentTeam) {
-			initialValues = {
-				teamName: '',
-				teamLeague: '',
-				customTeamLeague: ''
-			};
-		} else {
-			// Set initial values as current team values for editing
-			initialValues = {
-				teamName: currentTeam.name,
-				teamLeague: currentTeam.league,
-				customTeamLeague: ''
-			};
-		}
+  // Get initial values for form
+  const getInitialValues = () => {
+    let initialValues;
+    // If a currentTeam prop was not passed through,
+    // start fresh with empty strings
+    if (!currentTeam) {
+      initialValues = {
+        teamName: '',
+        teamLeague: '',
+        customTeamLeague: ''
+      };
+    } else {
+      // Set initial values as current team values for editing
+      initialValues = {
+        teamName: currentTeam.name,
+        teamLeague: currentTeam.league,
+        customTeamLeague: ''
+      };
+    }
 
-		return initialValues;
-	};
+    return initialValues;
+  };
 
-	const validate = values => {
-		const errors = {};
+  const validate = values => {
+    const errors = {};
 
-		if (!values.teamName) {
-			errors.teamName = 'Name is required';
-		}
+    if (!values.teamName) {
+      errors.teamName = 'Name is required';
+    }
 
-		if (!values.teamLeague) {
-			errors.teamLeague = 'League is required';
-		}
+    if (!values.teamLeague) {
+      errors.teamLeague = 'League is required';
+    }
 
-		if (
-			values.teamLeague === 'Enter New League Name' &&
-			!values.customTeamLeague
-		) {
-			errors.customTeamLeague = 'League is required';
-		}
+    if (
+      values.teamLeague === 'Enter New League Name' &&
+      !values.customTeamLeague
+    ) {
+      errors.customTeamLeague = 'League is required';
+    }
 
-		return errors;
-	};
+    return errors;
+  };
 
-	// Set options for select element with populated leagues
-	const leagueOptions = leagues.map((league, index) => (
-		<option key={index} value={league}>
-			{league}
-		</option>
-	));
+  // Set options for select element with populated leagues
+  const leagueOptions = leagues.map((league, index) => (
+    <option key={index} value={league}>
+      {league}
+    </option>
+  ));
 
-	return (
-		<Modal isOpen={isOpen} onClose={onClose}>
-			<ModalOverlay />
-			<ModalContent p={4}>
-				<ModalHeader color="custom.blue">
-					{action === 'create'
-						? 'Add New Team'
-						: `Edit ${currentTeam.name} (${currentTeam.league})`}
-				</ModalHeader>
-				<ModalCloseButton />
-				<ModalBody>
-					<Formik
-						initialValues={getInitialValues()}
-						validate={validate}
-						onSubmit={handleFormSubmit}
-					>
-						{props => (
-							<Form>
-								<FormControl isInvalid={addTeamError || updateTeamError}>
-									<Field name="teamName">
-										{({ field, form }) => (
-											<FormControl
-												isRequired
-												isInvalid={
-													form.errors.teamName && form.touched.teamName
-												}
-											>
-												<FormLabel>Team Name</FormLabel>
-												<Input
-													placeholder="Enter new team name"
-													type="text"
-													{...field}
-												/>
-												<FormErrorMessage>
-													{form.errors.teamName}
-												</FormErrorMessage>
-											</FormControl>
-										)}
-									</Field>
-									<Field name="teamLeague">
-										{({ field, form }) => (
-											<FormControl
-												isRequired
-												isInvalid={
-													form.errors.teamLeague && form.touched.teamLeague
-												}
-											>
-												<FormLabel mt={3}>League</FormLabel>
-												<Select placeholder="Select League" {...field}>
-													{leagueOptions}
-													<option value="Independent">Independent</option>
-													<option value="Enter New League Name">
-														Enter New League Name
-													</option>
-												</Select>
-												<FormErrorMessage>
-													{form.errors.teamLeague}
-												</FormErrorMessage>
-											</FormControl>
-										)}
-									</Field>
-									{props.values.teamLeague === 'Enter New League Name' && (
-										<Field name="customTeamLeague">
-											{({ field, form }) => (
-												<FormControl
-													isInvalid={
-														form.errors.customTeamLeague &&
-														form.touched.customTeamLeague
-													}
-												>
-													<Input mt={2} type="text" {...field} />
-													<FormErrorMessage>
-														{form.errors.customTeamLeague}
-													</FormErrorMessage>
-												</FormControl>
-											)}
-										</Field>
-									)}
-									<FormErrorMessage>
-										Something went wrong. Please try again.
-									</FormErrorMessage>
-									<ModalFooter pr={1}>
-										<Button
-											boxShadow="md"
-											type="button"
-											mr={3}
-											onClick={onClose}
-										>
-											Cancel
-										</Button>
-										<Button
-											colorScheme="blue"
-											boxShadow="xl"
-											type="submit"
-											isLoading={props.isSubmitting}
-										>
-											{action === 'create' ? 'Add Team' : 'Update Team'}
-										</Button>
-									</ModalFooter>
-								</FormControl>
-							</Form>
-						)}
-					</Formik>
-				</ModalBody>
-			</ModalContent>
-		</Modal>
-	);
+  return (
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent p={4}>
+        <ModalHeader color="custom.blue">
+          {action === 'create'
+            ? 'Add New Team'
+            : `Edit ${currentTeam.name} (${currentTeam.league})`}
+        </ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <Formik
+            initialValues={getInitialValues()}
+            validate={validate}
+            onSubmit={handleFormSubmit}
+          >
+            {props => (
+              <Form>
+                <FormControl isInvalid={addTeamError || updateTeamError}>
+                  <Field name="teamName">
+                    {({ field, form }) => (
+                      <FormControl
+                        isRequired
+                        isInvalid={
+                          form.errors.teamName && form.touched.teamName
+                        }
+                      >
+                        <FormLabel>Team Name</FormLabel>
+                        <Input
+                          placeholder="Enter new team name"
+                          type="text"
+                          {...field}
+                        />
+                        <FormErrorMessage>
+                          {form.errors.teamName}
+                        </FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Field name="teamLeague">
+                    {({ field, form }) => (
+                      <FormControl
+                        isRequired
+                        isInvalid={
+                          form.errors.teamLeague && form.touched.teamLeague
+                        }
+                      >
+                        <FormLabel mt={3}>League</FormLabel>
+                        <Select placeholder="Select League" {...field}>
+                          {leagueOptions}
+                          <option value="Independent">Independent</option>
+                          <option value="Enter New League Name">
+                            Enter New League Name
+                          </option>
+                        </Select>
+                        <FormErrorMessage>
+                          {form.errors.teamLeague}
+                        </FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  {props.values.teamLeague === 'Enter New League Name' && (
+                    <Field name="customTeamLeague">
+                      {({ field, form }) => (
+                        <FormControl
+                          isInvalid={
+                            form.errors.customTeamLeague &&
+                            form.touched.customTeamLeague
+                          }
+                        >
+                          <Input mt={2} type="text" {...field} />
+                          <FormErrorMessage>
+                            {form.errors.customTeamLeague}
+                          </FormErrorMessage>
+                        </FormControl>
+                      )}
+                    </Field>
+                  )}
+                  <FormErrorMessage>
+                    Something went wrong. Please try again.
+                  </FormErrorMessage>
+                  <ModalFooter pr={1}>
+                    <Button
+                      boxShadow="md"
+                      type="button"
+                      mr={3}
+                      onClick={onClose}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      colorScheme="blue"
+                      boxShadow="xl"
+                      type="submit"
+                      isLoading={props.isSubmitting}
+                    >
+                      {action === 'create' ? 'Add Team' : 'Update Team'}
+                    </Button>
+                  </ModalFooter>
+                </FormControl>
+              </Form>
+            )}
+          </Formik>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
+  );
 }

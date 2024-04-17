@@ -1,4 +1,5 @@
 # HeatCheck
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ![Banner Screenshot](./images/banner_screenshot.png)
@@ -13,6 +14,7 @@ HeatCheck is a basketball team stat management app intended to be used by recrea
 by allowing users to view what others have submitted for their own teams, but also a focus on secure record-keeping by only allowing the creators of the teams to edit the existing data and add new players. Head on over to [HeatCheck](https://heatcheck.onrender.com/) to start keeping track of your teams' stats with ease!
 
 ## Table of Contents
+
 - [Technologies](#technologies)
 - [Requirements](#requirements)
 - [Installation](#installation)
@@ -22,6 +24,7 @@ by allowing users to view what others have submitted for their own teams, but al
 - [Screenshots](#screenshots)
 
 ## Technologies
+
 - Node.js
 - React.js
 - Express.js
@@ -49,7 +52,7 @@ Get started contributing and tracking your own stats by first signing up, or log
 you can start by adding a new team on your Dashboard page. By adding your team's name and the league it belongs to, you are now able to add players to that team
 and game logs to those players by going to the corresponding pages after you create the entries! You can add as many teams as you need to. There is no limit.
 
-Worried about other users mucking up your stats and ruining your records? Don't be! The only one allowed to edit a team, or its players (game logs included), 
+Worried about other users mucking up your stats and ruining your records? Don't be! The only one allowed to edit a team, or its players (game logs included),
 is the user who created it. Everyone else can only gaze at your teams' stats and be jealous!
 
 ## License

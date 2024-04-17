@@ -14,39 +14,39 @@ import SingleTeam from './pages/SingleTeam.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 
 const router = createBrowserRouter([
-	{
-		path: '/',
-		element: <App />,
-		errorElement: <ErrorPage />,
-		children: [
-			{
-				index: true,
-				element: <Home />
-			},
-			{
-				path: '/dashboard',
-				element: <Dashboard />
-			},
-			{
-				path: '/player/:id',
-				element: <SinglePlayer />
-			},
-			{
-				path: '/teams',
-				element: <TeamsPage />
-			},
-			{
-				path: '/team/:id',
-				element: <SingleTeam />
-			}
-		]
-	}
+  {
+    path: '/',
+    element: <App />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <Home />
+      },
+      {
+        path: '/dashboard',
+        element: <Dashboard />
+      },
+      {
+        path: '/player/:id',
+        element: <SinglePlayer />
+      },
+      {
+        path: '/teams',
+        element: <TeamsPage />
+      },
+      {
+        path: '/team/:id',
+        element: <SingleTeam />
+      }
+    ]
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-	<React.StrictMode>
-		<ChakraProvider theme={theme}>
-			<RouterProvider router={router} />
-		</ChakraProvider>
-	</React.StrictMode>
+  <React.StrictMode>
+    <ChakraProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ChakraProvider>
+  </React.StrictMode>
 );

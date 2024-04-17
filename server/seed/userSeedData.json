@@ -1,32 +1,32 @@
 [
-	{
-		"username": "coachmiles12",
-		"email": "miles@test.com",
-		"password": "Password1234!"
-	},
-	{
-		"username": "johnsmith",
-		"email": "johnsmith@test.com",
-		"password": "Password1234!"
-	},
-	{
-		"username": "baller47",
-		"email": "baller47@test.com",
-		"password": "Password1234!"
-	},
-	{
-		"username": "and1mixtape",
-		"email": "and1mixtape@test.com",
-		"password": "Password1234!"
-	},
-	{
-		"username": "blakemorrison",
-		"email": "blakemorrison@test.com",
-		"password": "Password1234!"
-	},
-	{
-		"username": "badcompany",
-		"email": "badcompany@test.com",
-		"password": "Password1234!"
-	}
+  {
+    "username": "coachmiles12",
+    "email": "miles@test.com",
+    "password": "Password1234!"
+  },
+  {
+    "username": "johnsmith",
+    "email": "johnsmith@test.com",
+    "password": "Password1234!"
+  },
+  {
+    "username": "baller47",
+    "email": "baller47@test.com",
+    "password": "Password1234!"
+  },
+  {
+    "username": "and1mixtape",
+    "email": "and1mixtape@test.com",
+    "password": "Password1234!"
+  },
+  {
+    "username": "blakemorrison",
+    "email": "blakemorrison@test.com",
+    "password": "Password1234!"
+  },
+  {
+    "username": "badcompany",
+    "email": "badcompany@test.com",
+    "password": "Password1234!"
+  }
 ]
