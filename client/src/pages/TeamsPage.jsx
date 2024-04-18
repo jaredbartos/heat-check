@@ -1,6 +1,6 @@
 import { GET_TEAMS } from '../utils/queries/team';
 import { useQuery } from '@apollo/client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import TeamCard from '../components/TeamCard';
 import {
   Heading,
@@ -10,7 +10,12 @@ import {
   Text,
   Spinner,
   Flex,
-  Box
+  Box,
+  HStack,
+  VStack,
+  Select,
+  Stack,
+  Checkbox
 } from '@chakra-ui/react';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { getLeagues } from '../utils/leagues';
@@ -22,6 +27,15 @@ export default function TeamsPage() {
   // Declare state variables for holding the teams and league values
   const [teams, setTeams] = useState([]);
   const [leagues, setLeagues] = useState([]);
+  const [selectedLeague, setSelectedLeague] = useState('All Leagues');
+  // Set visible teams dependent on filtering
+  const visibleTeams = useMemo(() => {
+    if (selectedLeague === 'All Leagues') {
+      return teams;
+    } else {
+      return teams.filter(team => team.league === selectedLeague);
+    }
+  }, [teams, selectedLeague]);
 
   // Use database data to set teams and set leagues
   useEffect(() => {
@@ -30,14 +44,32 @@ export default function TeamsPage() {
       const teamLeagues = getLeagues(data.teams);
       setLeagues(teamLeagues);
     }
-  }, [data, setTeams, setLeagues]);
+  }, [data]);
+
+  const handleChange = e => {
+    const { value } = e.target;
+    setSelectedLeague(value);
+  };
 
   return (
     <>
-      <Center h={100}>
-        <Heading as="h2" color="custom.blue" size="xl">
-          Teams
-        </Heading>
+      <Center h={150}>
+        <VStack>
+          <Heading as="h2" color="custom.blue" size="xl">
+            Teams
+          </Heading>
+          <HStack mt={3}>
+            <Text w={200}>Filter By League:</Text>
+            <Select borderColor="custom.blue" onChange={handleChange}>
+              <option value="All Leagues">All Leagues</option>
+              {leagues.map(league => (
+                <option key={league} value={league}>
+                  {league}
+                </option>
+              ))}
+            </Select>
+          </HStack>
+        </VStack>
       </Center>
       <Box m="auto" w={['95%', null, null, null, null, '1600px']}>
         {loading && (
@@ -45,9 +77,9 @@ export default function TeamsPage() {
             <LoadingSpinner />
           </Box>
         )}
-        {!loading && teams.length && (
+        {!loading && visibleTeams.length ? (
           <Flex flexWrap="wrap" justify="center">
-            {teams.map(team => (
+            {visibleTeams.map(team => (
               <TeamCard
                 key={team._id}
                 teamId={team._id}
@@ -57,11 +89,10 @@ export default function TeamsPage() {
               />
             ))}
           </Flex>
-        )}
-        {!loading && !teams.length && (
+        ) : (
           <Center>
             <Text fontSize="lg" my={20}>
-              No teams have been added yet!
+              No teams available!
             </Text>
           </Center>
         )}

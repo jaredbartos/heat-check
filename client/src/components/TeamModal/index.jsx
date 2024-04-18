@@ -189,7 +189,6 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
                         <FormLabel mt={3}>League</FormLabel>
                         <Select placeholder="Select League" {...field}>
                           {leagueOptions}
-                          <option value="Independent">Independent</option>
                           <option value="Enter New League Name">
                             Enter New League Name
                           </option>
