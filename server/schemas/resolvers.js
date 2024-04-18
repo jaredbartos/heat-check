@@ -28,14 +28,6 @@ const resolvers = {
         .sort({ updatedAt: -1 })
         .limit(3);
     },
-    players: async () => {
-      return await Player.find().populate('team').populate('createdBy');
-    },
-    playersByTeam: async (parent, { _id }) => {
-      return await Player.find({ team: _id })
-        .populate('team')
-        .sort({ number: 1 });
-    },
     player: async (parent, { _id }) => {
       const player = await Player.findById(_id)
         .populate('team')
@@ -47,9 +39,6 @@ const resolvers = {
       }
 
       return player;
-    },
-    performances: async () => {
-      return await Performance.find().populate('player').populate('createdBy');
     },
     avgPerformanceByPlayer: async (parent, { _id }) => {
       const aggregate = await Performance.aggregate([

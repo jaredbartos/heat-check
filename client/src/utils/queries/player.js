@@ -40,22 +40,3 @@ export const GET_SINGLE_PLAYER = gql`
     }
   }
 `;
-
-export const GET_PLAYERS_BY_TEAM = gql`
-  query getPlayersByTeam($id: ID!) {
-    playersByTeam(_id: $id) {
-      _id
-      firstName
-      lastName
-      position
-      number
-      height
-      weight
-      team {
-        _id
-        name
-        league
-      }
-    }
-  }
-`;
