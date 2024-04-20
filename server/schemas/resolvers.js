@@ -40,31 +40,6 @@ const resolvers = {
 
       return player;
     },
-    avgPerformanceByPlayer: async (parent, { _id }) => {
-      const aggregate = await Performance.aggregate([
-        { $match: { player: new ObjectId(_id) } },
-        {
-          $group: {
-            _id: '$player',
-            avgFgAtt: { $avg: '$fgAtt' },
-            avgFgMade: { $avg: '$fgMade' },
-            avgThreePtAtt: { $avg: '$threePtAtt' },
-            avgThreePtMade: { $avg: '$threePtMade' },
-            avgFtAtt: { $avg: '$ftAtt' },
-            avgFtMade: { $avg: '$ftMade' },
-            avgOffReb: { $avg: '$offReb' },
-            avgRebounds: { $avg: '$rebounds' },
-            avgAssists: { $avg: '$assists' },
-            avgSteals: { $avg: '$steals' },
-            avgBlocks: { $avg: '$blocks' },
-            avgTurnovers: { $avg: '$turnovers' },
-            avgPoints: { $avg: '$points' }
-          }
-        }
-      ]);
-
-      return aggregate[0];
-    },
     avgPlayerPerformanceByTeam: async (parent, { _id }) => {
       const team = await Team.findById(_id).populate({
         path: 'players',
