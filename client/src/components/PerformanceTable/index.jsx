@@ -1,6 +1,5 @@
 import { formatDate } from '../../utils/dates';
 import { DELETE_PERFORMANCE } from '../../utils/mutations';
-import { GET_AVG_PERFORMANCE_BY_PLAYER } from '../../utils/queries/performance';
 import { GET_SINGLE_PLAYER } from '../../utils/queries/player';
 import PerformanceModal from '../PerformanceModal';
 import DeletePerformanceModal from '../DeletePerformanceModal';
@@ -70,7 +69,7 @@ export default function PerformanceTable({
 
   // Prepare delete performance mutation
   const [deletePerformance] = useMutation(DELETE_PERFORMANCE, {
-    refetchQueries: [GET_SINGLE_PLAYER, GET_AVG_PERFORMANCE_BY_PLAYER]
+    refetchQueries: [GET_SINGLE_PLAYER]
   });
 
   // Handler for delete button for each performance

@@ -32,6 +32,22 @@ export const GET_SINGLE_PLAYER = gql`
         points
         date
       }
+      averages {
+        _id
+        avgFgAtt
+        avgFgMade
+        avgThreePtAtt
+        avgThreePtMade
+        avgFtAtt
+        avgFtMade
+        avgOffReb
+        avgRebounds
+        avgAssists
+        avgSteals
+        avgBlocks
+        avgTurnovers
+        avgPoints
+      }
       createdBy {
         _id
         username

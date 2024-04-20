@@ -66,6 +66,7 @@ const typeDefs = `
     weight: Int
     team: Team
     performances: [Performance]
+    averages: Averages
     createdBy: User
   }
 

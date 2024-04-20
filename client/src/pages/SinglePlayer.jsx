@@ -1,6 +1,5 @@
 import { useQuery, useMutation } from '@apollo/client';
 import { useParams } from 'react-router-dom';
-import { GET_AVG_PERFORMANCE_BY_PLAYER } from '../utils/queries/performance';
 import { GET_SINGLE_PLAYER } from '../utils/queries/player';
 import { DELETE_PLAYER } from '../utils/mutations';
 import PerformanceTable from '../components/PerformanceTable';
@@ -57,12 +56,6 @@ export default function SinglePlayer() {
     { variables: { id } }
   );
 
-  // Query the player's averages
-  const { loading: loadingAverages, data: averagesData } = useQuery(
-    GET_AVG_PERFORMANCE_BY_PLAYER,
-    { variables: { id } }
-  );
-
   const [deletePlayer] = useMutation(DELETE_PLAYER);
   const [player, setPlayer] = useState();
   const [performances, setPerformances] = useState([]);
@@ -84,11 +77,9 @@ export default function SinglePlayer() {
     if (playerData) {
       setPlayer(playerData.player);
       setPerformances(playerData.player.performances);
+      setAverages(playerData.player.averages);
     }
-    if (averagesData) {
-      setAverages(averagesData.avgPerformanceByPlayer);
-    }
-  }, [playerData, averagesData]);
+  }, [playerData]);
 
   // Handler for delete player button
   const handleDelete = async e => {
@@ -291,7 +282,7 @@ export default function SinglePlayer() {
                   </Popover>
                 </ButtonGroup>
               )}
-            {loadingAverages && <LoadingSpinner />}
+            {loadingPlayer && <LoadingSpinner />}
             {averages && (
               <>
                 <AveragesTable

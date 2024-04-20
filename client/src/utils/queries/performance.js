@@ -37,27 +37,6 @@ export const GET_RANKED_PERFORMANCES = gql`
   }
 `;
 
-export const GET_AVG_PERFORMANCE_BY_PLAYER = gql`
-  query getAvgPerformanceByPlayer($id: ID!) {
-    avgPerformanceByPlayer(_id: $id) {
-      _id
-      avgFgAtt
-      avgFgMade
-      avgThreePtAtt
-      avgThreePtMade
-      avgFtAtt
-      avgFtMade
-      avgOffReb
-      avgRebounds
-      avgAssists
-      avgSteals
-      avgBlocks
-      avgTurnovers
-      avgPoints
-    }
-  }
-`;
-
 export const GET_AVG_PLAYER_PERFORMANCE_BY_TEAM = gql`
   query getAvgPlayerPerformanceByTeam($id: ID!) {
     avgPlayerPerformanceByTeam(_id: $id) {

@@ -141,6 +141,33 @@ const resolvers = {
       throw new Error('You need to be logged in!');
     }
   },
+  Player: {
+    averages: async ({ _id }) => {
+      const averages = await Performance.aggregate([
+        { $match: { player: new ObjectId(_id) } },
+        {
+          $group: {
+            _id: '$player',
+            avgFgAtt: { $avg: '$fgAtt' },
+            avgFgMade: { $avg: '$fgMade' },
+            avgThreePtAtt: { $avg: '$threePtAtt' },
+            avgThreePtMade: { $avg: '$threePtMade' },
+            avgFtAtt: { $avg: '$ftAtt' },
+            avgFtMade: { $avg: '$ftMade' },
+            avgOffReb: { $avg: '$offReb' },
+            avgRebounds: { $avg: '$rebounds' },
+            avgAssists: { $avg: '$assists' },
+            avgSteals: { $avg: '$steals' },
+            avgBlocks: { $avg: '$blocks' },
+            avgTurnovers: { $avg: '$turnovers' },
+            avgPoints: { $avg: '$points' }
+          }
+        }
+      ]);
+
+      return averages[0];
+    }
+  },
   Mutation: {
     addPerformance: async (parent, { input, createdBy }) => {
       const performance = await Performance.create({
