@@ -1,9 +1,6 @@
 import { useQuery, useMutation } from '@apollo/client';
 import { useParams } from 'react-router-dom';
-import {
-  GET_PERFORMANCES_BY_PLAYER,
-  GET_AVG_PERFORMANCE_BY_PLAYER
-} from '../utils/queries/performance';
+import { GET_AVG_PERFORMANCE_BY_PLAYER } from '../utils/queries/performance';
 import { GET_SINGLE_PLAYER } from '../utils/queries/player';
 import { DELETE_PLAYER } from '../utils/mutations';
 import PerformanceTable from '../components/PerformanceTable';
@@ -60,12 +57,6 @@ export default function SinglePlayer() {
     { variables: { id } }
   );
 
-  // Query player performances
-  const { loading: loadingPerformances, data: performancesData } = useQuery(
-    GET_PERFORMANCES_BY_PLAYER,
-    { variables: { id } }
-  );
-
   // Query the player's averages
   const { loading: loadingAverages, data: averagesData } = useQuery(
     GET_AVG_PERFORMANCE_BY_PLAYER,
@@ -92,21 +83,12 @@ export default function SinglePlayer() {
   useEffect(() => {
     if (playerData) {
       setPlayer(playerData.player);
-    }
-    if (performancesData) {
-      setPerformances(performancesData.performancesByPlayer);
+      setPerformances(playerData.player.performances);
     }
     if (averagesData) {
       setAverages(averagesData.avgPerformanceByPlayer);
     }
-  }, [
-    playerData,
-    performancesData,
-    averagesData,
-    setAverages,
-    setPlayer,
-    setPerformances
-  ]);
+  }, [playerData, averagesData]);
 
   // Handler for delete player button
   const handleDelete = async e => {
@@ -354,10 +336,13 @@ export default function SinglePlayer() {
                   </Button>
                 )}
             </HStack>
-            {loadingPerformances ? (
+            {loadingPlayer ? (
               <LoadingSpinner />
             ) : (
-              <PerformanceTable performances={performances} />
+              <PerformanceTable
+                performances={performances}
+                createdBy={player.createdBy._id}
+              />
             )}
 
             <PlayerModal

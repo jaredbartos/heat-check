@@ -107,7 +107,6 @@ const typeDefs = `
     player(_id: ID!): Player
     avgPerformanceByPlayer(_id: ID!): Averages
     avgPlayerPerformanceByTeam(_id: ID!): [Averages]
-    performancesByPlayer(_id: ID!): [Performance]
     performance(_id: ID!): Performance
     rankPerformanceByField(field: String!): [Performance]
     me: User

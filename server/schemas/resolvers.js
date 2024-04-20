@@ -31,7 +31,7 @@ const resolvers = {
     player: async (parent, { _id }) => {
       const player = await Player.findById(_id)
         .populate('team')
-        .populate('performances')
+        .populate({ path: 'performances', options: { sort: { date: -1 } } })
         .populate('createdBy');
 
       if (!player) {
@@ -102,12 +102,6 @@ const resolvers = {
       }
 
       return averages;
-    },
-    performancesByPlayer: async (parent, { _id }) => {
-      return await Performance.find({ player: _id })
-        .populate('player')
-        .populate('createdBy')
-        .sort({ date: -1 });
     },
     performance: async (parent, { _id }) => {
       const performance = await Performance.findById(_id)

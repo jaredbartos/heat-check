@@ -1,9 +1,6 @@
 import { formatDate } from '../../utils/dates';
 import { DELETE_PERFORMANCE } from '../../utils/mutations';
-import {
-  GET_AVG_PERFORMANCE_BY_PLAYER,
-  GET_PERFORMANCES_BY_PLAYER
-} from '../../utils/queries/performance';
+import { GET_AVG_PERFORMANCE_BY_PLAYER } from '../../utils/queries/performance';
 import { GET_SINGLE_PLAYER } from '../../utils/queries/player';
 import PerformanceModal from '../PerformanceModal';
 import DeletePerformanceModal from '../DeletePerformanceModal';
@@ -44,7 +41,11 @@ import { useSelector } from 'react-redux';
 import { selectRecentChanges } from '../../utils/globalState/slices/recentChangesSlice';
 
 // PerformanceTable component
-export default function PerformanceTable({ isRanking, performances }) {
+export default function PerformanceTable({
+  isRanking,
+  performances,
+  createdBy
+}) {
   // Get recentChanges state from Redux
   const recentChanges = useSelector(selectRecentChanges);
   const [selectedPerformance, setSelectedPerformance] = useState();
@@ -69,11 +70,7 @@ export default function PerformanceTable({ isRanking, performances }) {
 
   // Prepare delete performance mutation
   const [deletePerformance] = useMutation(DELETE_PERFORMANCE, {
-    refetchQueries: [
-      GET_SINGLE_PLAYER,
-      GET_PERFORMANCES_BY_PLAYER,
-      GET_AVG_PERFORMANCE_BY_PLAYER
-    ]
+    refetchQueries: [GET_SINGLE_PLAYER, GET_AVG_PERFORMANCE_BY_PLAYER]
   });
 
   // Handler for delete button for each performance
@@ -153,7 +150,7 @@ export default function PerformanceTable({ isRanking, performances }) {
         {
           // Only allow user to edit or delete if they created the entry and the table is on the player page
           Auth.loggedIn() &&
-          Auth.getProfile().data._id === performance.createdBy._id &&
+          Auth.getProfile().data._id === createdBy &&
           !isRanking ? (
             <Td>
               <ButtonGroup size="xs">
