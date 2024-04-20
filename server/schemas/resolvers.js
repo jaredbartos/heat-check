@@ -40,44 +40,6 @@ const resolvers = {
 
       return player;
     },
-    avgPlayerPerformanceByTeam: async (parent, { _id }) => {
-      const team = await Team.findById(_id).populate({
-        path: 'players',
-        populate: { path: 'performances' }
-      });
-
-      // Declare empty averages array to push to later
-      let averages = [];
-
-      // Loop through players
-      for (let i = 0; i < team.players.length; i++) {
-        let points = 0;
-        let rebounds = 0;
-        let assists = 0;
-
-        // Go through each performance and add relevant data together
-        team.players[i].performances.forEach(performance => {
-          points += performance.points;
-          rebounds += performance.rebounds;
-          assists += performance.assists;
-        });
-
-        // Push data to averages array
-        averages.push({
-          _id: team.players[i]._id,
-          firstName: team.players[i].firstName,
-          lastName: team.players[i].lastName,
-          avgPoints:
-            points === 0 ? 0 : points / team.players[i].performances.length,
-          avgRebounds:
-            rebounds === 0 ? 0 : rebounds / team.players[i].performances.length,
-          avgAssists:
-            assists === 0 ? 0 : assists / team.players[i].performances.length
-        });
-      }
-
-      return averages;
-    },
     performance: async (parent, { _id }) => {
       const performance = await Performance.findById(_id)
         .populate({

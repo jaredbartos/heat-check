@@ -1,7 +1,6 @@
 import { ADD_PLAYER, UPDATE_PLAYER } from '../../utils/mutations';
 import { GET_SINGLE_PLAYER } from '../../utils/queries/player';
 import { GET_SINGLE_TEAM } from '../../utils/queries/team';
-import { GET_AVG_PLAYER_PERFORMANCE_BY_TEAM } from '../../utils/queries/performance';
 import { useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
 import {
@@ -36,7 +35,7 @@ export default function PlayerModal({
 }) {
   // Prepare add player mutation
   const [addPlayer] = useMutation(ADD_PLAYER, {
-    refetchQueries: [GET_SINGLE_TEAM, GET_AVG_PLAYER_PERFORMANCE_BY_TEAM]
+    refetchQueries: [GET_SINGLE_TEAM]
   });
   // Prepare update player mutation
   const [updatePlayer] = useMutation(UPDATE_PLAYER, {

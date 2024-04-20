@@ -21,8 +21,6 @@ const typeDefs = `
 
   type Averages {
     _id: ID
-    firstName: String
-    lastName: String
     avgFgAtt: Float
     avgFgMade: Float
     avgThreePtAtt: Float
@@ -106,7 +104,6 @@ const typeDefs = `
     team(_id: ID!): Team
     recentlyUpdatedTeams: [Team]
     player(_id: ID!): Player
-    avgPlayerPerformanceByTeam(_id: ID!): [Averages]
     performance(_id: ID!): Performance
     rankPerformanceByField(field: String!): [Performance]
     me: User

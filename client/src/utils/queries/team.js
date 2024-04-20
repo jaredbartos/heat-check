@@ -37,6 +37,12 @@ export const GET_SINGLE_TEAM = gql`
         number
         height
         weight
+        averages {
+          _id
+          avgRebounds
+          avgAssists
+          avgPoints
+        }
       }
       createdBy {
         _id

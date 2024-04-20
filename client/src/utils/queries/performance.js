@@ -36,16 +36,3 @@ export const GET_RANKED_PERFORMANCES = gql`
     }
   }
 `;
-
-export const GET_AVG_PLAYER_PERFORMANCE_BY_TEAM = gql`
-  query getAvgPlayerPerformanceByTeam($id: ID!) {
-    avgPlayerPerformanceByTeam(_id: $id) {
-      _id
-      firstName
-      lastName
-      avgRebounds
-      avgAssists
-      avgPoints
-    }
-  }
-`;

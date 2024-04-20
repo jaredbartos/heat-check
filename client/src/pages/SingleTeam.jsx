@@ -1,5 +1,4 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { GET_AVG_PLAYER_PERFORMANCE_BY_TEAM } from '../utils/queries/performance';
 import { GET_SINGLE_TEAM } from '../utils/queries/team';
 import { DELETE_TEAM } from '../utils/mutations';
 import { useQuery, useMutation } from '@apollo/client';
@@ -57,17 +56,11 @@ export default function SingleTeam() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [team, setTeam] = useState();
-  const [averages, setAverages] = useState([]);
   const [deleteTeam] = useMutation(DELETE_TEAM);
   // Query the team using id param
   const { loading: loadingTeam, data: teamData } = useQuery(GET_SINGLE_TEAM, {
     variables: { id }
   });
-  // Query averages of team players
-  const { loading: loadingAverages, data: averagesData } = useQuery(
-    GET_AVG_PLAYER_PERFORMANCE_BY_TEAM,
-    { variables: { id } }
-  );
 
   const {
     isOpen: isTeamOpen,
@@ -87,10 +80,7 @@ export default function SingleTeam() {
     if (teamData) {
       setTeam(teamData.team);
     }
-    if (averagesData) {
-      setAverages(averagesData.avgPlayerPerformanceByTeam);
-    }
-  }, [teamData, averagesData, setAverages, setTeam]);
+  }, [teamData]);
 
   const handleDelete = async e => {
     e.preventDefault();
@@ -133,13 +123,17 @@ export default function SingleTeam() {
   };
 
   // Component to be used as child of AveragesTable
-  const AveragesTableContent = ({ averages }) => {
-    // Copy averages array
-    const averagesCopy = [...averages];
+  const AveragesTableContent = ({ players }) => {
+    // Get averages
+    const averages = players.map(player => {
+      return {
+        ...player.averages,
+        firstName: player.firstName,
+        lastName: player.lastName
+      };
+    });
     // Sort averages by points
-    const sortedAverages = averagesCopy.sort(
-      (a, b) => b.avgPoints - a.avgPoints
-    );
+    const sortedAverages = averages.sort((a, b) => b.avgPoints - a.avgPoints);
     // Create rows using sorted averages
     return sortedAverages.map(average => {
       return (
@@ -290,14 +284,14 @@ export default function SingleTeam() {
                   </Center>
                 </Box>
               )}
-              {loadingAverages && averages.length === 0 && (
+              {loadingTeam && (
                 <Box w={400} h={450}>
                   <LoadingSpinner />
                 </Box>
               )}
-              {averages.length !== 0 && (
+              {team.players.length !== 0 && (
                 <AveragesTable>
-                  <AveragesTableContent averages={averages} />
+                  <AveragesTableContent players={team.players} />
                 </AveragesTable>
               )}
             </Flex>
