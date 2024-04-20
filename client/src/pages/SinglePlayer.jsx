@@ -97,7 +97,7 @@ export default function SinglePlayer() {
   };
 
   // AveragesTable component
-  const AveragesTable = props => {
+  const AveragesTable = ({ averages }) => {
     return (
       <TableContainer
         borderWidth={2}
@@ -119,12 +119,12 @@ export default function SinglePlayer() {
           </Thead>
           <Tbody>
             <Tr>
-              <Td>{props.avgPoints.toFixed(1)}</Td>
-              <Td>{props.avgRebounds.toFixed(1)}</Td>
-              <Td>{props.avgAssists.toFixed(1)}</Td>
-              <Td>{props.avgSteals.toFixed(1)}</Td>
-              <Td>{props.avgBlocks.toFixed(1)}</Td>
-              <Td>{props.avgTurnovers.toFixed(1)}</Td>
+              <Td>{averages.avgPoints.toFixed(1)}</Td>
+              <Td>{averages.avgRebounds.toFixed(1)}</Td>
+              <Td>{averages.avgAssists.toFixed(1)}</Td>
+              <Td>{averages.avgSteals.toFixed(1)}</Td>
+              <Td>{averages.avgBlocks.toFixed(1)}</Td>
+              <Td>{averages.avgTurnovers.toFixed(1)}</Td>
             </Tr>
           </Tbody>
         </Table>
@@ -132,7 +132,7 @@ export default function SinglePlayer() {
     );
   };
 
-  const PercentagesTable = props => {
+  const PercentagesTable = ({ percentages }) => {
     return (
       <Box w={['100%', 350]}>
         <TableContainer
@@ -152,24 +152,9 @@ export default function SinglePlayer() {
             </Thead>
             <Tbody>
               <Tr>
-                <Td>
-                  {props.avgFgAtt === 0
-                    ? '0.0'
-                    : ((props.avgFgMade / props.avgFgAtt) * 100).toFixed(1)}
-                </Td>
-                <Td>
-                  {props.avgThreePtAtt === 0
-                    ? '0.0'
-                    : (
-                        (props.avgThreePtMade / props.avgThreePtAtt) *
-                        100
-                      ).toFixed(1)}
-                </Td>
-                <Td>
-                  {props.avgFtAtt === 0
-                    ? '0.0'
-                    : ((props.avgFtMade / props.avgFtAtt) * 100).toFixed(1)}
-                </Td>
+                <Td>{percentages.fgPercentage.toFixed(1)}</Td>
+                <Td>{percentages.threePtPercentage.toFixed(1)}</Td>
+                <Td>{percentages.ftPercentage.toFixed(1)}</Td>
               </Tr>
             </Tbody>
           </Table>
@@ -285,28 +270,8 @@ export default function SinglePlayer() {
             {loadingPlayer && <LoadingSpinner />}
             {averages && (
               <>
-                <AveragesTable
-                  avgPoints={averages.avgPoints}
-                  avgRebounds={averages.avgRebounds}
-                  avgAssists={averages.avgAssists}
-                  avgFgMade={averages.avgFgMade}
-                  avgFgAtt={averages.avgFgAtt}
-                  avgThreePtMade={averages.avgThreePtMade}
-                  avgThreePtAtt={averages.avgThreePtAtt}
-                  avgFtMade={averages.avgFtMade}
-                  avgFtAtt={averages.avgFtAtt}
-                  avgSteals={averages.avgSteals}
-                  avgBlocks={averages.avgBlocks}
-                  avgTurnovers={averages.avgTurnovers}
-                />
-                <PercentagesTable
-                  avgFgMade={averages.avgFgMade}
-                  avgFgAtt={averages.avgFgAtt}
-                  avgThreePtMade={averages.avgThreePtMade}
-                  avgThreePtAtt={averages.avgThreePtAtt}
-                  avgFtMade={averages.avgFtMade}
-                  avgFtAtt={averages.avgFtAtt}
-                />
+                <AveragesTable averages={averages} />
+                <PercentagesTable percentages={player.percentages} />
               </>
             )}
             <HStack>

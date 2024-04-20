@@ -103,6 +103,58 @@ const resolvers = {
       ]);
 
       return averages[0];
+    },
+    percentages: async ({ _id }) => {
+      const percentages = await Performance.aggregate([
+        { $match: { player: new ObjectId(_id) } },
+        {
+          $group: {
+            _id: '$player',
+            totalFgMade: { $sum: '$fgMade' },
+            totalFgAtt: { $sum: '$fgAtt' },
+            totalThreePtMade: { $sum: '$threePtMade' },
+            totalThreePtAtt: { $sum: '$threePtAtt' },
+            totalFtMade: { $sum: '$ftMade' },
+            totalFtAtt: { $sum: '$ftAtt' }
+          }
+        },
+        {
+          $project: {
+            fgPercentage: {
+              $cond: {
+                if: { $eq: ['$totalFgAtt', 0] },
+                then: 0,
+                else: {
+                  $multiply: [{ $divide: ['$totalFgMade', '$totalFgAtt'] }, 100]
+                }
+              }
+            },
+            threePtPercentage: {
+              $cond: {
+                if: { $eq: ['$totalThreePtAtt', 0] },
+                then: 0,
+                else: {
+                  $multiply: [
+                    { $divide: ['$totalThreePtMade', '$totalThreePtAtt'] },
+                    100
+                  ]
+                }
+              }
+            },
+            ftPercentage: {
+              $cond: {
+                if: { $eq: ['$totalFtAtt', 0] },
+                then: 0,
+                else: {
+                  $multiply: [{ $divide: ['$totalFtMade', '$totalFtAtt'] }, 100]
+                }
+              }
+            }
+          }
+        }
+      ]);
+
+      return percentages[0];
     }
   },
   Mutation: {

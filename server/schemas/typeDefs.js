@@ -36,6 +36,13 @@ const typeDefs = `
     avgPoints: Float
   }
 
+  type Percentages {
+    _id: ID
+    fgPercentage: Float
+    threePtPercentage: Float
+    ftPercentage: Float
+  }
+
   input PerformanceInput {
     fgAtt: Int
     fgMade: Int
@@ -65,6 +72,7 @@ const typeDefs = `
     team: Team
     performances: [Performance]
     averages: Averages
+    percentages: Percentages
     createdBy: User
   }
 

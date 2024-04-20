@@ -48,6 +48,12 @@ export const GET_SINGLE_PLAYER = gql`
         avgTurnovers
         avgPoints
       }
+      percentages {
+        _id
+        fgPercentage
+        threePtPercentage
+        ftPercentage
+      }
       createdBy {
         _id
         username
