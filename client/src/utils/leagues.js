@@ -3,7 +3,7 @@ export const getLeagues = teams => {
   // Always include independent option
   let teamLeagues = ['Independent'];
   for (let i = 0; i < teams.length; i++) {
-    const currentTeamLeague = teams[i].league;
+    const currentTeamLeague = teams[i].league.name;
     if (!teamLeagues.includes(currentTeamLeague)) {
       teamLeagues.push(currentTeamLeague);
     }

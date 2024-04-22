@@ -80,7 +80,7 @@ export default function Dashboard() {
                     teamId={team._id}
                     players={team.players}
                     teamName={team.name}
-                    league={team.league}
+                    league={team.league.name}
                   />
                 ))}
               </Flex>

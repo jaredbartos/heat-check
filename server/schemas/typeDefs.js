@@ -1,6 +1,6 @@
 const typeDefs = `
   type Performance {
-    _id: ID
+    _id: ID!
     fgAtt: Int!
     fgMade: Int!
     threePtAtt: Int!
@@ -20,7 +20,7 @@ const typeDefs = `
   }
 
   type Averages {
-    _id: ID
+    _id: ID!
     avgFgAtt: Float
     avgFgMade: Float
     avgThreePtAtt: Float
@@ -37,7 +37,7 @@ const typeDefs = `
   }
 
   type Percentages {
-    _id: ID
+    _id: ID!
     fgPercentage: Float
     threePtPercentage: Float
     ftPercentage: Float
@@ -62,7 +62,7 @@ const typeDefs = `
   }
 
   type Player {
-    _id: ID
+    _id: ID!
     firstName: String!
     lastName: String
     position: String!
@@ -76,6 +76,18 @@ const typeDefs = `
     createdBy: User
   }
 
+  type Leaderboard {
+    _id: ID!
+    category: String!
+    leaders: [Leader]
+  }
+
+  type Leader {
+    _id: ID!
+    player: Player
+    value: Float
+  }
+
   input PlayerInput {
     firstName: String
     lastName: String
@@ -87,11 +99,17 @@ const typeDefs = `
   }
 
   type Team {
-    _id: ID
+    _id: ID!
     name: String!
-    league: String!
+    league: League
     players: [Player]
     createdBy: User
+  }
+
+  type League {
+    _id: ID!
+    name: String!
+    teams: [Team]
   }
 
   type User {
@@ -113,6 +131,7 @@ const typeDefs = `
     recentlyUpdatedTeams: [Team]
     player(_id: ID!): Player
     performance(_id: ID!): Performance
+    allAvgLeaderboards: [Leaderboard]
     rankPerformanceByField(field: String!): [Performance]
     me: User
   }

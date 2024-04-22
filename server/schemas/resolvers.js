@@ -6,13 +6,15 @@ const resolvers = {
   Query: {
     teams: async () => {
       return await Team.find()
-        .populate('players')
+        .populate({ path: 'players', options: { sort: { number: 1 } } })
+        .populate('league')
         .populate('createdBy')
         .sort({ createdAt: -1 });
     },
     team: async (parent, { _id }) => {
       const team = await Team.findById(_id)
-        .populate('players')
+        .populate({ path: 'players', options: { sort: { number: 1 } } })
+        .populate('league')
         .populate('createdBy');
 
       if (!team) {
@@ -23,14 +25,15 @@ const resolvers = {
     },
     recentlyUpdatedTeams: async () => {
       return await Team.find()
-        .populate('players')
+        .populate({ path: 'players', options: { sort: { number: 1 } } })
+        .populate('league')
         .populate('createdBy')
         .sort({ updatedAt: -1 })
         .limit(3);
     },
     player: async (parent, { _id }) => {
       const player = await Player.findById(_id)
-        .populate('team')
+        .populate({ path: 'team', populate: { path: 'league' } })
         .populate({ path: 'performances', options: { sort: { date: -1 } } })
         .populate('createdBy');
 
@@ -42,10 +45,7 @@ const resolvers = {
     },
     performance: async (parent, { _id }) => {
       const performance = await Performance.findById(_id)
-        .populate({
-          path: 'player',
-          populate: { path: 'team' }
-        })
+        .populate({ path: 'player', populate: { path: 'team' } })
         .populate('createdBy');
 
       if (!performance) {
@@ -54,11 +54,71 @@ const resolvers = {
 
       return performance;
     },
+    allAvgLeaderboards: async () => {
+      // Get sample performance
+      const performance = await Performance.findOne();
+      // Extract field names with number values to use for leaderboard fetching
+      let categories = [];
+      for (let field in performance) {
+        if (typeof performance[field] === 'number' && field !== '__v') {
+          categories.push(field);
+        }
+      }
+
+      let leaderboards = [];
+
+      for (let category of categories) {
+        let leaderboard = await Performance.aggregate([
+          {
+            $group: {
+              _id: '$player',
+              [category]: { $avg: `$${category}` }
+            }
+          },
+          {
+            $addFields: {
+              player: '$_id'
+            }
+          },
+          {
+            $sort: {
+              [category]: category === 'turnovers' ? 1 : -1,
+              _id: -1
+            }
+          },
+          {
+            $limit: 5
+          },
+          {
+            $project: {
+              _id: 1,
+              value: `$${category}`,
+              player: 1
+            }
+          }
+        ]);
+
+        leaderboard = await Player.populate(leaderboard, {
+          path: 'player',
+          populate: { path: 'team' }
+        });
+
+        leaderboard = {
+          _id: new ObjectId(),
+          category,
+          leaders: [...leaderboard]
+        };
+
+        leaderboards.push(leaderboard);
+      }
+
+      return leaderboards;
+    },
     rankPerformanceByField: async (parent, { field }) => {
       return await Performance.find()
         .populate({
           path: 'player',
-          populate: { path: 'team' }
+          populate: { path: 'team', populate: { path: 'league' } }
         })
         .populate('createdBy')
         .sort({ [field]: -1 })
@@ -69,7 +129,8 @@ const resolvers = {
         const user = await User.findById(context.user._id)
           .populate({
             path: 'teams',
-            populate: { path: 'players' }
+            populate: { path: 'players' },
+            populate: { path: 'league' }
           })
           .populate('players');
         return user;
@@ -81,7 +142,7 @@ const resolvers = {
   Player: {
     averages: async ({ _id }) => {
       const averages = await Performance.aggregate([
-        { $match: { player: new ObjectId(_id) } },
+        { $match: { player: _id } },
         {
           $group: {
             _id: '$player',

@@ -33,7 +33,7 @@ export default function TeamsPage() {
     if (selectedLeague === 'All Leagues') {
       return teams;
     } else {
-      return teams.filter(team => team.league === selectedLeague);
+      return teams.filter(team => team.league.name === selectedLeague);
     }
   }, [teams, selectedLeague]);
 
@@ -85,7 +85,7 @@ export default function TeamsPage() {
                 teamId={team._id}
                 players={team.players}
                 teamName={team.name}
-                league={team.league}
+                league={team.league.name}
               />
             ))}
           </Flex>

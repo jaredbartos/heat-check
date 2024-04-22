@@ -12,4 +12,4 @@ const seedUsers = async data => {
   await User.create(data);
 };
 
-module.exports = seedUsers;
+module.exports = { seedUsers };

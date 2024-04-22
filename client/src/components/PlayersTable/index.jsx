@@ -23,12 +23,8 @@ export default function PlayersTable({ team }) {
   // Use navigate for redirecting links
   const navigate = useNavigate();
 
-  // Copy players array
-  const playersCopy = [...team.players];
-  // Sort players by number
-  const sortedPlayers = playersCopy.sort((a, b) => a.number - b.number);
-  // Use sorted players array to create rows of players
-  const playerList = sortedPlayers.map(player => {
+  // Create player rows
+  const playerList = team.players.map(player => {
     return (
       <Tr
         key={player._id}

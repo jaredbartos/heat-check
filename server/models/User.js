@@ -26,12 +26,6 @@ const userSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: 'Team'
       }
-    ],
-    players: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Player'
-      }
     ]
   },
   {

@@ -2,8 +2,14 @@ const { Team, Player, Performance } = require('../models');
 const userSeedData = require('./userSeedData.json');
 const teamSeedData = require('./teamSeedData');
 const playerSeedData = require('./playerSeedData');
-const seedUsers = require('./seedUsers');
-const { seedTeams, addTeamsToUsers } = require('./seedTeams');
+const { seedLeagues } = require('./seedLeagues');
+const { seedUsers } = require('./seedUsers');
+const {
+  seedTeams,
+  addTeamsToUsers,
+  addLeaguesToTeams,
+  addTeamsToLeagues
+} = require('./seedTeams');
 const {
   addTeamsToPlayers,
   seedPlayers,
@@ -50,7 +56,10 @@ const addCreators = async () => {
 
 db.once('open', async () => {
   await seedUsers(userSeedData);
-  await seedTeams(teamSeedData);
+  await seedLeagues();
+  const teams = await addLeaguesToTeams(teamSeedData);
+  await seedTeams(teams);
+  await addTeamsToLeagues();
   await addTeamsToUsers();
   const players = await addTeamsToPlayers(playerSeedData);
   await seedPlayers(players);

@@ -8,7 +8,10 @@ export const GET_ME = gql`
       teams {
         _id
         name
-        league
+        league {
+          _id
+          name
+        }
         players {
           _id
           firstName

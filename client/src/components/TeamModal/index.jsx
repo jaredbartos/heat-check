@@ -103,7 +103,7 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
       // Set initial values as current team values for editing
       initialValues = {
         teamName: currentTeam.name,
-        teamLeague: currentTeam.league,
+        teamLeague: currentTeam.league.name,
         customTeamLeague: ''
       };
     }
@@ -146,7 +146,7 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
         <ModalHeader color="custom.blue">
           {action === 'create'
             ? 'Add New Team'
-            : `Edit ${currentTeam.name} (${currentTeam.league})`}
+            : `Edit ${currentTeam.name} (${currentTeam.league.name})`}
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>

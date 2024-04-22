@@ -185,7 +185,7 @@ export default function SinglePlayer() {
                   textDecoration: 'underline'
                 }}
               >
-                {player.team.name} ({player.team.league})
+                {player.team.name} ({player.team.league.name})
               </ChakraLink>
             </Text>
             <Text fontSize="xl" mb={2}>

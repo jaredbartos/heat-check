@@ -24,7 +24,10 @@ export const GET_RANKED_PERFORMANCES = gql`
         team {
           _id
           name
-          league
+          league {
+            _id
+            name
+          }
         }
       }
       date

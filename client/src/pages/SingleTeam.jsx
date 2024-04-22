@@ -173,7 +173,7 @@ export default function SingleTeam() {
                   {team.name}
                 </Heading>
                 <Text fontSize="xl" mb={2}>
-                  League: {team.league}
+                  League: {team.league.name}
                 </Text>
                 <Text fontSize="lg" mb={2}>
                   Submitted by:{' '}
@@ -214,7 +214,7 @@ export default function SingleTeam() {
                               <PopoverArrow />
                               <PopoverBody>
                                 Are you sure you want to delete the {team.name}{' '}
-                                ({team.league})?
+                                ({team.league.name})?
                                 <Text mt={1} color="red">
                                   This will also delete all of this team's
                                   players and their individual games. This

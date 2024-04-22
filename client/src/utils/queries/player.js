@@ -13,7 +13,10 @@ export const GET_SINGLE_PLAYER = gql`
       team {
         _id
         name
-        league
+        league {
+          _id
+          name
+        }
       }
       performances {
         _id

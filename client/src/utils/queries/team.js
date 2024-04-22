@@ -5,7 +5,10 @@ export const GET_TEAMS = gql`
     teams {
       _id
       name
-      league
+      league {
+        _id
+        name
+      }
       players {
         _id
         number
@@ -28,7 +31,10 @@ export const GET_SINGLE_TEAM = gql`
     team(_id: $id) {
       _id
       name
-      league
+      league {
+        _id
+        name
+      }
       players {
         _id
         firstName
@@ -58,7 +64,10 @@ export const GET_RECENTLY_UPDATED_TEAMS = gql`
     recentlyUpdatedTeams {
       _id
       name
-      league
+      league {
+        _id
+        name
+      }
       players {
         _id
         firstName
