@@ -20,13 +20,6 @@ export const GET_ME = gql`
           number
         }
       }
-      players {
-        _id
-        firstName
-        lastName
-        position
-        number
-      }
     }
   }
 `;

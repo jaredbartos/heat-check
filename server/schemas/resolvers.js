@@ -1,4 +1,4 @@
-const { Performance, Player, Team, User } = require('../models');
+const { Performance, Player, Team, User, League } = require('../models');
 const { AuthenticationError, signToken } = require('../utils/auth');
 const { ObjectId } = require('mongoose').Types;
 
@@ -126,13 +126,13 @@ const resolvers = {
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        const user = await User.findById(context.user._id)
-          .populate({
-            path: 'teams',
-            populate: { path: 'players' },
-            populate: { path: 'league' }
-          })
-          .populate('players');
+        const user = await User.findById(context.user._id).populate({
+          path: 'teams',
+          populate: [
+            { path: 'players', options: { sort: { number: 1 } } },
+            { path: 'league' }
+          ]
+        });
         return user;
       }
 
@@ -163,7 +163,26 @@ const resolvers = {
         }
       ]);
 
-      return averages[0];
+      if (averages[0]) {
+        return averages[0];
+      } else {
+        return {
+          _id,
+          avgFgAtt: 0,
+          avgFgMade: 0,
+          avgThreePtAtt: 0,
+          avgThreePtMade: 0,
+          avgFtAtt: 0,
+          avgFtMade: 0,
+          avgOffReb: 0,
+          avgRebounds: 0,
+          avgAssists: 0,
+          avgSteals: 0,
+          avgBlocks: 0,
+          avgTurnovers: 0,
+          avgPoints: 0
+        };
+      }
     },
     percentages: async ({ _id }) => {
       const percentages = await Performance.aggregate([
@@ -215,7 +234,16 @@ const resolvers = {
         }
       ]);
 
-      return percentages[0];
+      if (percentages[0]) {
+        return percentages[0];
+      } else {
+        return {
+          _id,
+          fgPercentage: 0,
+          threePtPercentage: 0,
+          ftPercentage: 0
+        };
+      }
     }
   },
   Mutation: {
@@ -270,9 +298,27 @@ const resolvers = {
     },
     addTeam: async (parent, args, context) => {
       if (context.user) {
-        const team = await Team.create(args);
+        const existingLeague = await League.findOne({ name: args.league });
+
+        const newLeague = !existingLeague
+          ? await League.create({ name: args.league })
+          : null;
+
+        const leagueId = existingLeague ? existingLeague._id : newLeague._id;
+
+        const team = await Team.create({
+          ...args,
+          league: leagueId
+        });
+
         await User.findOneAndUpdate(
           { email: context.user.email },
+          { $addToSet: { teams: team._id } },
+          { new: true }
+        );
+
+        await League.findByIdAndUpdate(
+          leagueId,
           { $addToSet: { teams: team._id } },
           { new: true }
         );
@@ -346,16 +392,32 @@ const resolvers = {
 
       throw new Error('You need to be logged in!');
     },
-    updateTeam: async (parent, { _id, ...fields }, context) => {
+    updateTeam: async (parent, { _id, name, league }, context) => {
+      const existingTeam = await Team.findById(_id);
+
+      if (!existingTeam) {
+        throw new Error('No team found with that ID!');
+      }
+
+      const existingLeague = await League.findOne({ name: league });
+
+      const newLeague = !existingLeague
+        ? await League.create({ name: league })
+        : null;
+
+      const leagueId = existingLeague ? existingLeague._id : newLeague._id;
+
       const team = await Team.findOneAndUpdate(
         { _id },
-        { ...fields },
+        { name, league: leagueId },
         { new: true }
       );
 
-      if (!team) {
-        throw new Error('No team found with that ID!');
-      }
+      await League.findByIdAndUpdate(
+        leagueId,
+        { $addToSet: { teams: team._id } },
+        { new: true }
+      );
 
       return team;
     },
@@ -384,7 +446,10 @@ const resolvers = {
       throw new Error('You need to be logged in!');
     },
     login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email }).populate('teams');
+      const user = await User.findOne({ email }).populate({
+        path: 'teams',
+        populate: 'league'
+      });
 
       if (!user) {
         throw AuthenticationError;

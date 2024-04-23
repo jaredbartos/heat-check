@@ -11,7 +11,10 @@ export const LOGIN = gql`
         teams {
           _id
           name
-          league
+          league {
+            _id
+            name
+          }
         }
       }
     }
@@ -36,7 +39,6 @@ export const ADD_TEAM = gql`
     addTeam(name: $name, league: $league, createdBy: $createdBy) {
       _id
       name
-      league
     }
   }
 `;
@@ -98,7 +100,6 @@ export const UPDATE_TEAM = gql`
     updateTeam(_id: $_id, name: $name, league: $league) {
       _id
       name
-      league
     }
   }
 `;
