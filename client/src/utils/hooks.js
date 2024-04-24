@@ -1,4 +1,6 @@
 import { useDispatch } from 'react-redux';
+import { useQuery } from '@apollo/client';
+import { GET_LEAGUES } from './queries/league';
 import {
   addRecentChange,
   removeRecentChange
@@ -17,4 +19,10 @@ export const useManageChanges = () => {
   };
 
   return manageChanges;
+};
+
+export const useLeagueNames = () => {
+  const { data } = useQuery(GET_LEAGUES);
+
+  return data?.leagues.map(league => league.name);
 };

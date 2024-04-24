@@ -23,6 +23,9 @@ const resolvers = {
 
       return team;
     },
+    leagues: async () => {
+      return await League.find().sort({ name: 1 });
+    },
     recentlyUpdatedTeams: async () => {
       return await Team.find()
         .populate({ path: 'players', options: { sort: { number: 1 } } })
@@ -353,6 +356,10 @@ const resolvers = {
           throw new Error('No performance found with that ID!');
         }
 
+        await Player.findByIdAndUpdate(performance.player, {
+          $pull: { performances: _id }
+        });
+
         return performance;
       }
 
@@ -393,13 +400,26 @@ const resolvers = {
       throw new Error('You need to be logged in!');
     },
     updateTeam: async (parent, { _id, name, league }, context) => {
-      const existingTeam = await Team.findById(_id);
+      const existingTeam = await Team.findById(_id).populate('league');
 
       if (!existingTeam) {
         throw new Error('No team found with that ID!');
       }
 
       const existingLeague = await League.findOne({ name: league });
+
+      if (existingLeague?._id != existingTeam.league._id) {
+        if (
+          existingTeam.league.teams.length === 1 &&
+          existingTeam.league.teams[0].toString() === _id
+        ) {
+          await League.findByIdAndDelete(existingTeam.league);
+        } else {
+          await League.findByIdAndUpdate(existingTeam.league, {
+            $pull: { teams: _id }
+          });
+        }
+      }
 
       const newLeague = !existingLeague
         ? await League.create({ name: league })
@@ -439,6 +459,14 @@ const resolvers = {
         await Player.deleteMany({
           team: _id
         });
+
+        const league = await League.findById(team.league);
+
+        if (league.teams.length === 1 && league.teams[0].toString() === _id) {
+          await League.findByIdAndDelete(league._id);
+        } else {
+          await League.findByIdAndUpdate(league._id, { $pull: { teams: _id } });
+        }
 
         return team;
       }
