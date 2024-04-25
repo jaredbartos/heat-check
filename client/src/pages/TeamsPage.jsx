@@ -18,15 +18,14 @@ import {
   Checkbox
 } from '@chakra-ui/react';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { getLeagues } from '../utils/leagues';
+import { useLeagueNames } from '../utils/hooks';
 
 export default function TeamsPage() {
   // Query all teams from database
   const { loading, data, error } = useQuery(GET_TEAMS);
-
+  const leagueNames = useLeagueNames();
   // Declare state variables for holding the teams and league values
   const [teams, setTeams] = useState([]);
-  const [leagues, setLeagues] = useState([]);
   const [selectedLeague, setSelectedLeague] = useState('All Leagues');
   // Set visible teams dependent on filtering
   const visibleTeams = useMemo(() => {
@@ -37,12 +36,10 @@ export default function TeamsPage() {
     }
   }, [teams, selectedLeague]);
 
-  // Use database data to set teams and set leagues
+  // Use database data to set teams
   useEffect(() => {
     if (data) {
       setTeams(data.teams);
-      const teamLeagues = getLeagues(data.teams);
-      setLeagues(teamLeagues);
     }
   }, [data]);
 
@@ -62,7 +59,7 @@ export default function TeamsPage() {
             <Text w={200}>Filter By League:</Text>
             <Select borderColor="custom.blue" onChange={handleChange}>
               <option value="All Leagues">All Leagues</option>
-              {leagues.map(league => (
+              {leagueNames?.map(league => (
                 <option key={league} value={league}>
                   {league}
                 </option>

@@ -21,11 +21,10 @@ import {
   Select
 } from '@chakra-ui/react';
 import { Formik, Form, Field } from 'formik';
-import { getLeagues } from '../../utils/leagues';
+import { useLeagueNames } from '../../utils/hooks';
 
 export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
-  // Declare state for future storage of leagues
-  const [leagues, setLeagues] = useState([]);
+  const leagueNames = useLeagueNames();
   // Prepare add team mutation
   const [addTeam, { error: addTeamError }] = useMutation(ADD_TEAM, {
     refetchQueries: [GET_ME, GET_TEAMS]
@@ -34,18 +33,6 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
   const [updateTeam, { error: updateTeamError }] = useMutation(UPDATE_TEAM, {
     refetchQueries: [GET_SINGLE_TEAM]
   });
-  // Get all of the teams from the database to extract leagues from
-  const { data } = useQuery(GET_TEAMS);
-
-  // Use database data to set league states
-  useEffect(() => {
-    if (data) {
-      // Extract leagues from the team data
-      const teamLeagues = getLeagues(data.teams);
-      // Set leagues
-      setLeagues(teamLeagues);
-    }
-  }, [data, setLeagues]);
 
   const handleFormSubmit = async (values, { setSubmitting }) => {
     const name = values.teamName;
@@ -133,7 +120,7 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
   };
 
   // Set options for select element with populated leagues
-  const leagueOptions = leagues.map((league, index) => (
+  const leagueOptions = leagueNames?.map((league, index) => (
     <option key={index} value={league}>
       {league}
     </option>
@@ -189,6 +176,7 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
                         <FormLabel mt={3}>League</FormLabel>
                         <Select placeholder="Select League" {...field}>
                           {leagueOptions}
+                          <option value="Independent">Independent</option>
                           <option value="Enter New League Name">
                             Enter New League Name
                           </option>
