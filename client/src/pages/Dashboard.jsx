@@ -37,43 +37,76 @@ export default function Dashboard() {
   return (
     <>
       {!Auth.loggedIn() ? (
-        <Center h={200} mb={10}>
+        <Center
+          h={200}
+          mb={10}
+        >
           <VStack>
-            <Heading as="h2" color="custom.blue" size="xl" m={2}>
+            <Heading
+              as='h2'
+              color='custom.blue'
+              size='xl'
+              m={2}
+            >
               Your Dashboard
             </Heading>
-            <Text fontSize="lg" my={25}>
+            <Text
+              fontSize='lg'
+              my={25}
+            >
               You must be logged in to see your teams or add new teams!
             </Text>
           </VStack>
         </Center>
       ) : (
         <>
-          <Center h={150} mb={10}>
+          <Center
+            h={150}
+            mb={10}
+          >
             <VStack>
-              <Heading as="h2" color="custom.blue" size="xl" m={2}>
+              <Heading
+                as='h2'
+                color='custom.blue'
+                size='xl'
+                m={2}
+              >
                 Your Dashboard
               </Heading>
               <Button
-                boxShadow="xl"
-                colorScheme="blue"
+                boxShadow='xl'
+                colorScheme='blue'
                 mt={2}
-                type="button"
+                type='button'
                 onClick={onOpen}
               >
-                <Icon as={IoMdAddCircle} mr={1} />
+                <Icon
+                  as={IoMdAddCircle}
+                  mr={1}
+                />
                 Add Team
               </Button>
             </VStack>
           </Center>
-          <Box m="auto" w="95%">
+          <Box
+            m='auto'
+            w={['95%', null, null, null, null, '1600px']}
+          >
             {loading && (
               <Box h={600}>
                 <LoadingSpinner />
               </Box>
             )}
             {!loading && teams.length !== 0 && (
-              <Flex flexWrap="wrap" justify="center">
+              <Flex
+                flexWrap='wrap'
+                justify={[
+                  'center',
+                  null,
+                  null,
+                  teams.length === 2 ? 'space-around' : 'space-between'
+                ]}
+              >
                 {teams.map(team => (
                   <TeamCard
                     key={team._id}
@@ -87,13 +120,20 @@ export default function Dashboard() {
             )}
             {!loading && teams.length === 0 && (
               <Center>
-                <Text fontSize="lg" my={20}>
+                <Text
+                  fontSize='lg'
+                  my={20}
+                >
                   No teams have been added yet!
                 </Text>
               </Center>
             )}
           </Box>
-          <TeamModal action="create" isOpen={isOpen} onClose={onClose} />
+          <TeamModal
+            action='create'
+            isOpen={isOpen}
+            onClose={onClose}
+          />
         </>
       )}
     </>

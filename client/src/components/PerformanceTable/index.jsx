@@ -152,12 +152,12 @@ export default function PerformanceTable({
           Auth.getProfile().data._id === createdBy &&
           !isRanking ? (
             <Td>
-              <ButtonGroup size="xs">
+              <ButtonGroup size='xs'>
                 <Button
-                  boxShadow="xl"
-                  colorScheme="blue"
-                  type="button"
-                  className="editPerformanceBtn"
+                  boxShadow='xl'
+                  colorScheme='blue'
+                  type='button'
+                  className='editPerformanceBtn'
                   onClick={() => {
                     // Set performance to be passed through and open modal
                     setSelectedPerformance(performance);
@@ -168,16 +168,19 @@ export default function PerformanceTable({
                 </Button>
                 {width < 1100 ? (
                   <Button
-                    boxShadow="xl"
-                    colorScheme="red"
-                    type="button"
-                    className="deletePerformanceBtn"
+                    boxShadow='xl'
+                    colorScheme='red'
+                    type='button'
+                    className='deletePerformanceBtn'
                     onClick={() => {
                       setSelectedPerformance(performance);
                       onDeleteOpen();
                     }}
                   >
-                    <Icon as={TiDelete} boxSize={4} />
+                    <Icon
+                      as={TiDelete}
+                      boxSize={4}
+                    />
                   </Button>
                 ) : (
                   <Popover>
@@ -185,44 +188,50 @@ export default function PerformanceTable({
                       <>
                         <PopoverTrigger>
                           <Button
-                            boxShadow="xl"
-                            colorScheme="red"
-                            type="button"
-                            className="deletePerformanceBtn"
+                            boxShadow='xl'
+                            colorScheme='red'
+                            type='button'
+                            className='deletePerformanceBtn'
                           >
-                            <Icon as={TiDelete} boxSize={4} />
+                            <Icon
+                              as={TiDelete}
+                              boxSize={4}
+                            />
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent>
-                          <PopoverHeader color="custom.blue">
+                          <PopoverHeader color='custom.blue'>
                             Confirmation
                           </PopoverHeader>
                           <PopoverArrow />
-                          <PopoverBody color="black">
+                          <PopoverBody color='black'>
                             Are you sure you want to delete this game?
-                            <Text mt={3} color="red">
+                            <Text
+                              mt={3}
+                              color='red'
+                            >
                               This action cannot be undone.
                             </Text>
                           </PopoverBody>
                           <PopoverFooter
-                            border="0"
-                            display="flex"
-                            alignItems="center"
-                            justifyContent="flex-end"
+                            border='0'
+                            display='flex'
+                            alignItems='center'
+                            justifyContent='flex-end'
                           >
                             <ButtonGroup>
                               <Button
-                                size="sm"
-                                boxShadow="md"
+                                size='sm'
+                                boxShadow='md'
                                 mr={2}
                                 onClick={onClose}
                               >
                                 Cancel
                               </Button>
                               <Button
-                                colorScheme="red"
-                                size="sm"
-                                boxShadow="xl"
+                                colorScheme='red'
+                                size='sm'
+                                boxShadow='xl'
                                 mr={1}
                                 onClick={e => handleDelete(e, performance._id)}
                               >
@@ -249,54 +258,97 @@ export default function PerformanceTable({
     <>
       {performances.length ? (
         <Box w={['95%', null, null, null, null, '1200px']}>
-          <TableContainer borderWidth={2} borderRadius={20} boxShadow="md">
-            <Table size="sm">
-              <Thead bgColor="custom.red">
+          <TableContainer
+            borderWidth={2}
+            borderRadius={20}
+            boxShadow='md'
+          >
+            <Table size='sm'>
+              <Thead bgColor='custom.red'>
                 <Tr>
                   {isRanking && (
                     <>
-                      <Th color="white">Name</Th>
-                      <Th color="white">Team</Th>
+                      <Th color='white'>Name</Th>
+                      <Th color='white'>Team</Th>
                     </>
                   )}
-                  <Th color="white">DATE</Th>
-                  <Th color="white" textAlign="right">
+                  <Th color='white'>DATE</Th>
+                  <Th
+                    color='white'
+                    textAlign='right'
+                  >
                     FGA
                   </Th>
-                  <Th color="white" textAlign="right">
+                  <Th
+                    color='white'
+                    textAlign='right'
+                  >
                     FGM
                   </Th>
-                  <Th color="white" textAlign="right">
+                  <Th
+                    color='white'
+                    textAlign='right'
+                  >
                     3PA
                   </Th>
-                  <Th color="white" textAlign="right">
+                  <Th
+                    color='white'
+                    textAlign='right'
+                  >
                     3PM
                   </Th>
-                  <Th color="white" textAlign="right">
+                  <Th
+                    color='white'
+                    textAlign='right'
+                  >
                     FTA
                   </Th>
-                  <Th color="white" textAlign="right">
+                  <Th
+                    color='white'
+                    textAlign='right'
+                  >
                     FTM
                   </Th>
-                  <Th color="white" textAlign="right">
+                  <Th
+                    color='white'
+                    textAlign='right'
+                  >
                     OREB
                   </Th>
-                  <Th color="white" textAlign="right">
+                  <Th
+                    color='white'
+                    textAlign='right'
+                  >
                     TREB
                   </Th>
-                  <Th color="white" textAlign="right">
+                  <Th
+                    color='white'
+                    textAlign='right'
+                  >
                     AST
                   </Th>
-                  <Th color="white" textAlign="right">
+                  <Th
+                    color='white'
+                    textAlign='right'
+                  >
                     STL
                   </Th>
-                  <Th color="white" textAlign="right">
+                  <Th
+                    color='white'
+                    textAlign='right'
+                  >
                     BLK
                   </Th>
-                  <Th color="white" textAlign="right">
+                  <Th
+                    color='white'
+                    textAlign='right'
+                  >
                     TO
                   </Th>
-                  <Th color="white" textAlign="right">
+                  <Th
+                    color='white'
+                    textAlign='right'
+                  >
                     PTS
                   </Th>
                   <Th></Th>
@@ -307,7 +359,7 @@ export default function PerformanceTable({
           </TableContainer>
           <PerformanceModal
             currentPerformance={selectedPerformance}
-            action="update"
+            action='update'
             isOpen={isUpdateOpen}
             onClose={onUpdateClose}
           />

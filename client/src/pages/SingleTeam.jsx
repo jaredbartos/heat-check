@@ -100,18 +100,32 @@ export default function SingleTeam() {
   // AveragesTable component
   const AveragesTable = ({ children }) => {
     return (
-      <TableContainer borderWidth={2} borderRadius={20} boxShadow="md" mt={5}>
-        <Table variant="simple">
-          <Thead bgColor="custom.red">
+      <TableContainer
+        borderWidth={2}
+        borderRadius={20}
+        boxShadow='md'
+        mt={5}
+      >
+        <Table variant='simple'>
+          <Thead bgColor='custom.red'>
             <Tr>
-              <Th color="white">Name</Th>
-              <Th color="white" textAlign="right">
+              <Th color='white'>Name</Th>
+              <Th
+                color='white'
+                textAlign='right'
+              >
                 PPG
               </Th>
-              <Th color="white" textAlign="right">
+              <Th
+                color='white'
+                textAlign='right'
+              >
                 RPG
               </Th>
-              <Th color="white" textAlign="right">
+              <Th
+                color='white'
+                textAlign='right'
+              >
                 APG
               </Th>
             </Tr>
@@ -133,7 +147,7 @@ export default function SingleTeam() {
       };
     });
     // Sort averages by points
-    const sortedAverages = averages.sort((a, b) => b.avgPoints - a.avgPoints);
+    const sortedAverages = averages.sort((a, b) => b.points - a.points);
     // Create rows using sorted averages
     return sortedAverages.map(average => {
       return (
@@ -149,9 +163,9 @@ export default function SingleTeam() {
           <Td>
             {average.firstName} {average.lastName}
           </Td>
-          <Td isNumeric>{average.avgPoints.toFixed(1)}</Td>
-          <Td isNumeric>{average.avgRebounds.toFixed(1)}</Td>
-          <Td isNumeric>{average.avgAssists.toFixed(1)}</Td>
+          <Td isNumeric>{average.points.toFixed(1)}</Td>
+          <Td isNumeric>{average.rebounds.toFixed(1)}</Td>
+          <Td isNumeric>{average.assists.toFixed(1)}</Td>
         </Tr>
       );
     });
@@ -165,17 +179,31 @@ export default function SingleTeam() {
         </Box>
       )}
       {team && (
-        <Flex justify="center">
-          <Box w={['95%', null, 1050]} m={8}>
+        <Flex justify='center'>
+          <Box
+            w={['95%', null, 1050]}
+            m={8}
+          >
             <Center>
               <VStack>
-                <Heading as="h2" color="custom.blue" mb={2} size="xl">
+                <Heading
+                  as='h2'
+                  color='custom.blue'
+                  mb={2}
+                  size='xl'
+                >
                   {team.name}
                 </Heading>
-                <Text fontSize="xl" mb={2}>
+                <Text
+                  fontSize='xl'
+                  mb={2}
+                >
                   League: {team.league.name}
                 </Text>
-                <Text fontSize="lg" mb={2}>
+                <Text
+                  fontSize='lg'
+                  mb={2}
+                >
                   Submitted by:{' '}
                   {Auth.loggedIn() &&
                   Auth.getProfile().data._id === team.createdBy._id
@@ -186,12 +214,15 @@ export default function SingleTeam() {
                   Auth.getProfile().data._id === team.createdBy._id && (
                     <ButtonGroup>
                       <Button
-                        boxShadow="xl"
-                        colorScheme="blue"
-                        type="button"
+                        boxShadow='xl'
+                        colorScheme='blue'
+                        type='button'
                         onClick={onTeamOpen}
                       >
-                        <Icon as={FaEdit} mr={1} />
+                        <Icon
+                          as={FaEdit}
+                          mr={1}
+                        />
                         Edit Team
                       </Button>
                       <Popover>
@@ -199,47 +230,53 @@ export default function SingleTeam() {
                           <>
                             <PopoverTrigger>
                               <Button
-                                boxShadow="xl"
-                                colorScheme="red"
-                                type="button"
+                                boxShadow='xl'
+                                colorScheme='red'
+                                type='button'
                               >
-                                <Icon as={TiDelete} boxSize={6} />
+                                <Icon
+                                  as={TiDelete}
+                                  boxSize={6}
+                                />
                                 Delete Team
                               </Button>
                             </PopoverTrigger>
                             <PopoverContent>
-                              <PopoverHeader color="custom.blue">
+                              <PopoverHeader color='custom.blue'>
                                 Confirmation
                               </PopoverHeader>
                               <PopoverArrow />
                               <PopoverBody>
                                 Are you sure you want to delete the {team.name}{' '}
                                 ({team.league.name})?
-                                <Text mt={1} color="red">
+                                <Text
+                                  mt={1}
+                                  color='red'
+                                >
                                   This will also delete all of this team's
                                   players and their individual games. This
                                   action cannot be undone.
                                 </Text>
                               </PopoverBody>
                               <PopoverFooter
-                                border="0"
-                                display="flex"
-                                alignItems="center"
-                                justifyContent="flex-end"
+                                border='0'
+                                display='flex'
+                                alignItems='center'
+                                justifyContent='flex-end'
                               >
                                 <ButtonGroup>
                                   <Button
-                                    size="sm"
-                                    boxShadow="md"
+                                    size='sm'
+                                    boxShadow='md'
                                     mr={2}
                                     onClick={onClose}
                                   >
                                     Cancel
                                   </Button>
                                   <Button
-                                    colorScheme="red"
-                                    size="sm"
-                                    boxShadow="xl"
+                                    colorScheme='red'
+                                    size='sm'
+                                    boxShadow='xl'
                                     mr={1}
                                     onClick={handleDelete}
                                   >
@@ -257,12 +294,15 @@ export default function SingleTeam() {
                   Auth.getProfile().data._id === team.createdBy._id && (
                     <Center mt={5}>
                       <Button
-                        boxShadow="xl"
-                        colorScheme="blue"
-                        type="button"
+                        boxShadow='xl'
+                        colorScheme='blue'
+                        type='button'
                         onClick={onPlayerOpen}
                       >
-                        <Icon as={IoMdAddCircle} mr={1} />
+                        <Icon
+                          as={IoMdAddCircle}
+                          mr={1}
+                        />
                         Add Player
                       </Button>
                     </Center>
@@ -271,21 +311,27 @@ export default function SingleTeam() {
             </Center>
             <Flex
               justify={['center', null, null, 'space-between']}
-              flexWrap="wrap"
+              flexWrap='wrap'
             >
               {team.players.length ? (
                 <PlayersTable team={team} />
               ) : (
-                <Box w="100%">
+                <Box w='100%'>
                   <Center>
-                    <Text fontSize="lg" my={20}>
+                    <Text
+                      fontSize='lg'
+                      my={20}
+                    >
                       No players have been added yet!
                     </Text>
                   </Center>
                 </Box>
               )}
               {loadingTeam && (
-                <Box w={400} h={450}>
+                <Box
+                  w={400}
+                  h={450}
+                >
                   <LoadingSpinner />
                 </Box>
               )}
@@ -296,13 +342,13 @@ export default function SingleTeam() {
               )}
             </Flex>
             <TeamModal
-              action="update"
+              action='update'
               currentTeam={team}
               isOpen={isTeamOpen}
               onClose={onTeamClose}
             />
             <PlayerModal
-              action="create"
+              action='create'
               currentTeam={team}
               isOpen={isPlayerOpen}
               onClose={onPlayerClose}
@@ -310,7 +356,7 @@ export default function SingleTeam() {
           </Box>
         </Flex>
       )}
-      {!loadingTeam && !team && <NotFound variation="Team" />}
+      {!loadingTeam && !team && <NotFound variation='Team' />}
     </>
   );
 }

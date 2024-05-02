@@ -25,10 +25,13 @@ export default function LoginModal({ isOpen, onClose }) {
 
   return (
     // Set up modal for login
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+    >
       <ModalOverlay />
       <ModalContent p={4}>
-        <ModalHeader color="custom.blue">Login</ModalHeader>
+        <ModalHeader color='custom.blue'>Login</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Formik
@@ -48,25 +51,25 @@ export default function LoginModal({ isOpen, onClose }) {
             {props => (
               <Form>
                 <FormControl isInvalid={loginError}>
-                  <Field name="email">
+                  <Field name='email'>
                     {({ field }) => (
                       <FormControl>
                         <FormLabel>Email</FormLabel>
                         <Input
-                          placeholder="Enter your email"
-                          type="email"
+                          placeholder='Enter your email'
+                          type='email'
                           {...field}
                         />
                       </FormControl>
                     )}
                   </Field>
-                  <Field name="password">
+                  <Field name='password'>
                     {({ field }) => (
                       <FormControl>
                         <FormLabel mt={3}>Password</FormLabel>
                         <Input
-                          placeholder="Enter your password"
-                          type="password"
+                          placeholder='Enter your password'
+                          type='password'
                           {...field}
                         />
                       </FormControl>
@@ -77,17 +80,17 @@ export default function LoginModal({ isOpen, onClose }) {
                   </FormErrorMessage>
                   <ModalFooter pr={1}>
                     <Button
-                      boxShadow="md"
-                      type="button"
+                      boxShadow='md'
+                      type='button'
                       mr={3}
                       onClick={onClose}
                     >
                       Cancel
                     </Button>
                     <Button
-                      boxShadow="xl"
-                      colorScheme="blue"
-                      type="submit"
+                      boxShadow='xl'
+                      colorScheme='blue'
+                      type='submit'
                       isLoading={props.isSubmitting}
                     >
                       Log in

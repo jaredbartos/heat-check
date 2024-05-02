@@ -28,7 +28,7 @@ export default function TeamCard({ teamId, players, teamName, league }) {
       <Tr
         key={player._id}
         onClick={() => navigate(`/player/${player._id}`)}
-        className="player-row"
+        className='player-row'
       >
         <Td>{player.number}</Td>
         <Td>
@@ -46,35 +46,39 @@ export default function TeamCard({ teamId, players, teamName, league }) {
         p={0}
         borderWidth={2}
         borderRadius={20}
-        boxShadow="xl"
+        boxShadow='xl'
         w={['100%', 400]}
-        bgColor="white"
+        bgColor='white'
       >
-        <ChakraLink color="white" as={ReactRouterLink} to={`/team/${teamId}`}>
+        <ChakraLink
+          color='white'
+          as={ReactRouterLink}
+          to={`/team/${teamId}`}
+        >
           <Heading
-            as="h3"
+            as='h3'
             borderTopRadius={20}
-            bgColor="custom.red"
-            size="md"
+            bgColor='custom.red'
+            size='md'
             pb={3}
             pt={2}
-            textAlign="center"
+            textAlign='center'
           >
             {teamName} ({league})
           </Heading>
         </ChakraLink>
         {players.length ? (
           <TableContainer borderBottomRadius={20}>
-            <Table variant="simple">
+            <Table variant='simple'>
               <Thead
-                bgColor="custom.red"
+                bgColor='custom.red'
                 onClick={() => navigate(`/team/${teamId}`)}
                 _hover={{ cursor: 'pointer' }}
               >
                 <Tr>
-                  <Th color="white">Number</Th>
-                  <Th color="white">Name</Th>
-                  <Th color="white">Position</Th>
+                  <Th color='white'>Number</Th>
+                  <Th color='white'>Name</Th>
+                  <Th color='white'>Position</Th>
                 </Tr>
               </Thead>
               <Tbody>{playerLinks}</Tbody>
@@ -82,11 +86,11 @@ export default function TeamCard({ teamId, players, teamName, league }) {
           </TableContainer>
         ) : (
           <Text
-            bgColor="white"
+            bgColor='white'
             borderBottomRadius={20}
             my={30}
             p={3}
-            textAlign="center"
+            textAlign='center'
           >
             No players have been added to this team yet!
           </Text>

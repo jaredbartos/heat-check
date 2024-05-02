@@ -163,7 +163,11 @@ export default function PerformanceModal({
         {({ field, form }) => (
           <FormControl isRequired>
             <FormLabel>{labelName}</FormLabel>
-            <Input w={14} type="number" {...field} />
+            <Input
+              w={14}
+              type='number'
+              {...field}
+            />
           </FormControl>
         )}
       </Field>
@@ -181,10 +185,13 @@ export default function PerformanceModal({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+    >
       <ModalOverlay />
       <ModalContent p={4}>
-        <ModalHeader color="custom.blue">
+        <ModalHeader color='custom.blue'>
           {action === 'create' ? 'Add Game' : 'Edit Game'}
         </ModalHeader>
         <ModalCloseButton />
@@ -199,38 +206,78 @@ export default function PerformanceModal({
                 <FormControl
                   isInvalid={addPerformanceError || updatePerformanceError}
                 >
-                  <Field name="date">
+                  <Field name='date'>
                     {({ field, form }) => (
                       <FormControl
                         isRequired
                         isInvalid={form.errors.date && form.touched.date}
                       >
                         <FormLabel>Date</FormLabel>
-                        <Input w={40} type="date" {...field} />
+                        <Input
+                          w={40}
+                          type='date'
+                          {...field}
+                        />
                         <FormErrorMessage>{form.errors.date}</FormErrorMessage>
                       </FormControl>
                     )}
                   </Field>
                   <HStack mt={3}>
-                    <PerformanceField fieldName="fgAtt" labelName="FGA" />
-                    <PerformanceField fieldName="fgMade" labelName="FGM" />
-                    <PerformanceField fieldName="threePtAtt" labelName="3PA" />
-                    <PerformanceField fieldName="threePtMade" labelName="3PM" />
+                    <PerformanceField
+                      fieldName='fgAtt'
+                      labelName='FGA'
+                    />
+                    <PerformanceField
+                      fieldName='fgMade'
+                      labelName='FGM'
+                    />
+                    <PerformanceField
+                      fieldName='threePtAtt'
+                      labelName='3PA'
+                    />
+                    <PerformanceField
+                      fieldName='threePtMade'
+                      labelName='3PM'
+                    />
                   </HStack>
                   <HStack mt={3}>
-                    <PerformanceField fieldName="ftAtt" labelName="FTA" />
-                    <PerformanceField fieldName="ftMade" labelName="FTM" />
-                    <PerformanceField fieldName="offReb" labelName="OREB" />
-                    <PerformanceField fieldName="rebounds" labelName="TREB" />
+                    <PerformanceField
+                      fieldName='ftAtt'
+                      labelName='FTA'
+                    />
+                    <PerformanceField
+                      fieldName='ftMade'
+                      labelName='FTM'
+                    />
+                    <PerformanceField
+                      fieldName='offReb'
+                      labelName='OREB'
+                    />
+                    <PerformanceField
+                      fieldName='rebounds'
+                      labelName='TREB'
+                    />
                   </HStack>
                   <HStack mt={3}>
-                    <PerformanceField fieldName="assists" labelName="AST" />
-                    <PerformanceField fieldName="steals" labelName="STL" />
-                    <PerformanceField fieldName="blocks" labelName="BLK" />
-                    <PerformanceField fieldName="turnovers" labelName="TO" />
+                    <PerformanceField
+                      fieldName='assists'
+                      labelName='AST'
+                    />
+                    <PerformanceField
+                      fieldName='steals'
+                      labelName='STL'
+                    />
+                    <PerformanceField
+                      fieldName='blocks'
+                      labelName='BLK'
+                    />
+                    <PerformanceField
+                      fieldName='turnovers'
+                      labelName='TO'
+                    />
                   </HStack>
                   <HStack mt={3}>
-                    <Field name="points">
+                    <Field name='points'>
                       {({ field, form }) => (
                         <FormControl isRequired>
                           <FormLabel>PTS</FormLabel>
@@ -241,7 +288,7 @@ export default function PerformanceModal({
                               props.values.threePtMade +
                               props.values.ftMade
                             }
-                            type="number"
+                            type='number'
                             {...field}
                           />
                         </FormControl>
@@ -253,17 +300,17 @@ export default function PerformanceModal({
                   </FormErrorMessage>
                   <ModalFooter pr={1}>
                     <Button
-                      boxShadow="md"
-                      type="button"
+                      boxShadow='md'
+                      type='button'
                       mr={3}
                       onClick={onClose}
                     >
                       Cancel
                     </Button>
                     <Button
-                      colorScheme="blue"
-                      boxShadow="xl"
-                      type="submit"
+                      colorScheme='blue'
+                      boxShadow='xl'
+                      type='submit'
                       isLoading={props.isSubmitting}
                     >
                       {action === 'create' ? 'Add Game' : 'Update Game'}

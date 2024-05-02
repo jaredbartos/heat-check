@@ -102,29 +102,29 @@ export default function SinglePlayer() {
       <TableContainer
         borderWidth={2}
         borderRadius={20}
-        boxShadow="md"
+        boxShadow='md'
         mt={5}
         mb={10}
       >
         <Table>
-          <Thead bgColor="custom.red">
+          <Thead bgColor='custom.red'>
             <Tr>
-              <Th color="white">PPG</Th>
-              <Th color="white">RPG</Th>
-              <Th color="white">APG</Th>
-              <Th color="white">SPG</Th>
-              <Th color="white">BPG</Th>
-              <Th color="white">TPG</Th>
+              <Th color='white'>PPG</Th>
+              <Th color='white'>RPG</Th>
+              <Th color='white'>APG</Th>
+              <Th color='white'>SPG</Th>
+              <Th color='white'>BPG</Th>
+              <Th color='white'>TPG</Th>
             </Tr>
           </Thead>
           <Tbody>
             <Tr>
-              <Td>{averages.avgPoints.toFixed(1)}</Td>
-              <Td>{averages.avgRebounds.toFixed(1)}</Td>
-              <Td>{averages.avgAssists.toFixed(1)}</Td>
-              <Td>{averages.avgSteals.toFixed(1)}</Td>
-              <Td>{averages.avgBlocks.toFixed(1)}</Td>
-              <Td>{averages.avgTurnovers.toFixed(1)}</Td>
+              <Td>{averages.points.toFixed(1)}</Td>
+              <Td>{averages.rebounds.toFixed(1)}</Td>
+              <Td>{averages.assists.toFixed(1)}</Td>
+              <Td>{averages.steals.toFixed(1)}</Td>
+              <Td>{averages.blocks.toFixed(1)}</Td>
+              <Td>{averages.turnovers.toFixed(1)}</Td>
             </Tr>
           </Tbody>
         </Table>
@@ -138,16 +138,16 @@ export default function SinglePlayer() {
         <TableContainer
           borderWidth={2}
           borderRadius={20}
-          boxShadow="md"
+          boxShadow='md'
           mt={5}
           mb={10}
         >
           <Table>
-            <Thead bgColor="custom.red">
+            <Thead bgColor='custom.red'>
               <Tr>
-                <Th color="white">FG%</Th>
-                <Th color="white">3P%</Th>
-                <Th color="white">FT%</Th>
+                <Th color='white'>FG%</Th>
+                <Th color='white'>3P%</Th>
+                <Th color='white'>FT%</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -171,12 +171,23 @@ export default function SinglePlayer() {
         </Box>
       )}
       {player && (
-        <Flex justify="center">
-          <Box w={['95%', null, null, null, 1200]} m={12}>
-            <Heading color="custom.blue" as="h2" size="lg" mb={2}>
+        <Flex justify='center'>
+          <Box
+            w={['95%', null, null, null, 1200]}
+            m={12}
+          >
+            <Heading
+              color='custom.blue'
+              as='h2'
+              size='lg'
+              mb={2}
+            >
               {player.firstName} {player.lastName} #{player.number}
             </Heading>
-            <Text fontSize="xl" mb={2}>
+            <Text
+              fontSize='xl'
+              mb={2}
+            >
               Team:{' '}
               <ChakraLink
                 as={ReactRouterLink}
@@ -188,25 +199,37 @@ export default function SinglePlayer() {
                 {player.team.name} ({player.team.league.name})
               </ChakraLink>
             </Text>
-            <Text fontSize="xl" mb={2}>
+            <Text
+              fontSize='xl'
+              mb={2}
+            >
               Position: {player.position}
             </Text>
-            <Text fontSize="xl" mb={2}>
+            <Text
+              fontSize='xl'
+              mb={2}
+            >
               Height: {player.height || 'N/A'}
             </Text>
-            <Text fontSize="xl" mb={2}>
+            <Text
+              fontSize='xl'
+              mb={2}
+            >
               Weight: {player.weight || 'N/A'}
             </Text>
             {Auth.loggedIn() &&
               Auth.getProfile().data._id === player.createdBy._id && (
                 <ButtonGroup mb={5}>
                   <Button
-                    boxShadow="xl"
-                    colorScheme="blue"
-                    type="button"
+                    boxShadow='xl'
+                    colorScheme='blue'
+                    type='button'
                     onClick={onPlayerOpen}
                   >
-                    <Icon as={FaEdit} mr={1} />
+                    <Icon
+                      as={FaEdit}
+                      mr={1}
+                    />
                     Edit Player
                   </Button>
                   <Popover>
@@ -214,46 +237,52 @@ export default function SinglePlayer() {
                       <>
                         <PopoverTrigger>
                           <Button
-                            boxShadow="xl"
-                            colorScheme="red"
-                            type="button"
+                            boxShadow='xl'
+                            colorScheme='red'
+                            type='button'
                           >
-                            <Icon as={TiDelete} boxSize={6} />
+                            <Icon
+                              as={TiDelete}
+                              boxSize={6}
+                            />
                             Delete Player
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent>
-                          <PopoverHeader color="custom.blue">
+                          <PopoverHeader color='custom.blue'>
                             Confirmation
                           </PopoverHeader>
                           <PopoverArrow />
                           <PopoverBody>
                             Are you sure you want to delete {player.firstName}{' '}
                             {player.lastName}?
-                            <Text mt={1} color="red">
+                            <Text
+                              mt={1}
+                              color='red'
+                            >
                               This action will also delete all of this
                               individual's games and cannot be undone.
                             </Text>
                           </PopoverBody>
                           <PopoverFooter
-                            border="0"
-                            display="flex"
-                            alignItems="center"
-                            justifyContent="flex-end"
+                            border='0'
+                            display='flex'
+                            alignItems='center'
+                            justifyContent='flex-end'
                           >
                             <ButtonGroup>
                               <Button
-                                size="sm"
-                                boxShadow="md"
+                                size='sm'
+                                boxShadow='md'
                                 mr={2}
                                 onClick={onClose}
                               >
                                 Cancel
                               </Button>
                               <Button
-                                colorScheme="red"
-                                size="sm"
-                                boxShadow="xl"
+                                colorScheme='red'
+                                size='sm'
+                                boxShadow='xl'
                                 mr={1}
                                 onClick={handleDelete}
                               >
@@ -275,19 +304,28 @@ export default function SinglePlayer() {
               </>
             )}
             <HStack>
-              <Heading as="h3" size="md" color="custom.blue" mt={3} mb={3}>
+              <Heading
+                as='h3'
+                size='md'
+                color='custom.blue'
+                mt={3}
+                mb={3}
+              >
                 Game Log
               </Heading>
               {Auth.loggedIn() &&
                 Auth.getProfile().data._id === player.createdBy._id && (
                   <Button
-                    boxShadow="xl"
-                    colorScheme="blue"
-                    size="xs"
-                    type="button"
+                    boxShadow='xl'
+                    colorScheme='blue'
+                    size='xs'
+                    type='button'
                     onClick={onPerformanceOpen}
                   >
-                    <Icon as={IoMdAddCircle} mr={1} />
+                    <Icon
+                      as={IoMdAddCircle}
+                      mr={1}
+                    />
                     Add Game
                   </Button>
                 )}
@@ -303,20 +341,20 @@ export default function SinglePlayer() {
 
             <PlayerModal
               currentPlayer={player}
-              action="update"
+              action='update'
               isOpen={isPlayerOpen}
               onClose={onPlayerClose}
             />
             <PerformanceModal
               currentPlayer={player}
-              action="create"
+              action='create'
               isOpen={isPerformanceOpen}
               onClose={onPerformanceClose}
             />
           </Box>
         </Flex>
       )}
-      {!loadingPlayer && !player && <NotFound variation="Player" />}
+      {!loadingPlayer && !player && <NotFound variation='Player' />}
     </>
   );
 }

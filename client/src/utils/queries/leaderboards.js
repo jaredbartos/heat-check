@@ -14,9 +14,28 @@ export const GET_ALL_AVG_LEADERBOARDS = gql`
           team {
             _id
             name
+            league {
+              _id
+              name
+            }
+          }
+          averages {
+            _id
+            fgAtt
+            fgMade
+            threePtAtt
+            threePtMade
+            ftAtt
+            ftMade
+            offReb
+            rebounds
+            assists
+            steals
+            blocks
+            turnovers
+            points
           }
         }
-        value
       }
     }
   }

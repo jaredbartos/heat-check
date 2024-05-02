@@ -20,26 +20,37 @@ export default function DeletePerformanceModal({
   handleDelete
 }) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      isCentered
+    >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader color="custom.blue">Confirmation</ModalHeader>
+        <ModalHeader color='custom.blue'>Confirmation</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           Are you sure you want to delete this game?
-          <Text mt={3} color="red">
+          <Text
+            mt={3}
+            color='red'
+          >
             This action cannot be undone.
           </Text>
         </ModalBody>
         <ModalFooter pr={1}>
           <ButtonGroup>
-            <Button boxShadow="md" mr={2} onClick={onClose}>
+            <Button
+              boxShadow='md'
+              mr={2}
+              onClick={onClose}
+            >
               Cancel
             </Button>
             <Button
-              boxShadow="xl"
+              boxShadow='xl'
               mr={1}
-              colorScheme="red"
+              colorScheme='red'
               onClick={e => {
                 handleDelete(e, performanceId);
                 onClose();

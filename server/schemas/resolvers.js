@@ -95,7 +95,6 @@ const resolvers = {
           {
             $project: {
               _id: 1,
-              value: `$${category}`,
               player: 1
             }
           }
@@ -103,7 +102,7 @@ const resolvers = {
 
         leaderboard = await Player.populate(leaderboard, {
           path: 'player',
-          populate: { path: 'team' }
+          populate: { path: 'team', populate: { path: 'league' } }
         });
 
         leaderboard = {
@@ -144,48 +143,32 @@ const resolvers = {
   },
   Player: {
     averages: async ({ _id }) => {
-      const averages = await Performance.aggregate([
-        { $match: { player: _id } },
-        {
-          $group: {
-            _id: '$player',
-            avgFgAtt: { $avg: '$fgAtt' },
-            avgFgMade: { $avg: '$fgMade' },
-            avgThreePtAtt: { $avg: '$threePtAtt' },
-            avgThreePtMade: { $avg: '$threePtMade' },
-            avgFtAtt: { $avg: '$ftAtt' },
-            avgFtMade: { $avg: '$ftMade' },
-            avgOffReb: { $avg: '$offReb' },
-            avgRebounds: { $avg: '$rebounds' },
-            avgAssists: { $avg: '$assists' },
-            avgSteals: { $avg: '$steals' },
-            avgBlocks: { $avg: '$blocks' },
-            avgTurnovers: { $avg: '$turnovers' },
-            avgPoints: { $avg: '$points' }
-          }
+      // Get sample performance
+      const performance = await Performance.findOne();
+      // Extract field names with number values to use for averages fetching
+      let categories = [];
+      for (let field in performance) {
+        if (typeof performance[field] === 'number' && field !== '__v') {
+          categories.push(field);
         }
-      ]);
-
-      if (averages[0]) {
-        return averages[0];
-      } else {
-        return {
-          _id,
-          avgFgAtt: 0,
-          avgFgMade: 0,
-          avgThreePtAtt: 0,
-          avgThreePtMade: 0,
-          avgFtAtt: 0,
-          avgFtMade: 0,
-          avgOffReb: 0,
-          avgRebounds: 0,
-          avgAssists: 0,
-          avgSteals: 0,
-          avgBlocks: 0,
-          avgTurnovers: 0,
-          avgPoints: 0
-        };
       }
+
+      let averages = { _id };
+      for (let category of categories) {
+        const average = await Performance.aggregate([
+          { $match: { player: _id } },
+          {
+            $group: {
+              _id: '$player',
+              [category]: { $avg: `$${category}` }
+            }
+          }
+        ]);
+
+        averages[category] = average[0] ? average[0][category] : 0;
+      }
+
+      return averages;
     },
     percentages: async ({ _id }) => {
       const percentages = await Performance.aggregate([
@@ -237,16 +220,14 @@ const resolvers = {
         }
       ]);
 
-      if (percentages[0]) {
-        return percentages[0];
-      } else {
-        return {
+      return (
+        percentages[0] || {
           _id,
           fgPercentage: 0,
           threePtPercentage: 0,
           ftPercentage: 0
-        };
-      }
+        }
+      );
     }
   },
   Mutation: {

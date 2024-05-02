@@ -21,19 +21,19 @@ const typeDefs = `
 
   type Averages {
     _id: ID!
-    avgFgAtt: Float
-    avgFgMade: Float
-    avgThreePtAtt: Float
-    avgThreePtMade: Float
-    avgFtAtt: Float
-    avgFtMade: Float
-    avgOffReb: Float
-    avgRebounds: Float
-    avgAssists: Float
-    avgSteals: Float
-    avgBlocks: Float
-    avgTurnovers: Float
-    avgPoints: Float
+    fgAtt: Float
+    fgMade: Float
+    threePtAtt: Float
+    threePtMade: Float
+    ftAtt: Float
+    ftMade: Float
+    offReb: Float
+    rebounds: Float
+    assists: Float
+    steals: Float
+    blocks: Float
+    turnovers: Float
+    points: Float
   }
 
   type Percentages {
@@ -85,7 +85,6 @@ const typeDefs = `
   type Leader {
     _id: ID!
     player: Player
-    value: Float
   }
 
   input PlayerInput {

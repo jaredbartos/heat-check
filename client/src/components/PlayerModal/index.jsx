@@ -161,10 +161,13 @@ export default function PlayerModal({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+    >
       <ModalOverlay />
       <ModalContent p={4}>
-        <ModalHeader color="custom.blue">
+        <ModalHeader color='custom.blue'>
           {action === 'create'
             ? 'Add New Player'
             : `Edit ${currentPlayer.firstName} ${currentPlayer.lastName}`}
@@ -179,7 +182,7 @@ export default function PlayerModal({
             {props => (
               <Form>
                 <FormControl>
-                  <Field name="firstName">
+                  <Field name='firstName'>
                     {({ field, form }) => (
                       <FormControl
                         isRequired
@@ -189,8 +192,8 @@ export default function PlayerModal({
                       >
                         <FormLabel>First Name</FormLabel>
                         <Input
-                          placeholder="Enter first name"
-                          type="text"
+                          placeholder='Enter first name'
+                          type='text'
                           {...field}
                         />
                         <FormErrorMessage>
@@ -199,19 +202,19 @@ export default function PlayerModal({
                       </FormControl>
                     )}
                   </Field>
-                  <Field name="lastName">
+                  <Field name='lastName'>
                     {({ field, form }) => (
                       <FormControl>
                         <FormLabel mt={3}>Last Name</FormLabel>
                         <Input
-                          placeholder="Enter last name"
-                          type="text"
+                          placeholder='Enter last name'
+                          type='text'
                           {...field}
                         />
                       </FormControl>
                     )}
                   </Field>
-                  <Field name="number">
+                  <Field name='number'>
                     {({ field, form }) => (
                       <FormControl
                         isRequired
@@ -219,10 +222,10 @@ export default function PlayerModal({
                       >
                         <FormLabel mt={3}>Number</FormLabel>
                         <Input
-                          placeholder="Enter number"
-                          min="0"
-                          max="99"
-                          type="number"
+                          placeholder='Enter number'
+                          min='0'
+                          max='99'
+                          type='number'
                           {...field}
                         />
                         <FormErrorMessage>
@@ -231,7 +234,7 @@ export default function PlayerModal({
                       </FormControl>
                     )}
                   </Field>
-                  <Field name="position">
+                  <Field name='position'>
                     {({ field, form }) => (
                       <FormControl
                         isRequired
@@ -240,10 +243,13 @@ export default function PlayerModal({
                         }
                       >
                         <FormLabel mt={3}>Position</FormLabel>
-                        <Select placeholder="Select Position" {...field}>
-                          <option value="Guard">Guard</option>
-                          <option value="Forward">Forward</option>
-                          <option value="Center">Center</option>
+                        <Select
+                          placeholder='Select Position'
+                          {...field}
+                        >
+                          <option value='Guard'>Guard</option>
+                          <option value='Forward'>Forward</option>
+                          <option value='Center'>Center</option>
                         </Select>
                         <FormErrorMessage>
                           {form.errors.position}
@@ -253,15 +259,15 @@ export default function PlayerModal({
                   </Field>
                   <FormLabel mt={3}>Height</FormLabel>
                   <HStack>
-                    <Field name="feet">
+                    <Field name='feet'>
                       {({ field, form }) => (
                         <FormControl>
                           <InputGroup>
                             <Input
                               w={12}
-                              min="3"
-                              max="8"
-                              type="number"
+                              min='3'
+                              max='8'
+                              type='number'
                               {...field}
                             />
                             <InputRightAddon>feet</InputRightAddon>
@@ -269,15 +275,15 @@ export default function PlayerModal({
                         </FormControl>
                       )}
                     </Field>
-                    <Field name="inches">
+                    <Field name='inches'>
                       {({ field, form }) => (
                         <FormControl>
                           <InputGroup>
                             <Input
                               w={14}
-                              min="0"
-                              max="12"
-                              type="number"
+                              min='0'
+                              max='12'
+                              type='number'
                               {...field}
                             />
                             <InputRightAddon>inches</InputRightAddon>
@@ -286,13 +292,13 @@ export default function PlayerModal({
                       )}
                     </Field>
                   </HStack>
-                  <Field name="weight">
+                  <Field name='weight'>
                     {({ field, form }) => (
                       <FormControl>
                         <FormLabel mt={3}>Weight</FormLabel>
                         <Input
-                          placeholder="Enter weight"
-                          type="number"
+                          placeholder='Enter weight'
+                          type='number'
                           {...field}
                         />
                       </FormControl>
@@ -300,17 +306,17 @@ export default function PlayerModal({
                   </Field>
                   <ModalFooter pr={1}>
                     <Button
-                      boxShadow="md"
-                      type="button"
+                      boxShadow='md'
+                      type='button'
                       mr={3}
                       onClick={onClose}
                     >
                       Cancel
                     </Button>
                     <Button
-                      colorScheme="blue"
-                      boxShadow="xl"
-                      type="submit"
+                      colorScheme='blue'
+                      boxShadow='xl'
+                      type='submit'
                       isLoading={props.isSubmitting}
                     >
                       {action === 'create' ? 'Add Player' : 'Update Player'}

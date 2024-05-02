@@ -121,16 +121,22 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
 
   // Set options for select element with populated leagues
   const leagueOptions = leagueNames?.map((league, index) => (
-    <option key={index} value={league}>
+    <option
+      key={index}
+      value={league}
+    >
       {league}
     </option>
   ));
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+    >
       <ModalOverlay />
       <ModalContent p={4}>
-        <ModalHeader color="custom.blue">
+        <ModalHeader color='custom.blue'>
           {action === 'create'
             ? 'Add New Team'
             : `Edit ${currentTeam.name} (${currentTeam.league.name})`}
@@ -145,7 +151,7 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
             {props => (
               <Form>
                 <FormControl isInvalid={addTeamError || updateTeamError}>
-                  <Field name="teamName">
+                  <Field name='teamName'>
                     {({ field, form }) => (
                       <FormControl
                         isRequired
@@ -155,8 +161,8 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
                       >
                         <FormLabel>Team Name</FormLabel>
                         <Input
-                          placeholder="Enter new team name"
-                          type="text"
+                          placeholder='Enter new team name'
+                          type='text'
                           {...field}
                         />
                         <FormErrorMessage>
@@ -165,7 +171,7 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
                       </FormControl>
                     )}
                   </Field>
-                  <Field name="teamLeague">
+                  <Field name='teamLeague'>
                     {({ field, form }) => (
                       <FormControl
                         isRequired
@@ -174,10 +180,13 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
                         }
                       >
                         <FormLabel mt={3}>League</FormLabel>
-                        <Select placeholder="Select League" {...field}>
+                        <Select
+                          placeholder='Select League'
+                          {...field}
+                        >
                           {leagueOptions}
-                          <option value="Independent">Independent</option>
-                          <option value="Enter New League Name">
+                          <option value='Independent'>Independent</option>
+                          <option value='Enter New League Name'>
                             Enter New League Name
                           </option>
                         </Select>
@@ -188,7 +197,7 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
                     )}
                   </Field>
                   {props.values.teamLeague === 'Enter New League Name' && (
-                    <Field name="customTeamLeague">
+                    <Field name='customTeamLeague'>
                       {({ field, form }) => (
                         <FormControl
                           isInvalid={
@@ -196,7 +205,11 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
                             form.touched.customTeamLeague
                           }
                         >
-                          <Input mt={2} type="text" {...field} />
+                          <Input
+                            mt={2}
+                            type='text'
+                            {...field}
+                          />
                           <FormErrorMessage>
                             {form.errors.customTeamLeague}
                           </FormErrorMessage>
@@ -209,17 +222,17 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
                   </FormErrorMessage>
                   <ModalFooter pr={1}>
                     <Button
-                      boxShadow="md"
-                      type="button"
+                      boxShadow='md'
+                      type='button'
                       mr={3}
                       onClick={onClose}
                     >
                       Cancel
                     </Button>
                     <Button
-                      colorScheme="blue"
-                      boxShadow="xl"
-                      type="submit"
+                      colorScheme='blue'
+                      boxShadow='xl'
+                      type='submit'
                       isLoading={props.isSubmitting}
                     >
                       {action === 'create' ? 'Add Team' : 'Update Team'}

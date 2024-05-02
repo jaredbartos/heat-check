@@ -52,15 +52,25 @@ export default function TeamsPage() {
     <>
       <Center h={150}>
         <VStack>
-          <Heading as="h2" color="custom.blue" size="xl">
+          <Heading
+            as='h2'
+            color='custom.blue'
+            size='xl'
+          >
             Teams
           </Heading>
           <HStack mt={3}>
             <Text w={200}>Filter By League:</Text>
-            <Select borderColor="custom.blue" onChange={handleChange}>
-              <option value="All Leagues">All Leagues</option>
+            <Select
+              borderColor='custom.blue'
+              onChange={handleChange}
+            >
+              <option value='All Leagues'>All Leagues</option>
               {leagueNames?.map(league => (
-                <option key={league} value={league}>
+                <option
+                  key={league}
+                  value={league}
+                >
                   {league}
                 </option>
               ))}
@@ -68,14 +78,25 @@ export default function TeamsPage() {
           </HStack>
         </VStack>
       </Center>
-      <Box m="auto" w={['95%', null, null, null, null, '1600px']}>
+      <Box
+        m='auto'
+        w={['95%', null, null, null, null, '1600px']}
+      >
         {loading && (
           <Box h={600}>
             <LoadingSpinner />
           </Box>
         )}
-        {!loading && visibleTeams.length ? (
-          <Flex flexWrap="wrap" justify="center">
+        {!loading && visibleTeams.length != 0 ? (
+          <Flex
+            flexWrap='wrap'
+            justify={[
+              'center',
+              null,
+              null,
+              visibleTeams.length === 2 ? 'space-around' : 'space-between'
+            ]}
+          >
             {visibleTeams.map(team => (
               <TeamCard
                 key={team._id}
@@ -88,7 +109,10 @@ export default function TeamsPage() {
           </Flex>
         ) : (
           <Center>
-            <Text fontSize="lg" my={20}>
+            <Text
+              fontSize='lg'
+              my={20}
+            >
               No teams available!
             </Text>
           </Center>

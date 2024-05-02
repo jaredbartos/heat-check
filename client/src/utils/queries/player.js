@@ -37,19 +37,19 @@ export const GET_SINGLE_PLAYER = gql`
       }
       averages {
         _id
-        avgFgAtt
-        avgFgMade
-        avgThreePtAtt
-        avgThreePtMade
-        avgFtAtt
-        avgFtMade
-        avgOffReb
-        avgRebounds
-        avgAssists
-        avgSteals
-        avgBlocks
-        avgTurnovers
-        avgPoints
+        fgAtt
+        fgMade
+        threePtAtt
+        threePtMade
+        ftAtt
+        ftMade
+        offReb
+        rebounds
+        assists
+        steals
+        blocks
+        turnovers
+        points
       }
       percentages {
         _id

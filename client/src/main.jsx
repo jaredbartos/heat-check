@@ -12,6 +12,7 @@ import SinglePlayer from './pages/SinglePlayer.jsx';
 import TeamsPage from './pages/TeamsPage.jsx';
 import SingleTeam from './pages/SingleTeam.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
+import Leaderboards from './pages/Leaderboards.jsx';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: '/team/:id',
         element: <SingleTeam />
+      },
+      {
+        path: '/leaderboards',
+        element: <Leaderboards />
       }
     ]
   }

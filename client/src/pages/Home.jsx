@@ -65,28 +65,42 @@ export default function Home() {
   return (
     <>
       <Box>
-        <Flex justify="center">
+        <Flex justify='center'>
           <VStack>
             <Heading
-              as="h2"
-              size="xl"
-              color="custom.blue"
+              as='h2'
+              size='xl'
+              color='custom.blue'
               mt={8}
-              textAlign="center"
+              textAlign='center'
             >
               Welcome to HeatCheck!
             </Heading>
-            <Heading as="h3" size="md" color="custom.blue" textAlign="center">
+            <Heading
+              as='h3'
+              size='md'
+              color='custom.blue'
+              textAlign='center'
+            >
               The World Leader (sort of) in Amateur Basketball Stat Management
             </Heading>
-            <Text w={['95%', null, null, 900]} my={10}>
+            <Text
+              w={['95%', null, null, 900]}
+              my={10}
+            >
               {!Auth.loggedIn() ? (
                 <>
-                  <ChakraLink onClick={onLoginOpen} color="blue">
+                  <ChakraLink
+                    onClick={onLoginOpen}
+                    color='blue'
+                  >
                     Log in{' '}
                   </ChakraLink>
                   or{' '}
-                  <ChakraLink onClick={onSignupOpen} color="blue">
+                  <ChakraLink
+                    onClick={onSignupOpen}
+                    color='blue'
+                  >
                     sign up{' '}
                   </ChakraLink>
                   for a new account to begin recording and tracking stats for
@@ -97,7 +111,11 @@ export default function Home() {
               ) : (
                 <>
                   Greetings, {Auth.getProfile().data.username}! Head to{' '}
-                  <ChakraLink as={ReactRouterLink} to="/dashboard" color="blue">
+                  <ChakraLink
+                    as={ReactRouterLink}
+                    to='/dashboard'
+                    color='blue'
+                  >
                     your dashboard{' '}
                   </ChakraLink>
                   to start or continue managing the stats of your own teams! You
@@ -109,34 +127,57 @@ export default function Home() {
           </VStack>
         </Flex>
         <Center h={100}>
-          <Heading as="h2" color="custom.blue" size="lg">
+          <Heading
+            as='h2'
+            color='custom.blue'
+            size='lg'
+          >
             Highest Scorers
           </Heading>
         </Center>
-        <Box h={390} className="delay-4">
+        <Box
+          h={390}
+          className='delay-4'
+        >
           {loadingPerformances && <LoadingSpinner />}
           {!loadingPerformances && performances.length && (
-            <Flex justify="center">
-              <PerformanceTable performances={performances} isRanking={true} />
+            <Flex justify='center'>
+              <PerformanceTable
+                performances={performances}
+                isRanking={true}
+              />
             </Flex>
           )}
           {!loadingPerformances && !performances.length && (
             <Center>
-              <Text fontSize="lg" my={20}>
+              <Text
+                fontSize='lg'
+                my={20}
+              >
                 No games have been added yet!
               </Text>
             </Center>
           )}
         </Box>
         <Center h={100}>
-          <Heading as="h2" color="custom.blue" size="lg">
+          <Heading
+            as='h2'
+            color='custom.blue'
+            size='lg'
+          >
             Recently Updated Teams
           </Heading>
         </Center>
-        <Box m="auto" w={['95%']}>
+        <Box
+          m='auto'
+          w={['95%']}
+        >
           {loadingTeams && <LoadingSpinner />}
           {!loadingTeams && teams.length && (
-            <Flex flexWrap="wrap" justify="center">
+            <Flex
+              flexWrap='wrap'
+              justify='center'
+            >
               {teams.map(team => (
                 <TeamCard
                   key={team._id}
@@ -150,15 +191,24 @@ export default function Home() {
           )}
           {!loadingTeams && !teams.length && (
             <Center>
-              <Text fontSize="lg" my={20}>
+              <Text
+                fontSize='lg'
+                my={20}
+              >
                 No teams have been added yet!
               </Text>
             </Center>
           )}
         </Box>
       </Box>
-      <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
-      <SignupModal isOpen={isSignupOpen} onClose={onSignupClose} />
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={onLoginClose}
+      />
+      <SignupModal
+        isOpen={isSignupOpen}
+        onClose={onSignupClose}
+      />
     </>
   );
 }

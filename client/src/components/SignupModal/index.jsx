@@ -57,10 +57,13 @@ export default function SignupModal({ isOpen, onClose }) {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+    >
       <ModalOverlay />
       <ModalContent p={4}>
-        <ModalHeader color="custom.blue">Sign Up</ModalHeader>
+        <ModalHeader color='custom.blue'>Sign Up</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Formik
@@ -88,7 +91,7 @@ export default function SignupModal({ isOpen, onClose }) {
             {props => (
               <Form>
                 <FormControl>
-                  <Field name="username">
+                  <Field name='username'>
                     {({ field, form }) => (
                       <FormControl
                         isRequired
@@ -98,8 +101,8 @@ export default function SignupModal({ isOpen, onClose }) {
                       >
                         <FormLabel>Username</FormLabel>
                         <Input
-                          placeholder="Enter username"
-                          type="text"
+                          placeholder='Enter username'
+                          type='text'
                           {...field}
                         />
                         <FormErrorMessage>
@@ -108,7 +111,7 @@ export default function SignupModal({ isOpen, onClose }) {
                       </FormControl>
                     )}
                   </Field>
-                  <Field name="email">
+                  <Field name='email'>
                     {({ field, form }) => (
                       <FormControl
                         isRequired
@@ -116,15 +119,15 @@ export default function SignupModal({ isOpen, onClose }) {
                       >
                         <FormLabel mt={3}>Email</FormLabel>
                         <Input
-                          placeholder="Enter email address"
-                          type="email"
+                          placeholder='Enter email address'
+                          type='email'
                           {...field}
                         />
                         <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                       </FormControl>
                     )}
                   </Field>
-                  <Field name="password">
+                  <Field name='password'>
                     {({ field, form }) => (
                       <FormControl
                         isRequired
@@ -134,17 +137,20 @@ export default function SignupModal({ isOpen, onClose }) {
                       >
                         <FormLabel mt={3}>Password</FormLabel>
                         <Input
-                          placeholder="Enter password"
-                          type="password"
+                          placeholder='Enter password'
+                          type='password'
                           {...field}
                         />
                         <FormErrorMessage>
                           {form.errors.password}
                         </FormErrorMessage>
                         <FormHelperText mt={3}>
-                          <Flex justify="space-around" align="flex-start">
+                          <Flex
+                            justify='space-around'
+                            align='flex-start'
+                          >
                             <Text>Password must contain:</Text>
-                            <VStack align="left">
+                            <VStack align='left'>
                               <Text>at least 8 characters</Text>
                               <Text>at least one uppercase letter</Text>
                               <Text>at least one lowercase letter</Text>
@@ -158,17 +164,17 @@ export default function SignupModal({ isOpen, onClose }) {
                   </Field>
                   <ModalFooter pr={1}>
                     <Button
-                      boxShadow="md"
-                      type="button"
+                      boxShadow='md'
+                      type='button'
                       mr={3}
                       onClick={onClose}
                     >
                       Cancel
                     </Button>
                     <Button
-                      colorScheme="blue"
-                      boxShadow="xl"
-                      type="submit"
+                      colorScheme='blue'
+                      boxShadow='xl'
+                      type='submit'
                       isLoading={props.isSubmitting}
                     >
                       Sign Up
