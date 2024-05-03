@@ -1,25 +1,21 @@
 import Auth from '../../utils/auth';
-import LoginModal from '../LoginModal';
-import SignupModal from '../SignupModal';
-import HomeLink from '../NavLinks/HomeLink';
-import TeamsLink from '../NavLinks/TeamsLink';
-import LeaderboardsLink from '../NavLinks/LeaderboardsLink';
-import DashboardLink from '../NavLinks/DashboardLink';
-import LoginLink from '../NavLinks/LoginLink';
-import LogoutLink from '../NavLinks/LogoutLink';
-import SignupLink from '../NavLinks/SignupLink';
 import {
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
   MenuDivider,
   IconButton
 } from '@chakra-ui/react';
 import { RxHamburgerMenu } from 'react-icons/rx';
+import { Link } from 'react-router-dom';
+import { FaHome } from 'react-icons/fa';
+import { HiUserGroup } from 'react-icons/hi';
+import { MdLeaderboard } from 'react-icons/md';
+import { AiFillDashboard } from 'react-icons/ai';
+import { MdLogin } from 'react-icons/md';
+import { MdLogout } from 'react-icons/md';
+import { FaUserPlus } from 'react-icons/fa6';
 
 export default function NavMobile({ onLoginOpen, onSignupOpen }) {
   return (
@@ -36,31 +32,72 @@ export default function NavMobile({ onLoginOpen, onSignupOpen }) {
         _expanded={{ bgColor: 'custom.red', color: 'white' }}
         _hover={{ bgColor: 'custom.red', color: 'white' }}
       />
-      <MenuList color='custom.red'>
-        <MenuItem _hover={{ bgColor: 'white' }}>
-          <HomeLink />
+      <MenuList
+        fontSize='lg'
+        color='custom.red'
+      >
+        <MenuItem
+          as={Link}
+          to='/'
+          icon={<FaHome />}
+          _hover={{ bgColor: 'custom.red', color: 'white' }}
+        >
+          Home
         </MenuItem>
-        <MenuItem _hover={{ bgColor: 'white' }}>
-          <TeamsLink />
+        <MenuItem
+          as={Link}
+          to='/teams'
+          icon={<HiUserGroup />}
+          _hover={{ bgColor: 'custom.red', color: 'white' }}
+        >
+          Teams
         </MenuItem>
-        <MenuItem _hover={{ bgColor: 'white' }}>
-          <LeaderboardsLink />
+        <MenuItem
+          as={Link}
+          to='/leaderboards'
+          icon={<MdLeaderboard />}
+          _hover={{ bgColor: 'custom.red', color: 'white' }}
+        >
+          Leaderboards
         </MenuItem>
-        <MenuDivider borderColor='custom.red'/>
-        <MenuItem _hover={{ bgColor: 'white' }}>
-          {Auth.loggedIn() ? (
-            <DashboardLink />
-          ) : (
-            <LoginLink onLoginOpen={onLoginOpen} />
-          )}
-        </MenuItem>
-        <MenuItem _hover={{ bgColor: 'white' }}>
-          {Auth.loggedIn() ? (
-            <LogoutLink />
-          ) : (
-            <SignupLink onSignupOpen={onSignupOpen} />
-          )}
-        </MenuItem>
+        <MenuDivider borderColor='custom.red' />
+        {Auth.loggedIn() ? (
+          <MenuItem
+            as={Link}
+            to='/dashboard'
+            icon={<AiFillDashboard />}
+            _hover={{ bgColor: 'custom.red', color: 'white' }}
+          >
+            Dashboard
+          </MenuItem>
+        ) : (
+          <MenuItem
+            onClick={onLoginOpen}
+            icon={<MdLogin />}
+            _hover={{ bgColor: 'custom.red', color: 'white' }}
+          >
+            Login
+          </MenuItem>
+        )}
+        {Auth.loggedIn() ? (
+          <MenuItem
+            as='a'
+            href='/'
+            onClick={() => Auth.logout()}
+            icon={<MdLogout />}
+            _hover={{ bgColor: 'custom.red', color: 'white' }}
+          >
+            Logout
+          </MenuItem>
+        ) : (
+          <MenuItem
+            onClick={onSignupOpen}
+            icon={<FaUserPlus />}
+            _hover={{ bgColor: 'custom.red', color: 'white' }}
+          >
+            Sign Up
+          </MenuItem>
+        )}
       </MenuList>
     </Menu>
   );

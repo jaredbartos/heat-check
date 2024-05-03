@@ -25,7 +25,6 @@ export default function Header() {
         <Heading
           as='h1'
           size='2xl'
-          // mb={[4, null, null, 0]}
           className='title-font'
         >
           <Icon
