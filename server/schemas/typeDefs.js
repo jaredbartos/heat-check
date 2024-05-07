@@ -76,17 +76,6 @@ const typeDefs = `
     createdBy: User
   }
 
-  type Leaderboard {
-    _id: ID!
-    category: String!
-    leaders: [Leader]
-  }
-
-  type Leader {
-    _id: ID!
-    player: Player
-  }
-
   input PlayerInput {
     firstName: String
     lastName: String
@@ -130,8 +119,8 @@ const typeDefs = `
     leagues: [League]
     recentlyUpdatedTeams: [Team]
     player(_id: ID!): Player
+    players: [Player]
     performance(_id: ID!): Performance
-    allAvgLeaderboards: [Leaderboard]
     rankPerformanceByField(field: String!): [Performance]
     me: User
   }

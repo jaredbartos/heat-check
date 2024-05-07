@@ -5,7 +5,8 @@ const { Schema } = mongoose;
 const leagueSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   teams: [
     {

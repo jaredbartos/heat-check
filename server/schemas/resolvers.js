@@ -46,6 +46,12 @@ const resolvers = {
 
       return player;
     },
+    players: async () => {
+      return await Player.find()
+        .populate({ path: 'team', populate: { path: 'league' } })
+        .populate({ path: 'performances', options: { sort: { date: -1 } } })
+        .populate('createdBy');
+    },
     performance: async (parent, { _id }) => {
       const performance = await Performance.findById(_id)
         .populate({ path: 'player', populate: { path: 'team' } })
@@ -56,65 +62,6 @@ const resolvers = {
       }
 
       return performance;
-    },
-    allAvgLeaderboards: async () => {
-      // Get sample performance
-      const performance = await Performance.findOne();
-      // Extract field names with number values to use for leaderboard fetching
-      let categories = [];
-      for (let field in performance) {
-        if (typeof performance[field] === 'number' && field !== '__v') {
-          categories.push(field);
-        }
-      }
-
-      let leaderboards = [];
-
-      for (let category of categories) {
-        let leaderboard = await Performance.aggregate([
-          {
-            $group: {
-              _id: '$player',
-              [category]: { $avg: `$${category}` }
-            }
-          },
-          {
-            $addFields: {
-              player: '$_id'
-            }
-          },
-          {
-            $sort: {
-              [category]: category === 'turnovers' ? 1 : -1,
-              _id: -1
-            }
-          },
-          {
-            $limit: 5
-          },
-          {
-            $project: {
-              _id: 1,
-              player: 1
-            }
-          }
-        ]);
-
-        leaderboard = await Player.populate(leaderboard, {
-          path: 'player',
-          populate: { path: 'team', populate: { path: 'league' } }
-        });
-
-        leaderboard = {
-          _id: new ObjectId(),
-          category,
-          leaders: [...leaderboard]
-        };
-
-        leaderboards.push(leaderboard);
-      }
-
-      return leaderboards;
     },
     rankPerformanceByField: async (parent, { field }) => {
       return await Performance.find()
@@ -143,32 +90,46 @@ const resolvers = {
   },
   Player: {
     averages: async ({ _id }) => {
-      // Get sample performance
-      const performance = await Performance.findOne();
-      // Extract field names with number values to use for averages fetching
-      let categories = [];
-      for (let field in performance) {
-        if (typeof performance[field] === 'number' && field !== '__v') {
-          categories.push(field);
-        }
-      }
-
-      let averages = { _id };
-      for (let category of categories) {
-        const average = await Performance.aggregate([
-          { $match: { player: _id } },
-          {
-            $group: {
-              _id: '$player',
-              [category]: { $avg: `$${category}` }
-            }
+      const averages = await Performance.aggregate([
+        { $match: { player: _id } },
+        {
+          $group: {
+            _id: '$player',
+            fgAtt: { $avg: '$fgAtt' },
+            fgMade: { $avg: '$fgMade' },
+            threePtAtt: { $avg: '$threePtAtt' },
+            threePtMade: { $avg: '$threePtMade' },
+            ftAtt: { $avg: '$ftAtt' },
+            ftMade: { $avg: '$ftMade' },
+            offReb: { $avg: '$offReb' },
+            rebounds: { $avg: '$rebounds' },
+            assists: { $avg: '$assists' },
+            steals: { $avg: '$steals' },
+            blocks: { $avg: '$blocks' },
+            turnovers: { $avg: '$turnovers' },
+            points: { $avg: '$points' }
           }
-        ]);
+        }
+      ]);
 
-        averages[category] = average[0] ? average[0][category] : 0;
-      }
-
-      return averages;
+      return averages[0]
+        ? averages[0]
+        : {
+            _id,
+            fgAtt: 0,
+            fgMade: 0,
+            threePtAtt: 0,
+            threePtMade: 0,
+            ftAtt: 0,
+            ftMade: 0,
+            offReb: 0,
+            rebounds: 0,
+            assists: 0,
+            steals: 0,
+            blocks: 0,
+            turnovers: 0,
+            points: 0
+          };
     },
     percentages: async ({ _id }) => {
       const percentages = await Performance.aggregate([

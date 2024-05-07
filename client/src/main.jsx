@@ -43,7 +43,7 @@ const router = createBrowserRouter([
       {
         path: '/leaderboards',
         element: <Leaderboards />
-      }
+      },
     ]
   }
 ]);
