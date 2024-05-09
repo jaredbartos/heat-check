@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { GET_PLAYERS } from '../utils/queries/player';
-import { useLeagueNames } from '../utils/hooks';
+import { useLeagues } from '../utils/hooks';
 import { useState, useMemo } from 'react';
 import LeadersCard from '../components/LeadersCard';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -14,101 +14,112 @@ import {
   HStack,
   Text
 } from '@chakra-ui/react';
+import { useParams, useNavigate } from 'react-router-dom';
 
 export default function Leaderboards() {
-  const [selectedLeague, setSelectedLeague] = useState();
-  const [selectedCategory, setSelectedCategory] = useState();
+  // Get the league and category from the URL, if present
+  const { league, category } = useParams();
+  const navigate = useNavigate();
 
-  const { loading, data } = useQuery(GET_PLAYERS);
+  // Set the selected league and category based on the URL
+  // or default to 'all' and an empty string
+  const [selectedLeague, setSelectedLeague] = useState(league || 'all');
+  const [selectedCategory, setSelectedCategory] = useState(category || '');
+
+  const { data } = useQuery(GET_PLAYERS);
+  // Get the players from the query data
   const players = useMemo(() => (data ? data.players : []), [data]);
 
-  const leagueNames = useLeagueNames();
+  // Get the leagues from the custom hook
+  const leagues = useLeagues();
 
+  // Define the categories for the select dropdown
   const categories = [
-    'FG Att Per Game',
-    'FG Made Per Game',
-    '3P Att Per Game',
-    '3P Made Per Game',
-    'FT Att Per Game',
-    'FT Made Per Game',
-    'Off Reb Per Game',
-    'Rebounds Per Game',
-    'Assists Per Game',
-    'Steals Per Game',
-    'Blocks Per Game',
-    'Turnovers Per Game',
-    'Points Per Game',
-    'Field Goal Percentage',
-    'Three Point Percentage',
-    'Free Throw Percentage'
+    {
+      name: 'FG Att Per Game',
+      key: 'fgAtt'
+    },
+    {
+      name: 'FG Made Per Game',
+      key: 'fgMade'
+    },
+    {
+      name: '3P Att Per Game',
+      key: 'threePtAtt'
+    },
+    {
+      name: '3P Made Per Game',
+      key: 'threePtMade'
+    },
+    {
+      name: 'FT Att Per Game',
+      key: 'ftAtt'
+    },
+    {
+      name: 'FT Made Per Game',
+      key: 'ftMade'
+    },
+    {
+      name: 'Off Reb Per Game',
+      key: 'offReb'
+    },
+    {
+      name: 'Rebounds Per Game',
+      key: 'rebounds'
+    },
+    {
+      name: 'Assists Per Game',
+      key: 'assists'
+    },
+    {
+      name: 'Steals Per Game',
+      key: 'steals'
+    },
+    {
+      name: 'Blocks Per Game',
+      key: 'blocks'
+    },
+    {
+      name: 'Turnovers Per Game',
+      key: 'turnovers'
+    },
+    {
+      name: 'Points Per Game',
+      key: 'points'
+    },
+    {
+      name: 'Field Goal Percentage',
+      key: 'fgPercentage'
+    },
+    {
+      name: 'Three Point Percentage',
+      key: 'threePtPercentage'
+    },
+    {
+      name: 'Free Throw Percentage',
+      key: 'ftPercentage'
+    }
   ];
 
-  let categoryKey;
-  switch (selectedCategory) {
-    case 'FG Att Per Game':
-      categoryKey = 'fgAtt';
-      break;
-    case 'FG Made Per Game':
-      categoryKey = 'fgMade';
-      break;
-    case '3P Att Per Game':
-      categoryKey = 'threePtAtt';
-      break;
-    case '3P Made Per Game':
-      categoryKey = 'threePtMade';
-      break;
-    case 'FT Att Per Game':
-      categoryKey = 'ftAtt';
-      break;
-    case 'FT Made Per Game':
-      categoryKey = 'ftMade';
-      break;
-    case 'Off Reb Per Game':
-      categoryKey = 'offReb';
-      break;
-    case 'Rebounds Per Game':
-      categoryKey = 'rebounds';
-      break;
-    case 'Assists Per Game':
-      categoryKey = 'assists';
-      break;
-    case 'Steals Per Game':
-      categoryKey = 'steals';
-      break;
-    case 'Blocks Per Game':
-      categoryKey = 'blocks';
-      break;
-    case 'Turnovers Per Game':
-      categoryKey = 'turnovers';
-      break;
-    case 'Points Per Game':
-      categoryKey = 'points';
-      break;
-    case 'Field Goal Percentage':
-      categoryKey = 'fgPercentage';
-      break;
-    case 'Three Point Percentage':
-      categoryKey = 'threePtPercentage';
-      break;
-    case 'Free Throw Percentage':
-      categoryKey = 'ftPercentage';
-  }
-
+  // Filter the players based on the selected league and category
   const leaders = useMemo(() => {
     let leaders = [...players];
-    if (selectedLeague) {
+    if (selectedLeague !== 'all' && selectedLeague) {
       leaders = leaders.filter(
-        leader => leader.team.league.name === selectedLeague
+        leader => leader.team.league._id === selectedLeague
       );
     }
-    if (categoryKey) {
+    if (selectedCategory && leaders.length > 0) {
+      // Sort the players based on the selected category
       leaders = leaders
         .sort((a, b) =>
-          !categoryKey.includes('Percentage')
-            ? b.averages[categoryKey] - a.averages[categoryKey]
-            : b.percentages[categoryKey] - a.percentages[categoryKey]
+          !selectedCategory.includes('Percentage')
+            ? b.averages[selectedCategory] - a.averages[selectedCategory]
+            : b.percentages[selectedCategory] - a.percentages[selectedCategory]
         )
+        // Get the top 20 players
         .slice(0, 20)
+        // Map the players to the format needed for the LeadersCard component
         .map(leader => {
           return {
             _id: leader._id,
@@ -119,14 +130,35 @@ export default function Leaderboards() {
               name: leader.team.name
             },
             league: leader.team.league.name,
-            value: !categoryKey.includes('Percentage')
-              ? leader.averages[categoryKey]
-              : leader.percentages[categoryKey]
+            // If the category is a percentage, use the percentage value
+            value: !selectedCategory.includes('Percentage')
+              ? leader.averages[selectedCategory]
+              : leader.percentages[selectedCategory]
           };
         });
       return leaders;
     }
-  }, [selectedLeague, players, categoryKey]);
+  }, [selectedLeague, players, selectedCategory]);
+
+  const handleChange = e => {
+    // Get the value and id from the select element
+    const { value, id } = e.target;
+
+    // Update the selected league or category based on the id
+    if (id === 'category') {
+      setSelectedCategory(value);
+      // Navigate to the new URL based on the selected league and category
+      navigate(
+        value ? `/leaderboards/${selectedLeague}/${value}` : '/leaderboards'
+      );
+    } else {
+      setSelectedLeague(value);
+      // If the category is already selected, navigate to the new URL
+      if (selectedCategory) {
+        navigate(`/leaderboards/${value}/${selectedCategory}`);
+      }
+    }
+  };
 
   return (
     <>
@@ -142,16 +174,18 @@ export default function Leaderboards() {
           <HStack mt={3}>
             <Text>League:</Text>
             <Select
+              id='league'
               borderColor='custom-blue'
-              onChange={e => setSelectedLeague(e.target.value)}
+              onChange={handleChange}
             >
-              <option value=''>All Leagues</option>
-              {leagueNames?.map(league => (
+              <option value='all'>All Leagues</option>
+              {leagues?.map(league => (
                 <option
-                  key={league}
-                  value={league}
+                  selected={selectedLeague === league._id}
+                  key={league._id}
+                  value={league._id}
                 >
-                  {league}
+                  {league.name}
                 </option>
               ))}
             </Select>
@@ -159,29 +193,40 @@ export default function Leaderboards() {
           <HStack mt={3}>
             <Text>Category:</Text>
             <Select
+              id='category'
               borderColor='custom-blue'
-              onChange={e => setSelectedCategory(e.target.value)}
+              onChange={handleChange}
               placeholder='Select Category'
             >
               {categories.map(category => (
                 <option
-                  key={category}
-                  value={category}
+                  selected={selectedCategory === category.key}
+                  key={category.key}
+                  value={category.key}
                 >
-                  {category}
+                  {category.name}
                 </option>
               ))}
             </Select>
           </HStack>
         </VStack>
       </Center>
+      {!leaders && selectedCategory && (
+        <Box h={600}>
+          <LoadingSpinner />
+        </Box>
+      )}
       <Flex
         mt={10}
         justify='center'
       >
         {leaders && (
           <LeadersCard
-            category={selectedCategory}
+            category={
+              // Get the name of the selected category
+              categories.find(category => category.key === selectedCategory)
+                .name
+            }
             leaders={leaders}
           />
         )}

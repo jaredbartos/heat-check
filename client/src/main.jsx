@@ -44,6 +44,10 @@ const router = createBrowserRouter([
         path: '/leaderboards',
         element: <Leaderboards />
       },
+      {
+        path: '/leaderboards/:league/:category',
+        element: <Leaderboards />
+      }
     ]
   }
 ]);

@@ -21,10 +21,10 @@ import {
   Select
 } from '@chakra-ui/react';
 import { Formik, Form, Field } from 'formik';
-import { useLeagueNames } from '../../utils/hooks';
+import { useLeagues } from '../../utils/hooks';
 
 export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
-  const leagueNames = useLeagueNames();
+  const leagues = useLeagues();
   // Prepare add team mutation
   const [addTeam, { error: addTeamError }] = useMutation(ADD_TEAM, {
     refetchQueries: [GET_ME, GET_TEAMS]
@@ -120,12 +120,12 @@ export default function TeamModal({ currentTeam, action, isOpen, onClose }) {
   };
 
   // Set options for select element with populated leagues
-  const leagueOptions = leagueNames?.map((league, index) => (
+  const leagueOptions = leagues?.map(league => (
     <option
-      key={index}
-      value={league}
+      key={league._id}
+      value={league.name}
     >
-      {league}
+      {league.name}
     </option>
   ));
 

@@ -22,8 +22,10 @@ export const useManageChanges = () => {
 };
 
 // Custom hook to get league names
-export const useLeagueNames = () => {
+export const useLeagues = () => {
   const { data } = useQuery(GET_LEAGUES);
 
-  return data?.leagues.map(league => league.name);
+  return data?.leagues.map(league => {
+    return { _id: league._id, name: league.name };
+  });
 };

@@ -18,12 +18,12 @@ import {
   Checkbox
 } from '@chakra-ui/react';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { useLeagueNames } from '../utils/hooks';
+import { useLeagues } from '../utils/hooks';
 
 export default function TeamsPage() {
   // Query all teams from database
   const { loading, data, error } = useQuery(GET_TEAMS);
-  const leagueNames = useLeagueNames();
+  const leagues = useLeagues();
   // Declare state variables for holding the teams and league values
   const [teams, setTeams] = useState([]);
   const [selectedLeague, setSelectedLeague] = useState('All Leagues');
@@ -66,12 +66,12 @@ export default function TeamsPage() {
               onChange={handleChange}
             >
               <option value='All Leagues'>All Leagues</option>
-              {leagueNames?.map(league => (
+              {leagues?.map(league => (
                 <option
-                  key={league}
-                  value={league}
+                  key={league._id}
+                  value={league.name}
                 >
-                  {league}
+                  {league.name}
                 </option>
               ))}
             </Select>
